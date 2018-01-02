@@ -1,7 +1,34 @@
-apply plugin: 'java'
+buildscript {
+    ext {
+        kotlinVersion = '1.2.0'
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+    }
+}
 
-sourceCompatibility = '1.9'
-targetCompatibility = '1.9'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
+
+ext {
+    targetJvmVersion = '1.8'
+}
+
+sourceCompatibility = targetJvmVersion
+targetCompatibility = targetJvmVersion
+compileKotlin {
+    kotlinOptions.jvmTarget = targetJvmVersion
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = targetJvmVersion
+}
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -10,7 +37,10 @@ repositories {
 }
 
 dependencies {
-
+    compile('org.springframework.boot:spring-boot-starter')
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 jar {
