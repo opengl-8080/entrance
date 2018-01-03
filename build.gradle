@@ -30,6 +30,9 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = targetJvmVersion
 }
 
+processResources.destinationDir = compileJava.destinationDir
+compileJava.dependsOn processResources
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {

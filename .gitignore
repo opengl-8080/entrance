@@ -4,3 +4,5 @@ gradle/
 *.iml
 out/
 .idea/
+*.db
+classes/

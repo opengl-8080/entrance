@@ -1,6 +1,6 @@
 package entrance.view
 
-import entrance.db.ItemDao
+import entrance.infrastructure.database.ItemTableDao
 import javafx.fxml.Initializable
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -11,10 +11,11 @@ import java.util.ResourceBundle
 @Component
 class MainController : Initializable {
     @Autowired
-    lateinit var dao: ItemDao
+    lateinit var dao: ItemTableDao
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         println("Hello")
+        println(System.getProperty("user.home"))
         var all = this.dao.selectAll()
         println("all=$all")
     }
