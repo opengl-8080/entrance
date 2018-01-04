@@ -13,44 +13,37 @@ buildscript {
     }
 }
 
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
-apply plugin: 'org.springframework.boot'
+allprojects {
+    apply plugin: 'kotlin'
+    apply plugin: 'kotlin-spring'
+    apply plugin: 'org.springframework.boot'
 
-ext {
-    targetJvmVersion = '1.8'
-}
+    ext {
+        targetJvmVersion = '1.8'
+    }
 
-sourceCompatibility = targetJvmVersion
-targetCompatibility = targetJvmVersion
-compileKotlin {
-    kotlinOptions.jvmTarget = targetJvmVersion
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = targetJvmVersion
-}
+    sourceCompatibility = targetJvmVersion
+    targetCompatibility = targetJvmVersion
+    compileKotlin {
+        kotlinOptions.jvmTarget = targetJvmVersion
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = targetJvmVersion
+    }
 
-processResources.destinationDir = compileJava.destinationDir
-compileJava.dependsOn processResources
+    processResources.destinationDir = compileJava.destinationDir
+    compileJava.dependsOn processResources
 
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-repositories {
-    mavenCentral()
-}
+    repositories {
+        mavenCentral()
+    }
 
-dependencies {
-    compile 'com.h2database:h2'
-    compile 'org.flywaydb:flyway-core'
-    compile 'org.seasar.doma.boot:doma-spring-boot-starter:1.1.1'
-    compile('org.springframework.boot:spring-boot-starter')
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
-    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
-jar {
-    manifest {
-        attributes('Main-Class': 'entrance.Main')
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter')
+        compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+        compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+        testCompile('org.springframework.boot:spring-boot-starter-test')
     }
 }

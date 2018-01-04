@@ -1,0 +1,7 @@
+include(
+    'domain',
+    'application',
+    'infrastructure',
+    'view',
+    'main',
+)

@@ -1,0 +1,10 @@
+apply plugin: 'idea'
+
+dependencies {
+    compile 'com.h2database:h2'
+    compile 'org.flywaydb:flyway-core'
+    compile 'org.seasar.doma.boot:doma-spring-boot-starter:1.1.1'
+    compile project(':application')
+}
+
+idea.module.outputDir = file('./out/production/classes')

@@ -1,0 +1,9 @@
+dependencies {
+    compile project(':view')
+}
+
+jar {
+    manifest {
+        attributes('Main-Class': 'entrance.Main')
+    }
+}
