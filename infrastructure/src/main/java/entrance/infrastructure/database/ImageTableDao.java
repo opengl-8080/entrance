@@ -1,18 +1,13 @@
 package entrance.infrastructure.database;
 
 import org.seasar.doma.Dao;
-import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.boot.ConfigAutowireable;
 
-import java.util.List;
-
 @Dao
 @ConfigAutowireable
-public interface ItemTableDao {
-    @Select
-    List<ItemTable> selectAll();
+public interface ImageTableDao {
     
-    @Insert
-    void save(ItemTable itemTable);
+    @Select
+    ImageTable find(long itemId);
 }
