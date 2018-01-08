@@ -1,5 +1,5 @@
 package entrance.domain
 
-data class ItemId(
+data class TagId (
     val value: Long
 )

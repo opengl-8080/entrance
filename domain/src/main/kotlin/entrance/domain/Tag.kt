@@ -1,7 +1,6 @@
 package entrance.domain
 
 class Tag (
-    private val name: TagName
-) {
-    
-}
+    val id: TagId,
+    val name: TagName
+)

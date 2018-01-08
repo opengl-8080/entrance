@@ -12,6 +12,9 @@ import java.util.List;
 public interface ItemTableDao {
     @Select
     List<ItemTable> selectAll();
+
+    @Select
+    ItemTable find(Long itemId);
     
     @Insert
     void save(ItemTable itemTable);
