@@ -13,5 +13,5 @@ public interface ImageTableDao {
     ImageTable find(long itemId);
     
     @Insert
-    int save(ImageTable imageTable);
+    int insert(ImageTable imageTable);
 }

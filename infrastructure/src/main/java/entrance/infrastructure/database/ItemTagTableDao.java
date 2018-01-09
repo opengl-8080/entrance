@@ -12,7 +12,7 @@ import java.util.List;
 public interface ItemTagTableDao {
     
     @Insert
-    void save(ItemTagTable itemTagTable);
+    int insert(ItemTagTable itemTagTable);
     
     @Select
     List<ItemTagTable> findByItemId(Long itemId);

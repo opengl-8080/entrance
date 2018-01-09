@@ -15,14 +15,12 @@ class ImageRepositoryImpl (
         val itemTable = ItemTable()
         itemTable.registeredDateTime = imageItem.registeredDateTime.value
         itemTable.uncategorized = imageItem.uncategorized
-        
-        itemDao.save(itemTable)
+        itemDao.insert(itemTable)
 
         val imageTable = ImageTable()
         imageTable.itemId = itemTable.id
         imageTable.path = imageItem.file.stringPath()
-        
-        imageDao.save(imageTable)
+        imageDao.insert(imageTable)
 
         val relationalTags = imageItem.relationalTags
         val mainTag = relationalTags.mainTag
@@ -40,17 +38,14 @@ class ImageRepositoryImpl (
         itemTagTable.itemId = itemTable.id
         itemTagTable.tagId = tag.id.value
         itemTagTable.main = main
-        itemTagDao.save(itemTagTable)
+        itemTagDao.insert(itemTagTable)
     }
 
     override fun find(id: ItemId): ImageItem {
-        val itemTable = itemDao.find(id.value)
-        val imageTable = imageDao.find(id.value)
-
         var mainTag: Tag? = null
         val tags = mutableListOf<Tag>()
         val itemTags = itemTagDao.findByItemId(id.value)
-        itemTags.map { itemTag ->
+        itemTags.forEach { itemTag ->
             val tagTable = tagDao.find(itemTag.tagId)
             val tag = Tag(TagId(tagTable.id), TagName(tagTable.name))
             
@@ -61,6 +56,9 @@ class ImageRepositoryImpl (
             }
         }
         val relationalTags = RelationalTags(mainTag = mainTag, tags = tags)
+
+        val itemTable = itemDao.find(id.value)
+        val imageTable = imageDao.find(id.value)
         
         return ImageItem(
             itemId = ItemId(itemTable.id),

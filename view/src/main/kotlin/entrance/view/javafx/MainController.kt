@@ -1,4 +1,4 @@
-package entrance.view.controller
+package entrance.view.javafx
 
 import entrance.domain.ImageRepository
 import javafx.fxml.Initializable

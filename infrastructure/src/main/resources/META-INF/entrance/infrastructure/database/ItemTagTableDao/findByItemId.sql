@@ -1,0 +1,3 @@
+SELECT *
+  FROM ITEM_TAG
+ WHERE ITEM_ID = /*itemId*/-1

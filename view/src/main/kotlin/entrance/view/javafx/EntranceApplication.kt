@@ -1,4 +1,4 @@
-package entrance.view
+package entrance.view.javafx
 
 import javafx.application.Application
 import javafx.scene.Scene

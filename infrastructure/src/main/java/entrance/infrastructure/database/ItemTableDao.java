@@ -10,12 +10,10 @@ import java.util.List;
 @Dao
 @ConfigAutowireable
 public interface ItemTableDao {
-    @Select
-    List<ItemTable> selectAll();
 
     @Select
-    ItemTable find(Long itemId);
+    ItemTable find(Long id);
     
     @Insert
-    void save(ItemTable itemTable);
+    int insert(ItemTable itemTable);
 }
