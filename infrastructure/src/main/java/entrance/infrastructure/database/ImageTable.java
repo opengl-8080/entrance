@@ -11,6 +11,6 @@ import org.seasar.doma.jdbc.entity.NamingType;
 @ToString
 public class ImageTable {
     @Id
-    Long itemId;
-    String path;
+    public Long itemId;
+    public String path;
 }

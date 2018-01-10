@@ -1,4 +1,4 @@
-package entrance.domain
+package entrance.domain.file
 
 import java.nio.file.Path
 import java.nio.file.Paths

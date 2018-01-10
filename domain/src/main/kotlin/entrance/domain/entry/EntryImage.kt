@@ -1,10 +1,13 @@
 package entrance.domain.entry
 
+import entrance.domain.file.LocalFile
+
 /**
  * エントリディレクトリに存在するエントリ対象の画像ファイル.
  */
 class EntryImage (
-    val name: EntryImageName
+    file: LocalFile
 ) {
-    
+    val path = file.path
+    val extension = file.extension
 }

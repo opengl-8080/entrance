@@ -2,13 +2,13 @@ package entrance.domain
 
 class ImageItem (
     itemId: ItemId,
-    uncategorized: Boolean,
+    notCategorized: Boolean,
     registeredDateTime: RegisteredDateTime,
     relationalTags: RelationalTags,
     val file: ImageFile
 ): Item(
     id = itemId,
-    uncategorized = uncategorized,
+    notCategorized = notCategorized,
     registeredDateTime = registeredDateTime,
     relationalTags = relationalTags
 ) {

@@ -17,9 +17,9 @@ import java.time.LocalDateTime;
 public class ItemTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    @Column(name = "IS_UNCATEGORIZED")
-    boolean uncategorized;
+    public Long id;
+    @Column(name = "IS_NOT_CATEGORIZED")
+    public boolean notCategorized;
     @Column(name = "REGISTERED_DATETIME")
-    LocalDateTime registeredDateTime;
+    public LocalDateTime registeredDateTime;
 }
