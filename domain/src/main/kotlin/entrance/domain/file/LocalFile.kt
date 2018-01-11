@@ -7,5 +7,7 @@ class LocalFile (
     val path: Path
 ) {
     
-    val extension = path.apply { fileName.toString().substringAfterLast(".") }
+    val extension: String = path.fileName.toString().substringAfterLast(".")
+    
+    fun isImage() = listOf("jpg", "jpeg", "png", "gif", "bmp").any { it.equals(extension, ignoreCase = true) }
 }

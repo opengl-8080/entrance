@@ -3,7 +3,7 @@ package entrance.infrastructure.entry
 import entrance.domain.config.EntranceHome
 import entrance.domain.entry.EntryImage
 import entrance.domain.entry.LibraryDirectory
-import entrance.domain.entry.SavedImage
+import entrance.domain.entry.EnteredImage
 import entrance.domain.file.RelativePath
 import org.springframework.stereotype.Component
 import java.nio.file.Files
@@ -18,23 +18,26 @@ class LocalLibraryDirectory(
     entranceHome: EntranceHome
 ): LibraryDirectory {
 
-    private val dir = entranceHome.path().resolve("library").toAbsolutePath().also(::createDirectoriesIfNotExists)
+    private val dir = entranceHome.initDir(RelativePath("library"))
     
-    private val yearMonthFormatter = DateTimeFormatter.ofPattern("uuuuMM")
+    private val yearFormatter = DateTimeFormatter.ofPattern("uuuu")
+    private val monthFormatter = DateTimeFormatter.ofPattern("MM")
     private val dateFormatter = DateTimeFormatter.ofPattern("dd")
     
-    override fun move(entryImage: EntryImage): SavedImage {
+    override fun move(entryImage: EntryImage): EnteredImage {
         val today = LocalDate.now()
-        val yearMonthDir = dir.resolve(today.format(yearMonthFormatter)).also(::createDirectoriesIfNotExists)
-        val dateDir = yearMonthDir.resolve(today.format(dateFormatter)).also(::createDirectoriesIfNotExists)
+        val yearDir = dir.resolveDir(RelativePath(today.format(yearFormatter)))
+        val monthDir = yearDir.resolveDir(RelativePath(today.format(monthFormatter)))
+        val dateDir = monthDir.resolveDir(RelativePath(today.format(dateFormatter)))
+        dateDir.createIfNotExists()
 
         val fileName = UUID.randomUUID().toString() + "." + entryImage.extension
-        val toPath = dateDir.resolve(fileName)
+        val outputFile = dateDir.resolveFile(RelativePath(fileName))
         
-        Files.move(entryImage.path, toPath, StandardCopyOption.ATOMIC_MOVE)
+        Files.move(entryImage.path, outputFile.path, StandardCopyOption.ATOMIC_MOVE)
 
-        val relativePath = RelativePath(dir.relativize(toPath))
-        return SavedImage(relativePath)
+        val relativePath = dir.relativize(outputFile)
+        return EnteredImage(relativePath)
     }
     
     private fun createDirectoriesIfNotExists(dir: Path) {

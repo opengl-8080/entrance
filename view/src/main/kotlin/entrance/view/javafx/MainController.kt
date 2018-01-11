@@ -12,6 +12,6 @@ class MainController(
 ) : Initializable {
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        println(entranceHome.path())
+        println(entranceHome)
     }
 }

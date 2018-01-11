@@ -5,7 +5,7 @@ import java.nio.file.Paths
 
 
 data class RelativePath (
-    private val path: Path
+    internal val path: Path
 ) {
     init {
         if (path.isAbsolute) {

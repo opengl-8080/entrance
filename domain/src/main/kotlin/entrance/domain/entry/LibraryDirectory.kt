@@ -3,5 +3,5 @@ package entrance.domain.entry
 
 interface LibraryDirectory {
     
-    fun move(entryImage: EntryImage): SavedImage
+    fun move(entryImage: EntryImage): EnteredImage
 }
