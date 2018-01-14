@@ -10,4 +10,8 @@ class EntryImage (
 ) {
     val path = file.path
     val extension = file.extension
+    
+    override fun toString(): String {
+        return "EntryImage(path=$path, extension='$extension')"
+    }
 }

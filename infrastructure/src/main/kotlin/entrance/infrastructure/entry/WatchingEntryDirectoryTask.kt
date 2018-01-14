@@ -15,8 +15,7 @@ class WatchingEntryDirectoryTask (
         thread(isDaemon = true, name = "WatchingEntryDirectoryThread") {
             val watcher = DirectoryWatcher(entryDirectory.path())
             watcher.watchFileCreatedEvent { 
-                println("created!!")
-                entryDirectory.getAllEntryImages().forEachImages { entryImage -> 
+                entryDirectory.getAllEntryImages().forEachImages { entryImage ->
                     saveEnteredItemService.save(entryImage)
                 }
             }

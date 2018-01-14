@@ -6,8 +6,6 @@ import java.nio.file.StandardWatchEventKinds
 
 /**
  * ディレクトリの監視機能を簡潔に提供するクラス.
- * 
- * 
  */
 class DirectoryWatcher (
     private val dir: Path
@@ -15,20 +13,15 @@ class DirectoryWatcher (
     
     fun watchFileCreatedEvent(listener: () -> Unit) {
         val watcher = FileSystems.getDefault().newWatchService()
-        dir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE)
-        println("watching dir=$dir")
+        dir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY)
         
         do {
-            val key = try {
-                watcher.take()
-            } catch (e: InterruptedException) {
-                return
-            }
-
-            val created = key.pollEvents().any {it.kind() == StandardWatchEventKinds.ENTRY_CREATE}
-            println("created=$created")
-            if (created) {
-                listener()
+            val key = watcher.take()
+            
+            key.pollEvents().forEach { event ->
+                if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
+                    listener()
+                }
             }
         } while (key.reset())
         
