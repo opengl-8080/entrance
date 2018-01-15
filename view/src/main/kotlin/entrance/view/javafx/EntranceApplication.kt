@@ -3,18 +3,22 @@ package entrance.view.javafx
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.stage.Stage
-import org.springframework.context.ApplicationContext
+import org.springframework.context.ConfigurableApplicationContext
 
 class EntranceApplication: Application() {
     
     companion object {
-        var context: ApplicationContext? = null
+        var context: ConfigurableApplicationContext? = null
     }
     
     override fun start(primaryStage: Stage) {
-        val loader = context!!.getBean(EntranceFXMLLoader::class.java)
-        val root = loader.load("main.fxml")
-        val scene = Scene(root)
+        val context = context!!
+        
+        context.beanFactory.registerSingleton("primaryStage", primaryStage)
+        
+        val loader = context.getBean(EntranceFXMLLoader::class.java)
+        val fxmlContext = loader.load<Any>("main.fxml")
+        val scene = Scene(fxmlContext.root)
         primaryStage.scene = scene
         primaryStage.show()
     }
