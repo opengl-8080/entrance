@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox prefHeight="300.0" prefWidth="400.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.TagMaintenanceController">
+<VBox prefHeight="300.0" prefWidth="400.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.TagMaintenanceController">
    <children>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="追加" />
-      <HBox spacing="10.0">
-         <children>
-            <TextField promptText="検索" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#add" text="追加" />
+      <TextField promptText="検索" />
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <content>
             <ListView prefHeight="200.0" prefWidth="200.0" />
          </content>
       </ScrollPane>
    </children>
+   <styleClass>
+      <String fx:value="panel" />
+      <String fx:value="liner-box" />
+   </styleClass>
 </VBox>

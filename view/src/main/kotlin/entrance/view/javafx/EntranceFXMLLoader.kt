@@ -8,21 +8,27 @@ import javafx.stage.Stage
 import javafx.util.Callback
 import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
-import java.io.IOException
-import java.io.InputStream
-import java.io.UncheckedIOException
-import java.nio.file.Paths
 
 @Component
 class EntranceFXMLLoader(private val context: ApplicationContext) {
     
-    fun <T> showAsModal(path: String): FxmlContext<T> {
+    fun <T> showAsModal(path: String, owner: Stage? = null): FxmlContext<T> {
         val fxmlContext = load<T>(path)
 
         val scene = Scene(fxmlContext.root)
         val stage = Stage()
+
+        val controller = fxmlContext.controller
+        if (controller is InjectOwnStage) {
+            controller.ownStage = stage
+        }
+        
         stage.scene = scene
-        stage.initOwner(context.getBean("primaryStage", Stage::class.java))
+        if (owner == null) {
+            stage.initOwner(context.getBean("primaryStage", Stage::class.java))
+        } else {
+            stage.initOwner(owner)
+        }
         stage.initModality(Modality.WINDOW_MODAL)
         stage.showAndWait()
         
@@ -30,26 +36,12 @@ class EntranceFXMLLoader(private val context: ApplicationContext) {
     }
 
     fun <T> load(path: String): FxmlContext<T> {
-        val loader = FXMLLoader()
+        val fxmlUrl = EntranceFXMLLoader::class.java.getResource("/fxml/$path")
+        val loader = FXMLLoader(fxmlUrl)
         loader.controllerFactory = Callback<Class<*>, Any> { this.context.getBean(it) }
-        var inputStream: InputStream? = null
-        
-        try {
-            val fxmlUrl = EntranceFXMLLoader::class.java.getResource("/fxml/$path")
-            val fxmlPath = Paths.get(fxmlUrl.toURI())
-            val location = fxmlPath.parent
-            loader.location = location.toUri().toURL()
 
-            inputStream = fxmlUrl.openStream()
-            val root: Parent = loader.load<Parent>(inputStream)
-            val controller = loader.getController<T>()
-            return FxmlContext(root = root, controller = controller)
-        } catch (e: IOException) {
-            throw UncheckedIOException(e)
-        } finally {
-            if (inputStream != null) {
-                inputStream.close()
-            }
-        }
+        val root: Parent = loader.load<Parent>()
+        val controller = loader.getController<T>()
+        return FxmlContext(root = root, controller = controller)
     }
 }

@@ -1,0 +1,19 @@
+* {
+    -fx-font-family: Meiryo UI;
+}
+
+.button {
+    -fx-font-size: 15px;
+}
+
+.text-field {
+    -fx-font-size: 15px;
+}
+
+.panel {
+    -fx-padding: 10px;
+}
+
+.liner-box {
+    -fx-spacing: 5px;
+}
