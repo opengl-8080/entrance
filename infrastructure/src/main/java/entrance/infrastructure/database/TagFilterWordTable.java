@@ -11,12 +11,12 @@ import org.seasar.doma.jdbc.entity.NamingType;
 
 @ToString
 @Entity(naming = NamingType.LENIENT_SNAKE_UPPER_CASE)
-@Table(name = "TAG_KANA")
-public class TagKanaTable {
+@Table(name = "TAG_FILTER_WORD")
+public class TagFilterWordTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column(name = "TAG_ID")
     Long tagId;
-    String kana;
+    String word;
 }

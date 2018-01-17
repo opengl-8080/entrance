@@ -1,4 +1,4 @@
-package entrance.view.javafx
+package entrance.view.javafx.tag
 
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component

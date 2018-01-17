@@ -7,9 +7,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="300.0" prefWidth="400.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.TagMaintenanceController">
+<VBox prefHeight="300.0" prefWidth="400.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.tag.TagMaintenanceController">
    <children>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#add" text="追加" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#add" text="新規登録" />
       <TextField promptText="検索" />
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <content>

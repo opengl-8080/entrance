@@ -10,7 +10,6 @@ import java.util.*
 class MainController(
     private val fxmlLoader: EntranceFXMLLoader
 ) : Initializable {
-    
     override fun initialize(location: URL?, resources: ResourceBundle?) {
     }
     

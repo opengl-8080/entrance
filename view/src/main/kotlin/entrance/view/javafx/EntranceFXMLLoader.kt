@@ -22,6 +22,9 @@ class EntranceFXMLLoader(private val context: ApplicationContext) {
         if (controller is InjectOwnStage) {
             controller.ownStage = stage
         }
+        if (controller is StageTitle) {
+            stage.title = controller.title
+        }
         
         stage.scene = scene
         if (owner == null) {

@@ -5,7 +5,7 @@ import org.seasar.doma.boot.ConfigAutowireable;
 
 @Dao
 @ConfigAutowireable
-public interface TagKanaTableDao {
+public interface TagFilterWordTableDao {
     
     
 }

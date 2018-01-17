@@ -19,6 +19,7 @@ class EntranceApplication: Application() {
         val loader = context.getBean(EntranceFXMLLoader::class.java)
         val fxmlContext = loader.load<Any>("main.fxml")
         val scene = Scene(fxmlContext.root)
+        primaryStage.title = "Entrance"
         primaryStage.scene = scene
         primaryStage.show()
     }
