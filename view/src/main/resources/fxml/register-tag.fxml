@@ -13,7 +13,7 @@
       <Label maxWidth="1.7976931348623157E308" text="タグ名" />
       <TextField fx:id="tagNameTextField" promptText="タグ名" />
       <Label text="読み仮名" />
-      <TextArea fx:id="kanaTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="改行区切りで複数指定可" VBox.vgrow="ALWAYS">
+      <TextArea fx:id="filterWordTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="改行区切りで複数指定可" VBox.vgrow="ALWAYS">
          <VBox.margin>
             <Insets />
          </VBox.margin>

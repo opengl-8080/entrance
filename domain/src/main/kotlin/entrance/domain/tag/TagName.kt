@@ -3,7 +3,7 @@ package entrance.domain.tag
 import entrance.domain.InvalidValueException
 
 data class TagName(
-    private val value: String
+    val value: String
 ) {
     init {
         if (value.isEmpty()) {

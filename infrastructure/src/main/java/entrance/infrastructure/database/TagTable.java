@@ -1,6 +1,7 @@
 package entrance.infrastructure.database;
 
 import lombok.ToString;
+import org.seasar.doma.Column;
 import org.seasar.doma.Entity;
 import org.seasar.doma.GeneratedValue;
 import org.seasar.doma.GenerationType;
@@ -13,6 +14,8 @@ import org.seasar.doma.Table;
 public class TagTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
+    public Long id;
+    public String name;
+    @Column(name = "FILTER_WORD")
+    public String filterWord;
 }
