@@ -15,6 +15,6 @@ class MainController(
     
     @FXML
     fun openTagMaintenance() {
-        fxmlLoader.showAsModal<Any>("tag-maintenance.fxml")
+        fxmlLoader.showAsModal<Any>("tag/tag-maintenance.fxml")
     }
 }

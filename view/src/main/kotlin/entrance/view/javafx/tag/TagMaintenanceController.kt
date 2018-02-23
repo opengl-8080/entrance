@@ -30,7 +30,7 @@ class TagMaintenanceController (
     
     @FXML
     fun add() {
-        fxmlLoader.showAsModal<RegisterTagController>("register-tag.fxml", owner = ownStage)
+        fxmlLoader.showAsModal<RegisterTagController>("tag/register-tag.fxml", owner = ownStage)
         loadTags()
     }
     
