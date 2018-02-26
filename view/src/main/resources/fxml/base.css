@@ -27,5 +27,5 @@
 }
 
 .error {
-    -fx-border-color: red;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,0,0,0.9), 5, 0, 0, 0);
 }
