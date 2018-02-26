@@ -25,3 +25,7 @@
 .text-area {
     -fx-font-size: 18px;
 }
+
+.error {
+    -fx-border-color: red;
+}
