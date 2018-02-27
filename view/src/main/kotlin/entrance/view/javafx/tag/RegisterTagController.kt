@@ -1,8 +1,11 @@
 package entrance.view.javafx.tag
 
 import entrance.application.tag.RegisterTagService
+import entrance.domain.error.ErrorCodeCollector
 import entrance.domain.tag.TagFilterWord
+import entrance.domain.tag.TagFilterWordError
 import entrance.domain.tag.TagName
+import entrance.domain.tag.TagNameError
 import entrance.view.javafx.EntranceFXMLLoader
 import entrance.view.javafx.InjectOwnStage
 import entrance.view.javafx.StageTitle
@@ -29,10 +32,33 @@ class RegisterTagController (
     
     @FXML
     fun register() {
-        val tagName = TagName(tagNameTextField.text)
-        val tagFilterWord = TagFilterWord(filterWordTextArea.text)
-        registerTagService.register(tagName, tagFilterWord)
+        tagNameTextField.styleClass.remove("error")
+        filterWordTextArea.styleClass.remove("error")
         
-        ownStage.close()
+        val errorCodeList = ErrorCodeCollector().collect(
+            { TagName.validate(tagNameTextField.text) },
+            { TagFilterWord.validate(filterWordTextArea.text) }
+        )
+        
+        if (errorCodeList.isEmpty()) {
+            val tagName = TagName(tagNameTextField.text)
+            val tagFilterWord = TagFilterWord(filterWordTextArea.text)
+            registerTagService.register(tagName, tagFilterWord)
+
+            ownStage.close()
+        } else {
+            errorCodeList.forEach { errorCode ->
+                when (errorCode) {
+                    is TagNameError -> {
+                        tagNameTextField.styleClass.add("error")
+                        println(errorCode.getMessage())
+                    }
+                    is TagFilterWordError -> {
+                        filterWordTextArea.styleClass.add("error")
+                        println(errorCode.getMessage())
+                    }
+                }
+            }
+        }
     }
 }
