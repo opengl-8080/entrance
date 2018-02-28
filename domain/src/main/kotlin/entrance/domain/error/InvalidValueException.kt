@@ -7,5 +7,5 @@ package entrance.domain.error
  * @param errorCode エラーコード
  */
 class InvalidValueException(
-    val errorCode: ErrorCode
-): Exception()
+    val errorMessage: ErrorMessage
+): Exception(errorMessage.message)

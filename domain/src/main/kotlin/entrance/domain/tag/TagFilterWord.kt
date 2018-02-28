@@ -1,31 +1,28 @@
 package entrance.domain.tag
 
-import entrance.domain.error.ErrorCode
+import entrance.domain.error.ErrorMessage
+import entrance.domain.error.ErrorType
 import entrance.domain.error.InvalidValueException
 
 data class TagFilterWord(
     val value: String
 ) {
     companion object {
-        fun validate(value: String) {
+        val ERROR: ErrorType = object: ErrorType {}
+        
+        fun validate(value: String): ErrorMessage? {
             if (value.isEmpty()) {
-                throw InvalidValueException(TagFilterWordError.REQUIRED)
+                return ErrorMessage(ERROR, "絞り込みワードは必須です")
             }
             if (200 < value.codePointCount(0, value.length)) {
-                throw InvalidValueException(TagFilterWordError.TOO_LONG)
+                return ErrorMessage(ERROR, "絞り込みワードは 200 文字以下で入力してください")
             }
+            
+            return null
         }
     }
     
     init {
-        validate(value)
+        validate(value)?.also { throw InvalidValueException(it) }
     }
-}
-
-enum class TagFilterWordError(private val errorMessage: String): ErrorCode {
-    REQUIRED("絞り込みワードは必須です"),
-    TOO_LONG("絞り込みワードは 200 文字以下で入力してください"),
-    ;
-
-    override fun getMessage(): String = this.errorMessage
 }
