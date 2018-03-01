@@ -1,12 +1,13 @@
 package entrance.view.javafx.tag
 
 import entrance.application.tag.RegisterTagService
-import entrance.domain.error.ErrorMessageCollector
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagName
+import entrance.domain.tag.TagName.Companion.validate
 import entrance.view.javafx.EntranceFXMLLoader
 import entrance.view.javafx.InjectOwnStage
 import entrance.view.javafx.StageTitle
+import entrance.view.javafx.error.Validations
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
@@ -35,29 +36,21 @@ class RegisterTagController (
     
     @FXML
     fun register() {
-        tagNameTextField.styleClass.remove("error")
-        tagNameErrorMessageLabel.text = ""
-        filterWordTextArea.styleClass.remove("error")
-        filterWordErrorMessageLabel.text = ""
+        val validations = Validations {
+            validation(
+                textField = tagNameTextField,
+                label = tagNameErrorMessageLabel,
+                validator = TagName.Companion::validate
+            )
 
-        val errorMessageCollector = ErrorMessageCollector()
-        errorMessageCollector.collect(TagName.validate(tagNameTextField.text))
-        errorMessageCollector.collect(TagFilterWord.validate(filterWordTextArea.text))
+            validation(
+                textArea = filterWordTextArea,
+                label = filterWordErrorMessageLabel,
+                validator = TagFilterWord.Companion::validate
+            )
+        }
         
-        if (errorMessageCollector.hasError()) {
-            errorMessageCollector.forEach {
-                when (it.type) {
-                    TagName.ERROR -> {
-                        tagNameTextField.styleClass.add("error")
-                        tagNameErrorMessageLabel.text = it.message
-                    }
-                    TagFilterWord.ERROR -> {
-                        filterWordTextArea.styleClass.add("error")
-                        filterWordErrorMessageLabel.text = it.message
-                    }
-                }
-            }
-        } else {
+        if (validations.validate()) {
             val tagName = TagName(tagNameTextField.text)
             val tagFilterWord = TagFilterWord(filterWordTextArea.text)
             registerTagService.register(tagName, tagFilterWord)

@@ -1,4 +1,8 @@
 package entrance.domain.error
 
 
-class ErrorMessage(val type: ErrorType, val message: String)
+class ErrorMessage(val message: String) {
+    fun throwAsInvalidValueException() {
+        throw InvalidValueException(this)
+    }
+}
