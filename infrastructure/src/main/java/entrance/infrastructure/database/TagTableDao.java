@@ -1,6 +1,7 @@
 package entrance.infrastructure.database;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.seasar.doma.Dao;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
@@ -18,6 +19,10 @@ public interface TagTableDao {
     
     @Select
     TagTable find(Long id);
+    
+    @Select
+    @Nullable
+    TagTable findByName(String name);
     
     @Insert
     int insert(TagTable tagTable);

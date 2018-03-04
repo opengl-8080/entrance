@@ -1,6 +1,7 @@
 package entrance.view.javafx.tag
 
 import entrance.application.tag.RegisterTagService
+import entrance.domain.error.InvalidValueException
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagName
 import entrance.domain.tag.TagName.Companion.validate
@@ -22,6 +23,7 @@ class RegisterTagController (
     private val fxmlLoader: EntranceFXMLLoader,
     private val registerTagService: RegisterTagService
 ): InjectOwnStage, StageTitle {
+
     override lateinit var ownStage: Stage
     override val title = "タグ新規登録"
     
@@ -51,11 +53,16 @@ class RegisterTagController (
         }
         
         if (validations.validate()) {
-            val tagName = TagName(tagNameTextField.text)
-            val tagFilterWord = TagFilterWord(filterWordTextArea.text)
-            registerTagService.register(tagName, tagFilterWord)
+            try {
+                val tagName = TagName(tagNameTextField.text)
+                val tagFilterWord = TagFilterWord(filterWordTextArea.text)
+                registerTagService.register(tagName, tagFilterWord)
 
-            ownStage.close()
+                ownStage.close()
+            } catch (e: InvalidValueException) {
+                tagNameErrorMessageLabel.text = e.message
+                tagNameTextField.styleClass += "error"
+            }
         }
     }
 }

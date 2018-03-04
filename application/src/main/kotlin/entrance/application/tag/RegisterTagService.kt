@@ -1,5 +1,7 @@
 package entrance.application.tag
 
+import entrance.domain.error.ErrorMessage
+import entrance.domain.error.InvalidValueException
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagName
@@ -12,7 +14,12 @@ class RegisterTagService (
 ) {
     
     fun register(tagName: TagName, tagFilterWord: TagFilterWord) {
-        val tag = Tag.new(tagName, tagFilterWord)
-        tagRepository.register(tag)
+        val alreadyExistsTag = tagRepository.find(tagName)
+        if (alreadyExistsTag == null) {
+            val tag = Tag.new(tagName, tagFilterWord)
+            tagRepository.register(tag)
+        } else {
+            throw InvalidValueException(ErrorMessage("${tagName.value} は既に存在します"))
+        }
     }
 }

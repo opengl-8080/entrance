@@ -9,7 +9,11 @@ import org.springframework.stereotype.Component
 class RdbTagRepository(
     private val tagTableDao: TagTableDao
 ): TagRepository {
-    
+    override fun find(name: TagName): Tag? {
+        val tagTable = tagTableDao.findByName(name.value)
+        return tagTable?.let (::rebuild)
+    }
+
     override fun findAll(): AllTags {
         val tagTables: MutableList<TagTable> = tagTableDao.findAll()
         val tags = tagTables.map(this::rebuild)
