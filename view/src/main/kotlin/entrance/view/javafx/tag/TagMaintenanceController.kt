@@ -4,13 +4,17 @@ import entrance.domain.tag.TagRepository
 import entrance.view.javafx.EntranceFXMLLoader
 import entrance.view.javafx.InjectOwnStage
 import entrance.view.javafx.StageTitle
+import javafx.collections.FXCollections
+import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
+import javafx.scene.control.TextField
 import javafx.stage.Stage
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*
+import java.util.function.Predicate
 
 @Component
 class TagMaintenanceController (
@@ -19,14 +23,24 @@ class TagMaintenanceController (
 ): InjectOwnStage, StageTitle, Initializable {
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        filteredTagListItems = tagListItems.filtered {true}
+        tagListView.items = filteredTagListItems
         loadTags()
+        filterTextFiled.textProperty().addListener {_, _, value ->
+            filteredTagListItems.predicate = Predicate { it.toUpperCase().contains(value.toUpperCase()) }
+        }
     }
 
     override lateinit var ownStage: Stage
     override val title = "タグメンテナンス"
     
     @FXML
+    lateinit var filterTextFiled: TextField
+    @FXML
     lateinit var tagListView: ListView<String>
+    
+    private val tagListItems = FXCollections.observableArrayList<String>()
+    lateinit var filteredTagListItems: FilteredList<String>
     
     @FXML
     fun add() {
@@ -35,10 +49,10 @@ class TagMaintenanceController (
     }
     
     private fun loadTags() {
-        tagListView.items.clear()
+        tagListItems.clear()
         
         tagRepository.findAll().tags.forEach { tag ->
-            tagListView.items.add(tag.name.value)
+            tagListItems.add(tag.name.value)
         }
     }
 }
