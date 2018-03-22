@@ -1,4 +1,4 @@
-package entrance.view.javafx
+package entrance.view.javafx.util
 
 import javafx.scene.Parent
 

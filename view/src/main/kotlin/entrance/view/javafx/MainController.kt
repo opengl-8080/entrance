@@ -1,20 +1,25 @@
 package entrance.view.javafx
 
+import entrance.view.javafx.tag.TagMaintenanceWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.stage.Stage
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*
 
 @Component
 class MainController(
-    private val fxmlLoader: EntranceFXMLLoader
+    private val tagMaintenanceWindow: TagMaintenanceWindow
 ) : Initializable {
+    
+    lateinit internal var primaryStage: Stage
+    
     override fun initialize(location: URL?, resources: ResourceBundle?) {
     }
     
     @FXML
     fun openTagMaintenance() {
-        fxmlLoader.showAsModal<Any>("tag/tag-maintenance.fxml")
+        tagMaintenanceWindow.open(primaryStage)
     }
 }

@@ -4,10 +4,6 @@ import entrance.application.tag.RegisterTagService
 import entrance.domain.error.InvalidValueException
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagName
-import entrance.domain.tag.TagName.Companion.validate
-import entrance.view.javafx.EntranceFXMLLoader
-import entrance.view.javafx.InjectOwnStage
-import entrance.view.javafx.StageTitle
 import entrance.view.javafx.error.Validations
 import javafx.fxml.FXML
 import javafx.scene.control.Label
@@ -20,12 +16,10 @@ import org.springframework.stereotype.Component
 @Component
 @Scope("prototype")
 class RegisterTagController (
-    private val fxmlLoader: EntranceFXMLLoader,
     private val registerTagService: RegisterTagService
-): InjectOwnStage, StageTitle {
+) {
 
-    override lateinit var ownStage: Stage
-    override val title = "タグ新規登録"
+    internal lateinit var stage: Stage
     
     @FXML
     lateinit var tagNameErrorMessageLabel: Label
@@ -58,7 +52,7 @@ class RegisterTagController (
                 val tagFilterWord = TagFilterWord(filterWordTextArea.text)
                 registerTagService.register(tagName, tagFilterWord)
 
-                ownStage.close()
+                stage.close()
             } catch (e: InvalidValueException) {
                 tagNameErrorMessageLabel.text = e.message
                 tagNameTextField.styleClass += "error"
