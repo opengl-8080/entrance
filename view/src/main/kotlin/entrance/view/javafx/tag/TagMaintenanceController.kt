@@ -1,5 +1,6 @@
 package entrance.view.javafx.tag
 
+import entrance.domain.tag.TagName
 import entrance.domain.tag.TagRepository
 import javafx.collections.FXCollections
 import javafx.collections.transformation.FilteredList
@@ -7,6 +8,8 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
+import javafx.scene.input.ContextMenuEvent
+import javafx.scene.input.MouseEvent
 import javafx.stage.Stage
 import org.springframework.stereotype.Component
 import java.net.URL
@@ -16,6 +19,7 @@ import java.util.function.Predicate
 @Component
 class TagMaintenanceController (
     private val registerTagWindow: RegisterTagWindow,
+    private val modifyTagWindow: ModifyTagWindow,
     private val tagRepository: TagRepository
 ): Initializable {
     
@@ -42,6 +46,20 @@ class TagMaintenanceController (
     fun add() {
         registerTagWindow.open(stage)
         loadTags()
+    }
+    
+    @FXML
+    fun modify() {
+        val selectedTagName = tagListView.selectionModel.selectedItem
+        if (selectedTagName != null) {
+            modifyTagWindow.open(stage, TagName(selectedTagName))
+            loadTags()
+        }
+    }
+    
+    @FXML
+    fun remove() {
+        
     }
     
     private fun loadTags() {

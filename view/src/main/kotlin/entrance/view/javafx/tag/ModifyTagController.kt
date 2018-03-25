@@ -1,9 +1,13 @@
 package entrance.view.javafx.tag
 
-import entrance.application.tag.RegisterTagService
+import entrance.application.tag.ModifyTagService
+import entrance.domain.error.InvalidValueException
+import entrance.domain.tag.Tag
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagName
 import entrance.view.javafx.error.Validations
+import entrance.view.javafx.util.Dialog
+import entrance.view.javafx.util.extractRootCause
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
@@ -14,12 +18,12 @@ import org.springframework.stereotype.Component
 
 @Component
 @Scope("prototype")
-class RegisterTagController (
-    private val registerTagService: RegisterTagService
+class ModifyTagController (
+    private val modifyTagService: ModifyTagService
 ) {
-
-    internal lateinit var stage: Stage
     
+    internal lateinit var stage: Stage
+
     @FXML
     lateinit var tagNameErrorMessageLabel: Label
     @FXML
@@ -29,8 +33,16 @@ class RegisterTagController (
     @FXML
     lateinit var filterWordTextArea: TextArea
     
+    private lateinit var tag: Tag
+    
+    fun setTag(tag: Tag) {
+        tagNameTextField.text = tag.name.value
+        filterWordTextArea.text = tag.filterWord.value
+        this.tag = tag
+    }
+    
     @FXML
-    fun register() {
+    fun modify() {
         val validations = Validations {
             validation(
                 textField = tagNameTextField,
@@ -48,7 +60,7 @@ class RegisterTagController (
         if (validations.validate()) {
             val tagName = TagName(tagNameTextField.text)
             val tagFilterWord = TagFilterWord(filterWordTextArea.text)
-            registerTagService.register(tagName, tagFilterWord)
+            modifyTagService.modify(tag, tagName, tagFilterWord)
 
             stage.close()
         }
