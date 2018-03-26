@@ -8,5 +8,5 @@ package entrance.domain.error
  */
 class InvalidValueException(
     private val errorMessage: ErrorMessage,
-    override var message: String = errorMessage.message
+    override val message: String = errorMessage.message
 ): Exception(message)
