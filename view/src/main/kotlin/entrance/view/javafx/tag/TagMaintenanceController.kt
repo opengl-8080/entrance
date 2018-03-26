@@ -1,16 +1,16 @@
 package entrance.view.javafx.tag
 
-import entrance.domain.tag.TagName
+import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import javafx.collections.FXCollections
 import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.control.ListCell
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
-import javafx.scene.input.ContextMenuEvent
-import javafx.scene.input.MouseEvent
 import javafx.stage.Stage
+import javafx.util.Callback
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*
@@ -28,17 +28,32 @@ class TagMaintenanceController (
     @FXML
     lateinit var filterTextFiled: TextField
     @FXML
-    lateinit var tagListView: ListView<String>
+    lateinit var tagListView: ListView<Tag>
     
-    private val tagListItems = FXCollections.observableArrayList<String>()
-    lateinit var filteredTagListItems: FilteredList<String>
+    private val tagListItems = FXCollections.observableArrayList<Tag>()
+    lateinit var filteredTagListItems: FilteredList<Tag>
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         filteredTagListItems = tagListItems.filtered {true}
         tagListView.items = filteredTagListItems
+        tagListView.cellFactory = Callback { _ -> 
+            object: ListCell<Tag>() {
+                override fun updateItem(tag: Tag?, empty: Boolean) {
+                    super.updateItem(tag, empty)
+                    
+                    if (empty || tag == null) {
+                        text = null
+                        graphic = null
+                    } else {
+                        text = tag.name.value
+                    }
+                }
+            }
+        }
+        
         loadTags()
-        filterTextFiled.textProperty().addListener {_, _, value ->
-            filteredTagListItems.predicate = Predicate { it.toUpperCase().contains(value.toUpperCase()) }
+        filterTextFiled.textProperty().addListener {_, _, inputText ->
+            filteredTagListItems.predicate = Predicate { it.matches(inputText) }
         }
     }
 
@@ -50,9 +65,9 @@ class TagMaintenanceController (
     
     @FXML
     fun modify() {
-        val selectedTagName = tagListView.selectionModel.selectedItem
-        if (selectedTagName != null) {
-            modifyTagWindow.open(stage, TagName(selectedTagName))
+        val selectedTag = tagListView.selectionModel.selectedItem
+        if (selectedTag != null) {
+            modifyTagWindow.open(stage, selectedTag.name)
             loadTags()
         }
     }
@@ -66,7 +81,7 @@ class TagMaintenanceController (
         tagListItems.clear()
         
         tagRepository.findAll().tags.forEach { tag ->
-            tagListItems.add(tag.name.value)
+            tagListItems.add(tag)
         }
     }
 }
