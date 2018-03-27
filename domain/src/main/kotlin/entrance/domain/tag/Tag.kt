@@ -1,5 +1,14 @@
 package entrance.domain.tag
 
+/**
+ * 変更不可の参照のタグオブジェクト.
+ * 
+ * このオブジェクトは不変で、参照のためだけに使用する場合に使用することを意図しています.
+ * 
+ * @param id タグのID
+ * @param name タグの名前
+ * @param filterWord タグの絞り込みキーワード
+ */
 class Tag (
     val id: TagId,
     val name: TagName,

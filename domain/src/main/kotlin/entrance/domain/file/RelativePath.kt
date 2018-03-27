@@ -3,7 +3,12 @@ package entrance.domain.file
 import java.nio.file.Path
 import java.nio.file.Paths
 
-
+/**
+ * 相対パスを表すクラス.
+ * 
+ * @param path 対象のパス
+ * @throws IllegalArgumentException 指定したパスが相対パスでない場合
+ */
 data class RelativePath (
     internal val path: Path
 ) {
@@ -12,7 +17,12 @@ data class RelativePath (
             throw IllegalArgumentException("パスが相対パスではありません > $path")
         }
     }
-    
+
+    /**
+     * 文字列表現のパスでインスタンスを生成する.
+     * 
+     * @param stringPath 文字列のパス
+     */
     constructor(stringPath: String): this(Paths.get(stringPath))
 
     /**
