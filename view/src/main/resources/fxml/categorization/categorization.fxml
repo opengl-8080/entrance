@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane dividerPositions="0.6" prefHeight="500.0" prefWidth="800.0" stylesheets="@categorization.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.categorization.CategorizationController">
+   <items>
+      <SplitPane dividerPositions="0.7" orientation="VERTICAL">
+        <items>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <FlowPane prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </ScrollPane>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <FlowPane prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </ScrollPane>
+        </items>
+      </SplitPane>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+         <content>
+            <VBox spacing="10.0">
+               <children>
+                  <TextField />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </items>
+</SplitPane>

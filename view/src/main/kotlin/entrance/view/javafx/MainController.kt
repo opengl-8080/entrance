@@ -1,5 +1,6 @@
 package entrance.view.javafx
 
+import entrance.view.javafx.categorization.CategorizationWindow
 import entrance.view.javafx.tag.TagMaintenanceWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -10,7 +11,8 @@ import java.util.*
 
 @Component
 class MainController(
-    private val tagMaintenanceWindow: TagMaintenanceWindow
+    private val tagMaintenanceWindow: TagMaintenanceWindow,
+    private val categorizationWindow: CategorizationWindow
 ) : Initializable {
     
     lateinit internal var primaryStage: Stage
@@ -21,5 +23,10 @@ class MainController(
     @FXML
     fun openTagMaintenance() {
         tagMaintenanceWindow.open(primaryStage)
+    }
+    
+    @FXML
+    fun openCategorizationWindow() {
+        categorizationWindow.open(primaryStage)
     }
 }
