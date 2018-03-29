@@ -1,5 +1,8 @@
 package entrance.domain.entry
 
+import entrance.domain.file.LocalFile
+import entrance.domain.file.RelativePath
+
 /**
  * 取り込まれたファイルを保管するディレクトリ.
  */
@@ -12,4 +15,9 @@ interface LibraryDirectory {
      * @return 保存された画像ファイル
      */
     fun move(entryImage: EntryImage): EnteredImage
+
+    /**
+     * ホームからの相対パスでファイルを解決する.
+     */
+    fun resolveFile(relativePath: RelativePath): LocalFile
 }

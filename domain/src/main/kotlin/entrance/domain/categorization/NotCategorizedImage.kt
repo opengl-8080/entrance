@@ -1,15 +1,15 @@
 package entrance.domain.categorization
 
 import entrance.domain.RegisteredDateTime
-import entrance.domain.file.RelativePath
+import entrance.domain.file.LocalFile
 
 /**
  * 未分類画像
  */
 class NotCategorizedImage (
-    private val path: RelativePath,
+    file: LocalFile,
     val registeredDateTime: RegisteredDateTime
 ) {
 
-    fun stringPath() = this.path.stringPath()
+    val uriString: String = file.uriString
 }

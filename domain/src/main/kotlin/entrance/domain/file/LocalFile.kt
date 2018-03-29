@@ -12,6 +12,11 @@ class LocalFile (
 ) {
 
     /**
+     * このファイルのパスの URI 文字列
+     */
+    val uriString = path.toUri().toString()
+    
+    /**
      * このファイルの拡張子.
      */
     val extension: String = path.fileName.toString().substringAfterLast(".")

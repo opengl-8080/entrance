@@ -5,12 +5,17 @@ import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.boot.ConfigAutowireable;
 
+import java.util.List;
+
 @Dao
 @ConfigAutowireable
 public interface ImageTableDao {
     
     @Select
     ImageTable find(long itemId);
+    
+    @Select
+    List<ImageItemView> findNotCategorizedImages();
     
     @Insert
     int insert(ImageTable imageTable);

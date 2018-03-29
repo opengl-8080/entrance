@@ -4,6 +4,8 @@ import entrance.domain.config.EntranceHome
 import entrance.domain.entry.EnteredImage
 import entrance.domain.entry.EntryImage
 import entrance.domain.entry.LibraryDirectory
+import entrance.domain.file.Directory
+import entrance.domain.file.LocalFile
 import entrance.domain.file.RelativePath
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -21,11 +23,15 @@ class LocalLibraryDirectory(
 ): LibraryDirectory {
     private val logger = LoggerFactory.getLogger(LocalLibraryDirectory::class.java)
 
-    private val dir = entranceHome.initDir(RelativePath("library"))
+    private val dir: Directory = entranceHome.initDir(RelativePath("library"))
     
     private val yearFormatter = DateTimeFormatter.ofPattern("uuuu")
     private val monthFormatter = DateTimeFormatter.ofPattern("MM")
     private val dateFormatter = DateTimeFormatter.ofPattern("dd")
+
+    override fun resolveFile(relativePath: RelativePath): LocalFile {
+        return dir.resolveFile(relativePath)
+    }
     
     override fun move(entryImage: EntryImage): EnteredImage {
         val today = LocalDate.now()

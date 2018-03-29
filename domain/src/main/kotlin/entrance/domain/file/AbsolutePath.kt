@@ -1,5 +1,6 @@
 package entrance.domain.file
 
+import java.net.URI
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -17,6 +18,11 @@ data class AbsolutePath (
             throw IllegalArgumentException("指定されたパスは絶対パスではありません > $path")
         }
     }
+
+    /**
+     * この絶対パスの URI を取得する.
+     */
+    val uri: URI = path.toUri()
 
     /**
      * 文字列形式のパスでインスタンスを生成する.

@@ -1,6 +1,7 @@
 package entrance.domain.config
 
 import entrance.domain.file.Directory
+import entrance.domain.file.LocalFile
 import entrance.domain.file.RelativePath
 
 abstract class EntranceHomeBase: EntranceHome {
@@ -11,6 +12,10 @@ abstract class EntranceHomeBase: EntranceHome {
         val resolveDir = home.resolveDir(relativePath)
         resolveDir.createIfNotExists()
         return resolveDir
+    }
+
+    override fun resolveFile(relativePath: RelativePath): LocalFile {
+        return home.resolveFile(relativePath)
     }
 
     override fun toString(): String {

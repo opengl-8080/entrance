@@ -10,9 +10,9 @@
    <items>
       <SplitPane dividerPositions="0.7" orientation="VERTICAL">
         <items>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+            <ScrollPane fitToHeight="true" fitToWidth="true">
                <content>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" />
+                  <FlowPane fx:id="notCategorizedImagesPane" hgap="10.0" vgap="10.0" />
                </content>
             </ScrollPane>
             <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
