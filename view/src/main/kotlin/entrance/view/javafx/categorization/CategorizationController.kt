@@ -1,10 +1,10 @@
 package entrance.view.javafx.categorization
 
 import entrance.domain.categorization.NotCategorizedImageRepository
+import entrance.view.javafx.control.SelectableImageView
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.image.Image
-import javafx.scene.image.ImageView
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
 import org.springframework.context.annotation.Scope
@@ -25,8 +25,8 @@ class CategorizationController (
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         val notCategorizedImages = notCategorizedImageRepository.loadAll()
         
-        notCategorizedImages.map { 
-            ImageView(Image(it.uriString)).apply { 
+        notCategorizedImages.map {
+            SelectableImageView(Image(it.uriString)).apply { 
                 fitWidth = 100.0
                 isPreserveRatio = true
                 isSmooth = true
