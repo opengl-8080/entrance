@@ -37,11 +37,3 @@
     -fx-max-width: 99999;
     -fx-max-height: 99999;
 }
-
-.thumbnail-list {
-    -fx-padding: 10px;
-}
-
-.thumbnail-list__thumbnail-selected {
-    -fx-effect: dropshadow(gaussian, orangered, 20, 0.3, 0, 0);
-}

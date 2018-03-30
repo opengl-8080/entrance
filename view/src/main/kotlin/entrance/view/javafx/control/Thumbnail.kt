@@ -4,10 +4,15 @@ import javafx.event.EventHandler
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 
-class SelectableImageView(image: Image): ImageView(image) {
-    private val selectedCssClass = "thumbnail-list__thumbnail-selected"
+class Thumbnail(image: Image): ImageView(image) {
+    private val selectedCssClass = "thumbnail--selected"
     private var selected = false
+    
     init {
+        fitWidth = 100.0
+        isPreserveRatio = true
+        isSmooth = true
+        
         onMouseClicked = EventHandler { 
             if (selected) {
                 styleClass.remove(selectedCssClass)

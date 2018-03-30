@@ -1,7 +1,7 @@
 package entrance.view.javafx.categorization
 
 import entrance.domain.categorization.NotCategorizedImageRepository
-import entrance.view.javafx.control.SelectableImageView
+import entrance.view.javafx.control.Thumbnail
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.image.Image
@@ -23,16 +23,10 @@ class CategorizationController (
     lateinit var notCategorizedImagesPane: FlowPane
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        val notCategorizedImages = notCategorizedImageRepository.loadAll()
-        
-        notCategorizedImages.map {
-            SelectableImageView(Image(it.uriString)).apply { 
-                fitWidth = 100.0
-                isPreserveRatio = true
-                isSmooth = true
+        notCategorizedImageRepository
+            .loadAll()
+            .forEach {
+                notCategorizedImagesPane.children.add(Thumbnail(Image(it.uriString)))
             }
-        }.forEach { imageView ->
-            notCategorizedImagesPane.children.add(imageView)
-        }
     }
 }
