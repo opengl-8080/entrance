@@ -2,6 +2,7 @@ package entrance.view.javafx.tag
 
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
+import entrance.view.javafx.control.TagListCellFactory
 import javafx.collections.FXCollections
 import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
@@ -36,20 +37,7 @@ class TagMaintenanceController (
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         filteredTagListItems = tagListItems.filtered {true}
         tagListView.items = filteredTagListItems
-        tagListView.cellFactory = Callback { _ -> 
-            object: ListCell<Tag>() {
-                override fun updateItem(tag: Tag?, empty: Boolean) {
-                    super.updateItem(tag, empty)
-                    
-                    if (empty || tag == null) {
-                        text = null
-                        graphic = null
-                    } else {
-                        text = tag.name.value
-                    }
-                }
-            }
-        }
+        tagListView.cellFactory = TagListCellFactory()
         
         loadTags()
         filterTextFiled.textProperty().addListener {_, _, inputText ->

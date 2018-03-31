@@ -1,11 +1,17 @@
 package entrance.view.javafx.categorization
 
 import entrance.domain.categorization.NotCategorizedImageRepository
+import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
+import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.control.TagView
 import entrance.view.javafx.control.ThumbnailView
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
+import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.control.ListView
 import javafx.scene.control.TextField
 import javafx.scene.image.Image
 import javafx.scene.layout.FlowPane
@@ -29,9 +35,11 @@ class CategorizationController (
     lateinit var tagsFlowPane: FlowPane
     @FXML
     lateinit var tagFilterTextField: TextField
-    
+    @FXML
+    lateinit var selectedTagListView: ListView<String>
     lateinit var tagViewList: List<TagView>
-
+    private val selectedTagList = FXCollections.observableArrayList<String>()
+    
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         notCategorizedImageRepository
             .loadAll()
@@ -41,6 +49,17 @@ class CategorizationController (
             }
         
         tagViewList = tagRepository.findAll().tags.map { TagView(it) }
+        tagViewList.forEach { tagView ->
+            tagView.selectedProperty().addListener { _, _, selected ->
+                if (selected) {
+                    selectedTagList.add(tagView.tag.name.value)
+                } else {
+                    selectedTagList.remove(tagView.tag.name.value)
+                }
+            }
+        }
+        selectedTagListView.items = selectedTagList
+        
         tagsFlowPane.children.addAll(tagViewList)
 
         tagFilterTextField.textProperty().addListener { _, _, text ->

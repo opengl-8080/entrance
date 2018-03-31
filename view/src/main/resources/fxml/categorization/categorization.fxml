@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
@@ -18,11 +19,20 @@
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
                   <TextField fx:id="tagFilterTextField" />
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <content>
-                        <FlowPane fx:id="tagsFlowPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
-                     </content>
-                  </ScrollPane>
+                  <SplitPane dividerPositions="0.3" VBox.vgrow="ALWAYS">
+                     <items>
+                        <ScrollPane fitToHeight="true" fitToWidth="true">
+                           <content>
+                              <ListView fx:id="selectedTagListView" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <content>
+                              <FlowPane fx:id="tagsFlowPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
+                           </content>
+                        </ScrollPane>
+                     </items>
+                  </SplitPane>
                </children>
             </VBox>
         </items>
