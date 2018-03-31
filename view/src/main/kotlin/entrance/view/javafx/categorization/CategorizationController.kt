@@ -12,7 +12,9 @@ import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
+import javafx.scene.control.RadioButton
 import javafx.scene.control.TextField
+import javafx.scene.control.ToggleGroup
 import javafx.scene.image.Image
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
@@ -31,14 +33,11 @@ class CategorizationController (
     
     @FXML
     lateinit var notCategorizedImagesPane: FlowPane
-    @FXML
-    lateinit var tagsFlowPane: FlowPane
+    
     @FXML
     lateinit var tagFilterTextField: TextField
     @FXML
-    lateinit var selectedTagListView: ListView<String>
-    lateinit var tagViewList: List<TagView>
-    private val selectedTagList = FXCollections.observableArrayList<String>()
+    lateinit var tagsFlowPane: FlowPane
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         notCategorizedImageRepository
@@ -47,29 +46,26 @@ class CategorizationController (
                 val thumbnailView = ThumbnailView(Image(it.uriString))
                 notCategorizedImagesPane.children += thumbnailView
             }
+
+        val radioTagMap = mutableMapOf<String, Tag>()
+
+        val toggleGroup = ToggleGroup()
         
-        tagViewList = tagRepository.findAll().tags.map { TagView(it) }
-        tagViewList.forEach { tagView ->
-            tagView.selectedProperty().addListener { _, _, selected ->
-                if (selected) {
-                    selectedTagList.add(tagView.tag.name.value)
-                } else {
-                    selectedTagList.remove(tagView.tag.name.value)
-                }
+        val tagRadioButtons = tagRepository.findAll().tags.map { tag ->
+            radioTagMap.put(tag.name.value, tag)
+            RadioButton(tag.name.value).apply { 
+                this.managedProperty().bind(this.visibleProperty())
+                this.toggleGroup = toggleGroup
             }
         }
-        selectedTagListView.items = selectedTagList
-        
-        tagsFlowPane.children.addAll(tagViewList)
 
+        tagRadioButtons.forEach { tagsFlowPane.children.add(it) }
+        
         tagFilterTextField.textProperty().addListener { _, _, text ->
-            tagsFlowPane.children.clear()
-            
-            tagViewList.forEach { tagView ->
-                if (tagView.tag.matches(text)) {
-                    tagsFlowPane.children += tagView
+            tagRadioButtons
+                .forEach { radio ->
+                    radio.isVisible = radioTagMap[radio.text]?.matches(text) ?: false
                 }
-            }
         }
     }
 }
