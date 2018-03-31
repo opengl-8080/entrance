@@ -1,0 +1,18 @@
+.tag {
+    -fx-font-size: 12pt;
+    -fx-background-color: #9EE;
+    -fx-padding: 0px 10px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: skyblue;
+}
+
+.tag:hover {
+    -fx-background-color: #5FF;
+}
+
+.tag--selected {
+    -fx-background-color: #30FFFF;
+    -fx-effect: innershadow(gaussian, #388, 10, 0.3, 0, 0);
+    -fx-font-weight: bold;
+}

@@ -6,30 +6,31 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.6" prefHeight="500.0" prefWidth="800.0" stylesheets="@../base.css, @../thumbnail.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.categorization.CategorizationController">
+<SplitPane dividerPositions="0.6" prefHeight="500.0" prefWidth="800.0" stylesheets="@../base.css, @../thumbnail.css, @../tag.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.categorization.CategorizationController">
    <items>
       <SplitPane dividerPositions="0.7" orientation="VERTICAL">
         <items>
             <ScrollPane fitToHeight="true" fitToWidth="true">
                <content>
-                  <FlowPane fx:id="notCategorizedImagesPane" hgap="10.0" vgap="10.0" styleClass="panel" />
+                  <FlowPane fx:id="notCategorizedImagesPane" hgap="10.0" styleClass="panel" vgap="10.0" />
                </content>
             </ScrollPane>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
-               <content>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" />
-               </content>
-            </ScrollPane>
-        </items>
-      </SplitPane>
-      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
-         <content>
-            <VBox spacing="10.0">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
-                  <TextField />
+                  <TextField fx:id="tagFilterTextField" />
+                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <content>
+                        <FlowPane fx:id="tagsFlowPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
+                     </content>
+                  </ScrollPane>
                </children>
             </VBox>
-         </content>
-      </ScrollPane>
+        </items>
+      </SplitPane>
+      <VBox spacing="10.0">
+         <children>
+            <TextField />
+         </children>
+      </VBox>
    </items>
 </SplitPane>

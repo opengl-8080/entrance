@@ -4,7 +4,7 @@ import javafx.event.EventHandler
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 
-class Thumbnail(image: Image): ImageView(image) {
+class ThumbnailView(image: Image): ImageView(image) {
     private val selectedCssClass = "thumbnail--selected"
     private var selected = false
     
