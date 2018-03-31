@@ -1,12 +1,16 @@
 package entrance.view.javafx.control
 
+import entrance.domain.categorization.NotCategorizedImage
 import javafx.event.EventHandler
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 
-class ThumbnailView(image: Image): ImageView(image) {
+class ThumbnailView(
+    val notCategorizedImage: NotCategorizedImage
+): ImageView(Image(notCategorizedImage.uriString)) {
     private val selectedCssClass = "thumbnail--selected"
-    private var selected = false
+    var selected = false
+        private set
     
     init {
         fitWidth = 100.0
