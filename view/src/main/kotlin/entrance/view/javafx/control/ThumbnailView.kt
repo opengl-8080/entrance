@@ -4,6 +4,7 @@ import entrance.domain.ImageFile
 import javafx.event.EventHandler
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.input.MouseButton
 
 class ThumbnailView<out T: ImageFile>(
     val imageFile: T
@@ -14,17 +15,24 @@ class ThumbnailView<out T: ImageFile>(
     
     init {
         fitWidth = 100.0
+        fitHeight = 100.0
         isPreserveRatio = true
         isSmooth = true
         
-        onMouseClicked = EventHandler { 
-            if (selected) {
-                styleClass.remove(selectedCssClass)
-            } else {
-                styleClass.add(selectedCssClass)
+        onMouseClicked = EventHandler { e ->
+            if (e.button == MouseButton.PRIMARY) {
+                switchSelect()
             }
-            
-            selected = !selected
         }
+    }
+    
+    fun switchSelect() {
+        if (selected) {
+            styleClass.remove(selectedCssClass)
+        } else {
+            styleClass.add(selectedCssClass)
+        }
+
+        selected = !selected
     }
 }

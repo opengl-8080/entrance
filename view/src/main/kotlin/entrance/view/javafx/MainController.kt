@@ -1,5 +1,6 @@
 package entrance.view.javafx
 
+import entrance.domain.image.Image
 import entrance.domain.image.ImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
@@ -8,11 +9,15 @@ import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.control.TagView
 import entrance.view.javafx.control.ThumbnailView
 import entrance.view.javafx.tag.TagMaintenanceWindow
+import entrance.view.javafx.viewer.SingleImageViewerWindow
 import javafx.collections.FXCollections
+import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
+import javafx.scene.control.MenuItem
 import javafx.scene.control.TextField
+import javafx.scene.input.MouseButton
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
 import org.springframework.stereotype.Component
@@ -24,7 +29,8 @@ class MainController(
     private val tagMaintenanceWindow: TagMaintenanceWindow,
     private val categorizationWindow: CategorizationWindow,
     private val tagRepository: TagRepository,
-    private val imageRepository: ImageRepository
+    private val imageRepository: ImageRepository,
+    private val singleImageViewerWindow: SingleImageViewerWindow
 ) : Initializable {
     
     lateinit internal var primaryStage: Stage
@@ -37,7 +43,11 @@ class MainController(
     lateinit var selectedTagsListView: ListView<Tag>
     @FXML
     lateinit var thumbnailsFlowPane: FlowPane
-    
+    @FXML
+    lateinit var openImageMenuItem: MenuItem
+
+    private val imageList = mutableListOf<Image>()
+    private var selectedThumbnailView: ThumbnailView<Image>? = null
     private val selectedTagList = FXCollections.observableArrayList<Tag>()
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -75,9 +85,33 @@ class MainController(
     
     @FXML
     fun search() {
-        val imageList = imageRepository.find(selectedTagList)
-
+        imageList.clear()
+        imageList.addAll(imageRepository.find(selectedTagList))
+        
         thumbnailsFlowPane.children.clear()
-        imageList.map { ThumbnailView(it) }.forEach { thumbnailsFlowPane.children += it }
+        imageList.map { ThumbnailView(it) }
+                .forEach { thumbnailView ->
+                    thumbnailView.onMouseClicked = EventHandler { e -> 
+                        if (e.button != MouseButton.PRIMARY) {
+                            return@EventHandler
+                        }
+
+                        selectedThumbnailView?.switchSelect()
+                        thumbnailView.switchSelect()
+                        
+                        if (thumbnailView.selected) {
+                            selectedThumbnailView = thumbnailView
+                        }
+                    }
+                    
+                    thumbnailsFlowPane.children += thumbnailView
+                }
+    }
+    
+    @FXML
+    fun openImage() {
+        selectedThumbnailView?.apply { 
+            singleImageViewerWindow.open(imageFile, imageList)
+        }
     }
 }
