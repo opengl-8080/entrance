@@ -1,5 +1,6 @@
 package entrance.infrastructure.categorization
 
+import entrance.domain.ItemId
 import entrance.domain.RegisteredDateTime
 import entrance.domain.categorization.NotCategorizedImage
 import entrance.domain.categorization.NotCategorizedImageRepository
@@ -19,7 +20,7 @@ class RdbNotCategorizedImageRepository (
         return notCategorizedImages.map {
             val relativePath = RelativePath(it.path)
             val localFile = libraryDirectory.resolveFile(relativePath)
-            NotCategorizedImage(localFile, RegisteredDateTime(it.registeredDateTime))
+            NotCategorizedImage(localFile, ItemId(it.id))
         }
     }
 }

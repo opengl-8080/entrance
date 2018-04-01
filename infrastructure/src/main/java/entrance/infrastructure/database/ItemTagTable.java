@@ -12,9 +12,9 @@ import org.seasar.doma.jdbc.entity.NamingType;
 @ToString
 public class ItemTagTable {
     @Id
-    Long itemId;
+    public Long itemId;
     @Id
-    Long tagId;
+    public Long tagId;
     @Column(name = "IS_MAIN")
-    boolean main;
+    public boolean main;
 }

@@ -1,5 +1,6 @@
 package entrance.view.javafx.categorization
 
+import entrance.application.categorization.CategorizeImageService
 import entrance.domain.categorization.NotCategorizedImage
 import entrance.domain.categorization.NotCategorizedImageRepository
 import entrance.domain.tag.Tag
@@ -27,7 +28,8 @@ import java.util.*
 class CategorizationController (
     private val notCategorizedImageRepository: NotCategorizedImageRepository,
     private val tagRepository: TagRepository,
-    private val fxmlLoader: EntranceFXMLLoader
+    private val fxmlLoader: EntranceFXMLLoader,
+    private val categorizeImageService: CategorizeImageService
 ): Initializable {
     internal lateinit var stage: Stage
     
@@ -79,6 +81,14 @@ class CategorizationController (
         val selectedThumbnailViewList = assignedImagesViewModel.takeSelectedImageList()
         notCategorizedImagesViewModel.addAll(selectedThumbnailViewList)
     }
+    
+    @FXML
+    fun save() {
+        if (Dialog.confirm("分類内容を保存しますか？")) {
+            val allAssignedImages = assignedImagesViewModel.takeAll()
+            categorizeImageService.categorize(allAssignedImages)
+        }
+    }
 }
 
 class MainTagSelectionViewModel(
@@ -116,8 +126,8 @@ class MainTagSelectionViewModel(
 }
 
 class AssignedImagesViewModel(
-    private val assignedImages: Pane,
-    private val fxmlLoader: EntranceFXMLLoader
+        private val pane: Pane,
+        private val fxmlLoader: EntranceFXMLLoader
 ) {
     private val assignedTagControllerMap = mutableMapOf<Tag, AssignedImageController>()
     
@@ -128,7 +138,7 @@ class AssignedImagesViewModel(
             val context = fxmlLoader.load<AssignedImageController>("categorization/assigned-image.fxml")
             context.controller.init(selectedTag, selectedNotCategorizedImageList)
             assignedTagControllerMap[selectedTag] = context.controller
-            assignedImages.children += context.root
+            pane.children += context.root
         }
     }
     
@@ -138,11 +148,25 @@ class AssignedImagesViewModel(
         val empties = assignedTagControllerMap.entries.filter { it.value.isEmpty }
 
         empties.forEach { entry ->
-            assignedImages.children -= entry.value.root
+            pane.children -= entry.value.root
             assignedTagControllerMap.remove(entry.key)
         }
         
         return selectedThumbnailViewList
+    }
+    
+    fun takeAll(): Map<Tag, List<NotCategorizedImage>> {
+        val map = assignedTagControllerMap.mapValues { entry ->
+            entry.value.allImages
+        }
+
+        assignedTagControllerMap.values.forEach { controller ->
+            pane.children -= controller.root
+        }
+
+        assignedTagControllerMap.clear()
+        
+        return map
     }
 }
 

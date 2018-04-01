@@ -22,6 +22,8 @@ class AssignedImageController {
     
     val isEmpty: Boolean
         get() = thumbnailViewList.isEmpty()
+    val allImages: List<NotCategorizedImage>
+        get() = thumbnailViewList.map { it.notCategorizedImage }
     
     private val thumbnailViewList = mutableListOf<ThumbnailView>()
     

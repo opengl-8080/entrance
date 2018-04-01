@@ -11,6 +11,18 @@ import java.io.StringWriter
 class Dialog {
     
     companion object {
+        fun confirm(message: String): Boolean {
+            val alert = Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK, ButtonType.CANCEL)
+            alert.headerText = null
+            alert.title = "確認"
+
+            val stage = alert.dialogPane.scene.window as Stage
+            stage.isAlwaysOnTop = true
+
+            val buttonType = alert.showAndWait()
+            return buttonType.map { it == ButtonType.OK }.orElse(false)
+        }
+        
         fun warn(message: String) {
             Platform.runLater {
                 val alert = Alert(Alert.AlertType.WARNING, message, ButtonType.OK)

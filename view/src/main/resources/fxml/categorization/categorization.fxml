@@ -35,17 +35,22 @@
             </VBox>
         </items>
       </SplitPane>
-      <ScrollPane fitToHeight="true" fitToWidth="true">
-         <content>
-            <VBox fx:id="assignedImages" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
-         </content>
-         <contextMenu>
-            <ContextMenu>
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#unassign" text="割り当て解除" />
-              </items>
-            </ContextMenu>
-         </contextMenu>
-      </ScrollPane>
+      <VBox>
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="assignedImages" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
+               </content>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#unassign" text="割り当て解除" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </ScrollPane>
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" text="保存" />
+         </children>
+      </VBox>
    </items>
 </SplitPane>
