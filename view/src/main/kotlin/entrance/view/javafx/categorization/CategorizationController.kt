@@ -173,7 +173,7 @@ class AssignedImagesViewModel(
 class NotCategorizedImagesViewModel (
     private val pane: Pane
 ) {
-    private val thumbnails = mutableListOf<ThumbnailView>()
+    private val thumbnails = mutableListOf<ThumbnailView<NotCategorizedImage>>()
     
     val isNotSelected: Boolean
         get() = thumbnails.all { !it.selected }
@@ -193,6 +193,6 @@ class NotCategorizedImagesViewModel (
             thumbnails.remove(thumbnail)
         }
         
-        return selectedThumbnails.map { it.notCategorizedImage }
+        return selectedThumbnails.map { it.imageFile }
     }
 }

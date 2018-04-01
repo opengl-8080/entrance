@@ -23,9 +23,9 @@ class AssignedImageController {
     val isEmpty: Boolean
         get() = thumbnailViewList.isEmpty()
     val allImages: List<NotCategorizedImage>
-        get() = thumbnailViewList.map { it.notCategorizedImage }
+        get() = thumbnailViewList.map { it.imageFile }
     
-    private val thumbnailViewList = mutableListOf<ThumbnailView>()
+    private val thumbnailViewList = mutableListOf<ThumbnailView<NotCategorizedImage>>()
     
     fun init(tag: Tag, notCategorizedImageList: List<NotCategorizedImage>) {
         tagNameLabel.text = tag.name.value
@@ -47,6 +47,6 @@ class AssignedImageController {
         thumbnailViewList.removeAll(selected)
         imagesPane.children.removeAll(selected)
         
-        return selected.map { it.notCategorizedImage }
+        return selected.map { it.imageFile }
     }
 }

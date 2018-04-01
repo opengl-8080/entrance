@@ -17,6 +17,9 @@ public interface ImageTableDao {
     @Select
     List<ImageItemView> findNotCategorizedImages();
     
+    @Select
+    List<ImageItemView> findCategorizedImagesByTagIdList(List<Long> tagIdList);
+    
     @Insert
     int insert(ImageTable imageTable);
 }

@@ -5,6 +5,7 @@
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
     -fx-border-color: skyblue;
+    -fx-cursor: hand;
 }
 
 .tag:hover {

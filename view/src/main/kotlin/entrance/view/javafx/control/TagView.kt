@@ -5,6 +5,8 @@ import javafx.scene.control.ToggleButton
 
 class TagView(val tag: Tag): ToggleButton(tag.name.value) {
     init {
+        managedProperty().bind(visibleProperty())
+        
         styleClass.add("tag")
         
         selectedProperty().addListener {_,_, selected ->
@@ -14,5 +16,9 @@ class TagView(val tag: Tag): ToggleButton(tag.name.value) {
                 styleClass -= "tag--selected"
             }
         }
+    }
+    
+    fun controlVisibility(text: String) {
+        isVisible = tag.matches(text)
     }
 }
