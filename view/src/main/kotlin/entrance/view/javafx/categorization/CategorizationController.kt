@@ -14,6 +14,7 @@ import javafx.scene.control.RadioButton
 import javafx.scene.control.TextField
 import javafx.scene.control.ToggleGroup
 import javafx.scene.layout.FlowPane
+import javafx.scene.layout.Pane
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import org.springframework.context.annotation.Scope
@@ -33,64 +34,94 @@ class CategorizationController (
     @FXML
     lateinit var notCategorizedImagesPane: FlowPane
     @FXML
-    lateinit var tagFilterTextField: TextField
+    lateinit var mainTagFilterTextField: TextField
     @FXML
-    lateinit var tagsFlowPane: FlowPane
+    lateinit var mainTagFlowPane: FlowPane
     @FXML
     lateinit var assignedImages: VBox
     @FXML
     lateinit var assignButton: Button
     
-    private val thumbnailViewList = mutableListOf<ThumbnailView>()
-    
-    val tagToggleGroup = ToggleGroup()
+    lateinit var mainTagSelectionViewModel: MainTagSelectionViewModel
+    lateinit var notCategorizedImagesViewModel: NotCategorizedImagesViewModel
+    lateinit var assignedImagesViewModel: AssignedImagesViewModel
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        val notCategorizedImageList = notCategorizedImageRepository.loadAll()
-
-        addNotCategorizedImageList(notCategorizedImageList)
+        mainTagSelectionViewModel = MainTagSelectionViewModel(mainTagFlowPane, mainTagFilterTextField, tagRepository)
         
+        notCategorizedImagesViewModel = NotCategorizedImagesViewModel(notCategorizedImagesPane)
+        notCategorizedImagesViewModel.addAll(notCategorizedImageRepository.loadAll())
+
+        assignedImagesViewModel = AssignedImagesViewModel(assignedImages, fxmlLoader)
+    }
+    
+    @FXML
+    fun assign() {
+        if (mainTagSelectionViewModel.isNotSelected) {
+            Dialog.warn("タグが選択されていません")
+            return
+        }
+        
+        if (notCategorizedImagesViewModel.isNotSelected) {
+            Dialog.warn("画像が選択されていません")
+            return
+        }
+        
+        val selectedNotCategorizedImageList = notCategorizedImagesViewModel.takeSelectedImages()
+
+        assignedImagesViewModel.addAll(mainTagSelectionViewModel.selectedTag, selectedNotCategorizedImageList)
+
+        mainTagSelectionViewModel.deselect()
+    }
+    
+    @FXML
+    fun unassign() {
+        val selectedThumbnailViewList = assignedImagesViewModel.takeSelectedImageList()
+        notCategorizedImagesViewModel.addAll(selectedThumbnailViewList)
+    }
+}
+
+class MainTagSelectionViewModel(
+    private val pane: Pane,
+    tagFilterTextField: TextField,
+    tagRepository: TagRepository
+) {
+    private val tagToggleGroup = ToggleGroup()
+    val selectedTag: Tag
+        get() = (tagToggleGroup.selectedToggle as RadioButton).userData as Tag
+    val isNotSelected: Boolean
+        get() = tagToggleGroup.selectedToggle as RadioButton? == null
+    
+    init {
         val tagRadioButtons = tagRepository.findAll().tags.map { tag ->
-            RadioButton(tag.name.value).apply { 
+            RadioButton(tag.name.value).apply {
                 this.managedProperty().bind(this.visibleProperty())
                 this.toggleGroup = tagToggleGroup
                 this.userData = tag
             }
         }
 
-        tagRadioButtons.forEach { tagsFlowPane.children.add(it) }
+        tagRadioButtons.forEach { pane.children.add(it) }
         
         tagFilterTextField.textProperty().addListener { _, _, text ->
             tagRadioButtons
-                .forEach { radio ->
-                    val tag = radio.userData as Tag
-                    radio.isVisible = tag.matches(text)
-                }
+                    .forEach { radio ->
+                        val tag = radio.userData as Tag
+                        radio.isVisible = tag.matches(text)
+                    }
         }
     }
     
+    fun deselect() = tagToggleGroup.selectToggle(null)
+}
+
+class AssignedImagesViewModel(
+    private val assignedImages: Pane,
+    private val fxmlLoader: EntranceFXMLLoader
+) {
     private val assignedTagControllerMap = mutableMapOf<Tag, AssignedImageController>()
     
-    @FXML
-    fun assign() {
-        val selectedRadioButton = tagToggleGroup.selectedToggle as RadioButton?
-        if (selectedRadioButton == null) {
-            Dialog.warn("タグが選択されていません")
-            return
-        }
-        
-        val selectedTag = selectedRadioButton.userData as Tag
-
-        val selectedThumbnailList = thumbnailViewList.filter { it.selected }
-        if (selectedThumbnailList.isEmpty()) {
-            Dialog.warn("画像が選択されていません")
-            return
-        }
-
-        removeNotCategorizedThumbnailViewList(selectedThumbnailList)
-        
-        val selectedNotCategorizedImageList = selectedThumbnailList.map { it.notCategorizedImage }
-        
+    fun addAll(selectedTag: Tag, selectedNotCategorizedImageList: List<NotCategorizedImage>) {
         if (selectedTag in assignedTagControllerMap) {
             assignedTagControllerMap[selectedTag]!!.addImage(selectedNotCategorizedImageList)
         } else {
@@ -99,37 +130,45 @@ class CategorizationController (
             assignedTagControllerMap[selectedTag] = context.controller
             assignedImages.children += context.root
         }
-        
-        tagToggleGroup.selectToggle(null)
     }
     
-    @FXML
-    fun unassign() {
+    fun takeSelectedImageList(): List<NotCategorizedImage> {
         val selectedThumbnailViewList = assignedTagControllerMap.values.flatMap { it.takeSelectedImageList() }
 
-        addNotCategorizedImageList(selectedThumbnailViewList)
+        val empties = assignedTagControllerMap.entries.filter { it.value.isEmpty }
 
-        val empties = assignedTagControllerMap.entries.filter { it.value.isEmpty() }
-        
         empties.forEach { entry ->
             assignedImages.children -= entry.value.root
             assignedTagControllerMap.remove(entry.key)
         }
+        
+        return selectedThumbnailViewList
     }
+}
+
+class NotCategorizedImagesViewModel (
+    private val pane: Pane
+) {
+    private val thumbnails = mutableListOf<ThumbnailView>()
     
-    private fun addNotCategorizedImageList(notCategorizedImageList: List<NotCategorizedImage>) {
-        notCategorizedImageList
-                .map { ThumbnailView(it) }
-                .forEach {
-                    notCategorizedImagesPane.children += it
-                    thumbnailViewList += it
-                }
-    }
+    val isNotSelected: Boolean
+        get() = thumbnails.all { !it.selected }
     
-    private fun removeNotCategorizedThumbnailViewList(notCategorizedImageList: List<ThumbnailView>) {
-        notCategorizedImageList.forEach {
-            notCategorizedImagesPane.children -= it
-            thumbnailViewList -= it
+    fun addAll(list: List<NotCategorizedImage>) {
+        list.map { ThumbnailView(it) }.forEach {
+            pane.children += it
+            thumbnails += it
         }
+    }
+    
+    fun takeSelectedImages(): List<NotCategorizedImage> {
+        val selectedThumbnails = thumbnails.filter { it.selected }
+
+        selectedThumbnails.forEach { thumbnail ->
+            pane.children -= thumbnail
+            thumbnails.remove(thumbnail)
+        }
+        
+        return selectedThumbnails.map { it.notCategorizedImage }
     }
 }

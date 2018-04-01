@@ -20,6 +20,9 @@ class AssignedImageController {
     @FXML
     lateinit var imagesPane: FlowPane
     
+    val isEmpty: Boolean
+        get() = thumbnailViewList.isEmpty()
+    
     private val thumbnailViewList = mutableListOf<ThumbnailView>()
     
     fun init(tag: Tag, notCategorizedImageList: List<NotCategorizedImage>) {
@@ -44,6 +47,4 @@ class AssignedImageController {
         
         return selected.map { it.notCategorizedImage }
     }
-    
-    fun isEmpty() = thumbnailViewList.isEmpty()
 }

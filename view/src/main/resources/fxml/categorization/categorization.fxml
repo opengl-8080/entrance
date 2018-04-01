@@ -25,10 +25,10 @@
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
-                  <TextField fx:id="tagFilterTextField" />
+                  <TextField fx:id="mainTagFilterTextField" />
                   <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                      <content>
-                        <FlowPane fx:id="tagsFlowPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
+                        <FlowPane fx:id="mainTagFlowPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
                      </content>
                   </ScrollPane>
                </children>
