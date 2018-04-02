@@ -95,11 +95,13 @@ class MainController(
                         if (e.button != MouseButton.PRIMARY) {
                             return@EventHandler
                         }
-
-                        selectedThumbnailView?.switchSelect()
-                        thumbnailView.switchSelect()
                         
-                        if (thumbnailView.selected) {
+                        if (selectedThumbnailView == thumbnailView) {
+                            thumbnailView.deselect()
+                            selectedThumbnailView = null
+                        } else {
+                            selectedThumbnailView?.deselect()
+                            thumbnailView.select()
                             selectedThumbnailView = thumbnailView
                         }
                     }

@@ -28,11 +28,27 @@ class ThumbnailView<out T: ImageFile>(
     
     fun switchSelect() {
         if (selected) {
-            styleClass.remove(selectedCssClass)
+            select()
         } else {
-            styleClass.add(selectedCssClass)
+            deselect()
+        }
+    }
+    
+    fun select() {
+        if (selected) {
+            return
         }
 
-        selected = !selected
+        styleClass.add(selectedCssClass)
+        selected = true
+    }
+    
+    fun deselect() {
+        if (!selected) {
+            return
+        }
+
+        styleClass.remove(selectedCssClass)
+        selected = false
     }
 }
