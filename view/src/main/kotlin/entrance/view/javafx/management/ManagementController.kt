@@ -1,42 +1,30 @@
-package entrance.view.javafx
+package entrance.view.javafx.management
 
 import entrance.domain.image.Image
 import entrance.domain.image.ImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
-import entrance.view.javafx.categorization.CategorizationWindow
 import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.control.TagView
 import entrance.view.javafx.control.ThumbnailView
-import entrance.view.javafx.management.ManagementWindow
-import entrance.view.javafx.tag.TagMaintenanceWindow
-import entrance.view.javafx.viewer.SingleImageViewerWindow
 import javafx.collections.FXCollections
-import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
-import javafx.scene.control.MenuItem
 import javafx.scene.control.TextField
-import javafx.scene.input.MouseButton
 import javafx.scene.layout.FlowPane
-import javafx.stage.Stage
+import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*
 
 @Component
-class MainController(
-    private val tagMaintenanceWindow: TagMaintenanceWindow,
-    private val categorizationWindow: CategorizationWindow,
+@Scope("prototype")
+class ManagementController(
     private val tagRepository: TagRepository,
-    private val imageRepository: ImageRepository,
-    private val singleImageViewerWindow: SingleImageViewerWindow,
-    private val managementWindow: ManagementWindow
-) : Initializable {
-    
-    lateinit internal var primaryStage: Stage
-    
+    private val imageRepository: ImageRepository
+): Initializable {
+
     @FXML
     lateinit var tagFilterTextField: TextField
     @FXML
@@ -45,18 +33,15 @@ class MainController(
     lateinit var selectedTagsListView: ListView<Tag>
     @FXML
     lateinit var thumbnailsFlowPane: FlowPane
-    @FXML
-    lateinit var openImageMenuItem: MenuItem
 
     private val imageList = mutableListOf<Image>()
-    private var selectedThumbnailView: ThumbnailView<Image>? = null
     private val selectedTagList = FXCollections.observableArrayList<Tag>()
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         selectedTagsListView.cellFactory = TagListCellFactory()
-        
+
         selectedTagsListView.items = selectedTagList
-        
+
         tagRepository.findAll().tags.forEach { tag ->
             val tagView = TagView(tag)
             tagsFlowPane.children += tagView
@@ -76,51 +61,14 @@ class MainController(
     }
     
     @FXML
-    fun openTagMaintenance() {
-        tagMaintenanceWindow.open(primaryStage)
-    }
-    
-    @FXML
-    fun openCategorizationWindow() {
-        categorizationWindow.open(primaryStage)
-    }
-    
-    @FXML
     fun search() {
         imageList.clear()
         imageList.addAll(imageRepository.find(selectedTagList))
-        
+
         thumbnailsFlowPane.children.clear()
         imageList.map { ThumbnailView(it) }
                 .forEach { thumbnailView ->
-                    thumbnailView.onMouseClicked = EventHandler { e -> 
-                        if (e.button != MouseButton.PRIMARY) {
-                            return@EventHandler
-                        }
-                        
-                        if (selectedThumbnailView == thumbnailView) {
-                            thumbnailView.deselect()
-                            selectedThumbnailView = null
-                        } else {
-                            selectedThumbnailView?.deselect()
-                            thumbnailView.select()
-                            selectedThumbnailView = thumbnailView
-                        }
-                    }
-                    
                     thumbnailsFlowPane.children += thumbnailView
                 }
-    }
-    
-    @FXML
-    fun openImage() {
-        selectedThumbnailView?.apply { 
-            singleImageViewerWindow.open(imageFile, imageList)
-        }
-    }
-    
-    @FXML
-    fun openManagement() {
-        managementWindow.open(primaryStage)
     }
 }
