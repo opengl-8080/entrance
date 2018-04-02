@@ -26,11 +26,11 @@ class ThumbnailView<out T: ImageFile>(
         }
     }
     
-    fun switchSelect() {
+    private fun switchSelect() {
         if (selected) {
-            select()
-        } else {
             deselect()
+        } else {
+            select()
         }
     }
     
