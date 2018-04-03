@@ -1,7 +1,7 @@
 package entrance.view.javafx.management
 
-import entrance.domain.image.Image
-import entrance.domain.image.ImageRepository
+import entrance.domain.management.ManagedImage
+import entrance.domain.management.ManagedImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.view.javafx.control.TagListCellFactory
@@ -13,6 +13,7 @@ import javafx.fxml.Initializable
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
 import javafx.scene.layout.FlowPane
+import javafx.stage.Stage
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import java.net.URL
@@ -22,9 +23,12 @@ import java.util.*
 @Scope("prototype")
 class ManagementController(
     private val tagRepository: TagRepository,
-    private val imageRepository: ImageRepository
+    private val managedImageRepository: ManagedImageRepository,
+    private val managementImageTagWindow: ManagementImageTagWindow
 ): Initializable {
 
+    lateinit var ownStage: Stage
+    
     @FXML
     lateinit var tagFilterTextField: TextField
     @FXML
@@ -34,7 +38,6 @@ class ManagementController(
     @FXML
     lateinit var thumbnailsFlowPane: FlowPane
 
-    private val imageList = mutableListOf<Image>()
     private val selectedTagList = FXCollections.observableArrayList<Tag>()
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -60,15 +63,24 @@ class ManagementController(
         }
     }
     
+    private val thumbnailViewList = mutableListOf<ThumbnailView<ManagedImage>>()
+    
     @FXML
     fun search() {
-        imageList.clear()
-        imageList.addAll(imageRepository.find(selectedTagList))
+        thumbnailViewList.clear()
+        val imageList = managedImageRepository.find(selectedTagList)
 
         thumbnailsFlowPane.children.clear()
         imageList.map { ThumbnailView(it) }
                 .forEach { thumbnailView ->
+                    thumbnailViewList += thumbnailView
                     thumbnailsFlowPane.children += thumbnailView
                 }
+    }
+    
+    @FXML
+    fun openManagementImageTagWindow() {
+        val selectedImageList = thumbnailViewList.filter { it.selected }.map { it.imageFile }
+        managementImageTagWindow.open(ownStage, selectedImageList)
     }
 }

@@ -1,0 +1,5 @@
+    SELECT TAG.*
+      FROM TAG
+INNER JOIN ITEM_TAG
+        ON ITEM_TAG.TAG_ID = TAG.ID
+     WHERE ITEM_TAG.ITEM_ID = /* itemId */1

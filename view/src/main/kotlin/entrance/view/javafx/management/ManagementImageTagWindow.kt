@@ -1,5 +1,6 @@
 package entrance.view.javafx.management
 
+import entrance.domain.management.ManagedImage
 import entrance.view.javafx.util.EntranceFXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Modality
@@ -7,21 +8,19 @@ import javafx.stage.Stage
 import org.springframework.stereotype.Component
 
 @Component
-class ManagementWindow(
+class ManagementImageTagWindow (
     private val fxmlLoader: EntranceFXMLLoader
 ) {
     
-    fun open(owner: Stage) {
-        val context = fxmlLoader.load<ManagementController>("management/management.fxml")
-
+    fun open(owner: Stage, imageList: List<ManagedImage>) {
+        val context = fxmlLoader.load<ManagementImageTagController>("management/management-image-tag.fxml")
+        context.controller.imageList = imageList
+        
         val stage = Stage()
         stage.initOwner(owner)
         stage.initModality(Modality.WINDOW_MODAL)
-        stage.title = "管理"
-        context.controller.ownStage = stage
-        
-        val scene = Scene(context.root)
-        stage.scene = scene
+        stage.title = "タグ管理"
+        stage.scene = Scene(context.root)
         
         stage.showAndWait()
     }

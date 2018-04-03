@@ -22,6 +22,9 @@ public interface TagTableDao {
     TagTable find(Long id);
     
     @Select
+    List<TagTable> findByItemId(Long itemId);
+    
+    @Select
     @Nullable
     TagTable findByName(String name);
 
