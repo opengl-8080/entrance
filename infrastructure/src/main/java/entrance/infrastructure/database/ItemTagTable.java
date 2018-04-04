@@ -15,6 +15,4 @@ public class ItemTagTable {
     public Long itemId;
     @Id
     public Long tagId;
-    @Column(name = "IS_MAIN")
-    public boolean main;
 }

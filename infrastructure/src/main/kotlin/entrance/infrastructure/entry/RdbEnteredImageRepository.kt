@@ -16,7 +16,6 @@ class RdbEnteredImageRepository (
     
     override fun save(enteredImage: EnteredImage) {
         val itemTable = ItemTable()
-        itemTable.notCategorized = enteredImage.notCategorized
         itemTable.registeredDateTime = enteredImage.registeredDateTime
         itemTableDao.insert(itemTable)
 

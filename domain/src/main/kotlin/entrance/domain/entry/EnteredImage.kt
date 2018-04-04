@@ -17,16 +17,11 @@ class EnteredImage(
     val stringPath = path.stringPath()
 
     /**
-     * この画像が分類済みかどうか.
-     */
-    val notCategorized = true
-
-    /**
      * エントリが完了した日時.
      */
     val registeredDateTime = RegisteredDateTime.now().value
 
     override fun toString(): String {
-        return "EnteredImage(stringPath='$stringPath', notCategorized=$notCategorized, registeredDateTime=$registeredDateTime)"
+        return "EnteredImage(stringPath='$stringPath', registeredDateTime=$registeredDateTime)"
     }
 }

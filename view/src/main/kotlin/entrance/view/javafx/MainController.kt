@@ -8,7 +8,6 @@ import entrance.view.javafx.categorization.CategorizationWindow
 import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.control.TagView
 import entrance.view.javafx.control.ThumbnailView
-import entrance.view.javafx.management.ManagementWindow
 import entrance.view.javafx.tag.TagMaintenanceWindow
 import entrance.view.javafx.viewer.SingleImageViewerWindow
 import javafx.collections.FXCollections
@@ -31,8 +30,7 @@ class MainController(
     private val categorizationWindow: CategorizationWindow,
     private val tagRepository: TagRepository,
     private val imageRepository: ImageRepository,
-    private val singleImageViewerWindow: SingleImageViewerWindow,
-    private val managementWindow: ManagementWindow
+    private val singleImageViewerWindow: SingleImageViewerWindow
 ) : Initializable {
     
     lateinit internal var primaryStage: Stage
@@ -117,10 +115,5 @@ class MainController(
         selectedThumbnailView?.apply { 
             singleImageViewerWindow.open(imageFile, imageList)
         }
-    }
-    
-    @FXML
-    fun openManagement() {
-        managementWindow.open(primaryStage)
     }
 }

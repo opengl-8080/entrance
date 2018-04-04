@@ -13,7 +13,6 @@ class TagMaintenanceWindow (private val fxmlLoader: EntranceFXMLLoader) {
         val fxmlContext = fxmlLoader.load<TagMaintenanceController>("tag/tag-maintenance.fxml")
         
         val stage = Stage()
-        stage.initModality(Modality.WINDOW_MODAL)
         stage.scene = Scene(fxmlContext.root)
         stage.title = "タグメンテナンス"
         stage.initOwner(owner)

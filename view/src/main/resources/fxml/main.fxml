@@ -21,7 +21,6 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#openTagMaintenance" text="タグメンテナンス" />
                   <MenuItem mnemonicParsing="false" onAction="#openCategorizationWindow" text="分類" />
-                  <MenuItem mnemonicParsing="false" onAction="#openManagement" text="管理" />
               </items>
             </Menu>
          </menus>

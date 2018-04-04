@@ -7,7 +7,8 @@ INNER JOIN TAG
         ON TAG.ID = ITEM_TAG.TAG_ID
 INNER JOIN IMAGE
         ON IMAGE.ITEM_ID = ITEM.ID
-     WHERE ITEM.IS_NOT_CATEGORIZED = FALSE
+     WHERE 
        /*%for tagId : tagIdList*/
        AND TAG.ID = /* tagId */1
        /*%end*/
+  ORDER BY ITEM.REGISTERED_DATETIME ASC

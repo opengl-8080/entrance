@@ -9,48 +9,40 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.6" prefHeight="500.0" prefWidth="800.0" stylesheets="@../base.css, @../thumbnail.css, @../tag.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.categorization.CategorizationController">
-   <items>
-      <SplitPane dividerPositions="0.7" orientation="VERTICAL">
-        <items>
-            <VBox>
-               <children>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
-                     <content>
-                        <FlowPane fx:id="notCategorizedImagesPane" hgap="10.0" styleClass="panel" vgap="10.0" />
-                     </content>
-                  </ScrollPane>
-                  <Button fx:id="assignButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#assign" text="仮割り当て" VBox.vgrow="ALWAYS" />
-               </children>
-            </VBox>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <children>
-                  <TextField fx:id="mainTagFilterTextField" />
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <content>
-                        <FlowPane fx:id="mainTagFlowPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-            </VBox>
-        </items>
-      </SplitPane>
-      <VBox>
-         <children>
-            <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
-               <content>
-                  <VBox fx:id="assignedImages" prefHeight="200.0" prefWidth="100.0" spacing="10.0" />
-               </content>
-               <contextMenu>
-                  <ContextMenu>
+<?import javafx.scene.control.ListView?>
+<SplitPane dividerPositions="0.35" prefHeight="500.0" prefWidth="800.0" stylesheets="@../base.css, @../thumbnail.css, @../tag.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.categorization.CategorizationController">
+    <items>
+        <SplitPane dividerPositions="0.7" orientation="VERTICAL">
+            <items>
+                <VBox>
+                    <children>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" text="検索" />
+                        <TextField fx:id="tagFilterTextField" />
+                        <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                            <content>
+                                <FlowPane fx:id="tagsFlowPane" hgap="10.0" styleClass="panel" vgap="10.0" />
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </VBox>
+                <ScrollPane fitToHeight="true" fitToWidth="true">
+                    <content>
+                        <ListView fx:id="selectedTagsListView" />
+                    </content>
+                </ScrollPane>
+            </items>
+        </SplitPane>
+        <ScrollPane fitToHeight="true" fitToWidth="true">
+            <content>
+                <FlowPane fx:id="thumbnailsFlowPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
+            </content>
+            <contextMenu>
+                <ContextMenu>
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#unassign" text="割り当て解除" />
+                        <MenuItem mnemonicParsing="false" onAction="#openManagementImageTagWindow" text="タグ編集" />
                     </items>
-                  </ContextMenu>
-               </contextMenu>
-            </ScrollPane>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" text="保存" />
-         </children>
-      </VBox>
-   </items>
+                </ContextMenu>
+            </contextMenu>
+        </ScrollPane>
+    </items>
 </SplitPane>

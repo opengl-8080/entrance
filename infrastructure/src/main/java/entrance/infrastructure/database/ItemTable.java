@@ -18,8 +18,6 @@ public class ItemTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-    @Column(name = "IS_NOT_CATEGORIZED")
-    public boolean notCategorized;
     @Column(name = "REGISTERED_DATETIME")
     public LocalDateTime registeredDateTime;
 }

@@ -15,10 +15,10 @@ public interface ImageTableDao {
     ImageTable find(long itemId);
     
     @Select
-    List<ImageItemView> findNotCategorizedImages();
+    List<ImageItemView> findNotTaggedImages();
     
     @Select
-    List<ImageItemView> findCategorizedImagesByTagIdList(List<Long> tagIdList);
+    List<ImageItemView> findTaggedImagesByTagIdList(List<Long> tagIdList);
     
     @Insert
     int insert(ImageTable imageTable);
