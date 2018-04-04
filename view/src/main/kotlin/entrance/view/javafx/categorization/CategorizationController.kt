@@ -1,6 +1,6 @@
 package entrance.view.javafx.categorization
 
-import entrance.domain.categorization.NotTaggedImage
+import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
@@ -37,7 +37,7 @@ class CategorizationController (
     @FXML
     lateinit var thumbnailsFlowPane: FlowPane
 
-    private val thumbnailViewList = mutableListOf<ThumbnailView<NotTaggedImage>>()
+    private val thumbnailViewList = mutableListOf<ThumbnailView<TaggedImage>>()
     private val selectedTagList = FXCollections.observableArrayList<Tag>()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {

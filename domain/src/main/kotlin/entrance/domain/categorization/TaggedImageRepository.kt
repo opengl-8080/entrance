@@ -4,7 +4,7 @@ import entrance.domain.tag.Tag
 
 interface TaggedImageRepository {
     
-    fun findNotTaggedImages(): List<NotTaggedImage>
+    fun findNotTaggedImages(): List<TaggedImage>
     
     fun findTaggedImages(tagList: List<Tag>): List<TaggedImage>
     

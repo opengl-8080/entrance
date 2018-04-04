@@ -1,13 +1,13 @@
 package entrance.view.javafx.categorization
 
-import entrance.domain.ImageFile
+import entrance.domain.categorization.TaggedImage
 import javafx.stage.Stage
 import org.springframework.stereotype.Component
 
 @Component
 class CategorizeTagWindow {
     
-    fun open(owner: Stage, imageList: List<ImageFile>) {
+    fun open(owner: Stage, imageList: List<TaggedImage>) {
         
     }
 }
