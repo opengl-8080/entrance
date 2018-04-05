@@ -9,6 +9,7 @@ import org.seasar.doma.Update;
 import org.seasar.doma.boot.ConfigAutowireable;
 
 import java.util.List;
+import java.util.Set;
 
 @Dao
 @ConfigAutowireable

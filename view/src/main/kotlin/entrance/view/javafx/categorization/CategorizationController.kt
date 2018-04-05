@@ -1,5 +1,6 @@
 package entrance.view.javafx.categorization
 
+import entrance.domain.categorization.CategorizationImageUnit
 import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.tag.Tag
@@ -83,7 +84,8 @@ class CategorizationController (
 
     @FXML
     fun openManagementImageTagWindow() {
-        val selectedImageList = thumbnailViewList.filter { it.selected }.map { it.imageFile }
-        categorizeTagWindow.open(ownStage, selectedImageList)
+        val selectedImageList = thumbnailViewList.filter { it.selected }.map { it.imageFile }.toSet()
+        categorizeTagWindow.open(ownStage, CategorizationImageUnit(selectedImageList))
+        search()
     }
 }

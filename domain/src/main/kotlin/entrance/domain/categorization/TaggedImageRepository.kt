@@ -8,5 +8,5 @@ interface TaggedImageRepository {
     
     fun findTaggedImages(tagList: List<Tag>): List<TaggedImage>
     
-    fun save(taggedImage: TaggedImage)
+    fun save(taggedImage: TaggedImage, newAssignedTagSet: NewAssignedTagSet, releasedTagSet: ReleasedTagSet)
 }
