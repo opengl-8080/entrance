@@ -12,7 +12,7 @@ class CategorizeTagWindow (
     private val fxmlLoader: EntranceFXMLLoader
 ) {
     
-    fun open(owner: Stage, imageUnit: CategorizationImageUnit) {
+    fun open(owner: Stage, imageUnit: CategorizationImageUnit, onSaved: () -> Unit) {
         val context = fxmlLoader.load<CategorizeTagController>("categorization/categorize-tag.fxml")
         
         val stage = Stage()
@@ -21,7 +21,7 @@ class CategorizeTagWindow (
         stage.title = "タグ割り当て"
         stage.scene = Scene(context.root)
         
-        context.controller.init(stage, imageUnit)
+        context.controller.init(stage, imageUnit, onSaved)
         
         stage.showAndWait()
     }

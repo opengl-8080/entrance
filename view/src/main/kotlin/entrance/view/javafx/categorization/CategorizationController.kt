@@ -69,6 +69,7 @@ class CategorizationController (
 
     @FXML
     fun search() {
+        assignedTagFlowPane.children.clear()
         thumbnailViewList.clear()
         
         val imageList = if (selectedTagList.isEmpty()) {
@@ -100,7 +101,8 @@ class CategorizationController (
     @FXML
     fun openManagementImageTagWindow() {
         val selectedImageList = thumbnailViewList.filter { it.selected }.map { it.imageFile }.toSet()
-        categorizeTagWindow.open(ownStage, CategorizationImageUnit(selectedImageList))
-        search()
+        categorizeTagWindow.open(ownStage, CategorizationImageUnit(selectedImageList), {
+            search()
+        })
     }
 }

@@ -19,17 +19,19 @@ class CategorizeTagController (
     private val tagRepository: TagRepository,
     private val categorizeImageService: CategorizeImageService
 ) {
-    lateinit var stage: Stage
-
+    private lateinit var stage: Stage
+    private lateinit var onSavedListener: () -> Unit
+    private lateinit var imageUnit: CategorizationImageUnit
+    
     @FXML
     lateinit var tagFilterTextField: TextField
     @FXML
     lateinit var tagsFlowPane: FlowPane
     
-    private lateinit var imageUnit: CategorizationImageUnit
     private val selectedTagSet = FXCollections.observableSet<Tag>()
     
-    fun init(stage: Stage, imageUnit: CategorizationImageUnit) {
+    fun init(stage: Stage, imageUnit: CategorizationImageUnit, onSavedListener: () -> Unit) {
+        this.onSavedListener = onSavedListener
         this.stage = stage
         this.imageUnit = imageUnit
         val commonAssignedTags = imageUnit.commonAssignedTags
@@ -61,5 +63,6 @@ class CategorizeTagController (
     fun save() {
         categorizeImageService.categorize(imageUnit, selectedTagSet)
         stage.close()
+        onSavedListener.invoke()
     }
 }
