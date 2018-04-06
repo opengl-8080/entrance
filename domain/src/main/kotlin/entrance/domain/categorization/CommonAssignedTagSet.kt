@@ -10,6 +10,12 @@ data class CommonAssignedTagSet(
 ) {
 
     /**
+     * 各タグから抽出された名前だけのセット.
+     */
+    val names: Set<String>
+        get() = tagSet.map { it.name.value }.toSet()
+
+    /**
      * 指定したタグがこのセットの中に含まれるか確認する.
      * 
      * @return タグが含まれる場合は true

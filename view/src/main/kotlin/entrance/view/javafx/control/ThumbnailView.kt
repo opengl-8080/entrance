@@ -1,6 +1,9 @@
 package entrance.view.javafx.control
 
 import entrance.domain.ImageFile
+import javafx.beans.property.ReadOnlyBooleanProperty
+import javafx.beans.property.ReadOnlyBooleanWrapper
+import javafx.beans.value.ObservableBooleanValue
 import javafx.event.EventHandler
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
@@ -10,8 +13,12 @@ class ThumbnailView<out T: ImageFile>(
     val imageFile: T
 ): ImageView(Image(imageFile.stringPath)) {
     private val selectedCssClass = "thumbnail--selected"
-    var selected = false
-        private set
+    
+    private val _selectedProperty = ReadOnlyBooleanWrapper(false)
+    val selectedProperty: ReadOnlyBooleanProperty
+        get() = _selectedProperty.readOnlyProperty
+    val selected: Boolean
+        get() = selectedProperty.get()
     
     init {
         fitWidth = 100.0
@@ -40,7 +47,7 @@ class ThumbnailView<out T: ImageFile>(
         }
 
         styleClass.add(selectedCssClass)
-        selected = true
+        _selectedProperty.value = true
     }
     
     fun deselect() {
@@ -49,6 +56,6 @@ class ThumbnailView<out T: ImageFile>(
         }
 
         styleClass.remove(selectedCssClass)
-        selected = false
+        _selectedProperty.value = false
     }
 }

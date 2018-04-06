@@ -5,6 +5,10 @@ class CategorizationImageUnit (
 ) {
     
     val commonAssignedTags = CommonAssignedTagSet(
-        imageList.map { it.tagSet }.reduce { tmp, tagSet -> tmp.intersect(tagSet) }.toSet()
+        if (imageList.isEmpty()) {
+            emptySet()
+        } else {
+            imageList.map { it.tagSet }.reduce { tmp, tagSet -> tmp.intersect(tagSet) }.toSet()
+        }
     )
 }
