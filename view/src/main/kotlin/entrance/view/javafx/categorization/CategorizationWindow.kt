@@ -1,7 +1,6 @@
 package entrance.view.javafx.categorization
 
 import entrance.view.javafx.util.EntranceFXMLLoader
-import javafx.scene.Scene
 import javafx.stage.Stage
 import org.springframework.stereotype.Component
 
@@ -10,15 +9,13 @@ class CategorizationWindow (
     private val fxmlLoader: EntranceFXMLLoader
 ) {
     fun open(owner: Stage) {
-        val fxmlContext = fxmlLoader.load<CategorizationController>("categorization/categorization.fxml")
+        fxmlLoader.loadWithStage<CategorizationController>("categorization/categorization.fxml") { stage, controller ->
+            stage.title = "分類"
+            stage.initOwner(owner)
 
-        val stage = Stage()
-        stage.scene = Scene(fxmlContext.root)
-        stage.title = "分類"
-        stage.initOwner(owner)
+            controller.ownStage = stage
 
-        fxmlContext.controller.ownStage = stage
-
-        stage.showAndWait()
+            stage.showAndWait()
+        }
     }
 }

@@ -13,15 +13,16 @@ class MainWindow(
 ) {
     
     fun open(primaryStage: Stage) {
-        val fxmlContext = fxmlLoader.load<MainController>("main.fxml")
-        fxmlContext.controller.primaryStage = primaryStage
+        fxmlLoader.load<MainController>("main.fxml") { root, controller ->
+            controller.primaryStage = primaryStage
 
-        primaryStage.onCloseRequest = EventHandler { 
-            SingleImageViewerWindow.closeAll()
+            primaryStage.onCloseRequest = EventHandler {
+                SingleImageViewerWindow.closeAll()
+            }
+            
+            primaryStage.scene = Scene(root)
+            primaryStage.title = "Entrance"
+            primaryStage.show()
         }
-        
-        primaryStage.scene = Scene(fxmlContext.root)
-        primaryStage.title = "Entrance"
-        primaryStage.show()
     }
 }
