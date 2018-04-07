@@ -1,6 +1,7 @@
 package entrance.view.javafx.window.viewer
 
 import entrance.domain.image.Image
+import entrance.view.javafx.util.FXPrototypeController
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
@@ -10,14 +11,11 @@ import javafx.scene.control.SeparatorMenuItem
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
 import javafx.stage.Stage
-import org.springframework.context.annotation.Scope
-import org.springframework.stereotype.Component
 import java.util.function.BiConsumer
 import java.util.function.Consumer
 import javafx.scene.image.Image as JavaFxImage
 
-@Component
-@Scope("prototype")
+@FXPrototypeController
 class SingleImageViewerController {
     @FXML
     lateinit var root: Pane

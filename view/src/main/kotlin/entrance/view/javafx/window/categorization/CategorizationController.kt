@@ -5,9 +5,9 @@ import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
-import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.control.TagSelectionView
 import entrance.view.javafx.control.ThumbnailsView
+import entrance.view.javafx.util.FXPrototypeController
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
@@ -15,13 +15,10 @@ import javafx.scene.control.ListView
 import javafx.scene.control.TextField
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
-import org.springframework.context.annotation.Scope
-import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*
 
-@Component
-@Scope("prototype")
+@FXPrototypeController
 class CategorizationController (
     private val tagRepository: TagRepository,
     private val taggedImageRepository: TaggedImageRepository,

@@ -4,16 +4,14 @@ import entrance.application.tag.RegisterTagService
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagName
 import entrance.view.javafx.error.Validations
+import entrance.view.javafx.util.FXPrototypeController
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 import javafx.stage.Stage
-import org.springframework.context.annotation.Scope
-import org.springframework.stereotype.Component
 
-@Component
-@Scope("prototype")
+@FXPrototypeController
 class RegisterTagController (
     private val registerTagService: RegisterTagService
 ) {

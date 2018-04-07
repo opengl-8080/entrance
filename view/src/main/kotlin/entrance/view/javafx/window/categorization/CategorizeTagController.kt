@@ -5,16 +5,14 @@ import entrance.domain.categorization.CategorizationImageUnit
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.view.javafx.control.TagSelectionView
+import entrance.view.javafx.util.FXPrototypeController
 import javafx.fxml.FXML
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
-import org.springframework.context.annotation.Scope
-import org.springframework.stereotype.Component
 
-@Component
-@Scope("prototype")
+@FXPrototypeController
 class CategorizeTagController (
     private val tagRepository: TagRepository,
     private val categorizeImageService: CategorizeImageService
