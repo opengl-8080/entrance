@@ -4,9 +4,9 @@ import entrance.application.categorization.CategorizeImageService
 import entrance.domain.categorization.CategorizationImageUnit
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
-import entrance.view.javafx.control.TagView
-import javafx.collections.FXCollections
+import entrance.view.javafx.control.TagSelectionView
 import javafx.fxml.FXML
+import javafx.scene.control.ListView
 import javafx.scene.control.TextField
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
@@ -27,41 +27,24 @@ class CategorizeTagController (
     lateinit var tagFilterTextField: TextField
     @FXML
     lateinit var tagsFlowPane: FlowPane
+    @FXML
+    lateinit var selectedTagsListView: ListView<Tag>
     
-    private val selectedTagSet = FXCollections.observableSet<Tag>()
+    lateinit var tagSelectionView: TagSelectionView
     
     fun init(stage: Stage, imageUnit: CategorizationImageUnit, onSavedListener: () -> Unit) {
         this.onSavedListener = onSavedListener
         this.stage = stage
         this.imageUnit = imageUnit
-        val commonAssignedTags = imageUnit.commonAssignedTags
-
-        tagRepository.findAll().tags.forEach { tag ->
-            val tagView = TagView(tag)
-            tagsFlowPane.children += tagView
-            
-            if (commonAssignedTags.contains(tag)) {
-                tagView.isSelected = true
-                selectedTagSet += tag
-            }
-
-            tagView.selectedProperty().addListener { _, _, selected ->
-                if (selected) {
-                    selectedTagSet += tag
-                } else {
-                    selectedTagSet -= tag
-                }
-            }
-        }
         
-        tagFilterTextField.textProperty().addListener { _, _, text ->
-            tagsFlowPane.children.map { child -> child as TagView }.forEach { tagView -> tagView.controlVisibility(text) }
-        }
+        val commonAssignedTags = imageUnit.commonAssignedTags
+        tagSelectionView = TagSelectionView(tagRepository, tagsFlowPane, tagFilterTextField, selectedTagsListView)
+        tagSelectionView.selectAll(commonAssignedTags.tagSet)
     }
     
     @FXML
     fun save() {
-        categorizeImageService.categorize(imageUnit, selectedTagSet)
+        categorizeImageService.categorize(imageUnit, tagSelectionView.selectedTagList.toSet())
         stage.close()
         onSavedListener.invoke()
     }

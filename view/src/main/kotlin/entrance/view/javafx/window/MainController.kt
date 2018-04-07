@@ -5,12 +5,11 @@ import entrance.domain.image.ImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.view.javafx.control.TagListCellFactory
-import entrance.view.javafx.control.TagView
+import entrance.view.javafx.control.TagSelectionView
 import entrance.view.javafx.control.ThumbnailsView
 import entrance.view.javafx.window.categorization.CategorizationWindow
 import entrance.view.javafx.window.tag.TagMaintenanceWindow
 import entrance.view.javafx.window.viewer.SingleImageViewerWindow
-import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
@@ -45,32 +44,14 @@ class MainController(
     lateinit var openImageMenuItem: MenuItem
 
     lateinit var thumbnailsView: ThumbnailsView<Image>
-    
-    private val selectedTagList = FXCollections.observableArrayList<Tag>()
+    lateinit var tagSelectionView: TagSelectionView
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         thumbnailsView = ThumbnailsView(thumbnailsPane)
+        tagSelectionView = TagSelectionView(tagRepository, tagsFlowPane, tagFilterTextField, selectedTagsListView)
         
         selectedTagsListView.cellFactory = TagListCellFactory()
-        
-        selectedTagsListView.items = selectedTagList
-        
-        tagRepository.findAll().tags.forEach { tag ->
-            val tagView = TagView(tag)
-            tagsFlowPane.children += tagView
-
-            tagView.selectedProperty().addListener { _, _, selected ->
-                if (selected) {
-                    selectedTagList += tag
-                } else {
-                    selectedTagList -= tag
-                }
-            }
-        }
-
-        tagFilterTextField.textProperty().addListener { _, _, text ->
-            tagsFlowPane.children.map { child -> child as TagView }.forEach { tagView -> tagView.controlVisibility(text) }
-        }
+        selectedTagsListView.items = tagSelectionView.selectedTagList
     }
     
     @FXML
@@ -85,7 +66,7 @@ class MainController(
     
     @FXML
     fun search() {
-        thumbnailsView.images = imageRepository.find(selectedTagList)
+        thumbnailsView.images = imageRepository.find(tagSelectionView.selectedTagList)
     }
     
     @FXML

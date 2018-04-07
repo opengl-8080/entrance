@@ -6,7 +6,7 @@ import entrance.domain.tag.Tag
  * 複数の画像に共通で割り当て垂れていたタグのセット.
  */
 data class CommonAssignedTagSet(
-    private val tagSet: Set<Tag>
+    val tagSet: Set<Tag>
 ) {
 
     /**

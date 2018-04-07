@@ -6,9 +6,8 @@ import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.view.javafx.control.TagListCellFactory
-import entrance.view.javafx.control.TagView
+import entrance.view.javafx.control.TagSelectionView
 import entrance.view.javafx.control.ThumbnailsView
-import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
@@ -41,43 +40,22 @@ class CategorizationController (
     @FXML
     lateinit var assignedTagFlowPane: FlowPane
 
+    lateinit var tagSelectionView: TagSelectionView
     lateinit var thumbnailsView: ThumbnailsView<TaggedImage>
     
-    private val selectedTagList = FXCollections.observableArrayList<Tag>()
-
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         thumbnailsView = ThumbnailsView(thumbnailsPane, multiSelect = true)
-        
-        selectedTagsListView.cellFactory = TagListCellFactory()
-
-        selectedTagsListView.items = selectedTagList
-
-        tagRepository.findAll().tags.forEach { tag ->
-            val tagView = TagView(tag)
-            tagsFlowPane.children += tagView
-
-            tagView.selectedProperty().addListener { _, _, selected ->
-                if (selected) {
-                    selectedTagList += tag
-                } else {
-                    selectedTagList -= tag
-                }
-            }
-        }
-
-        tagFilterTextField.textProperty().addListener { _, _, text ->
-            tagsFlowPane.children.map { child -> child as TagView }.forEach { tagView -> tagView.controlVisibility(text) }
-        }
+        tagSelectionView = TagSelectionView(tagRepository, tagsFlowPane, tagFilterTextField, selectedTagsListView)
     }
 
     @FXML
     fun search() {
         assignedTagFlowPane.children.clear()
         
-        val imageList = if (selectedTagList.isEmpty()) {
+        val imageList = if (tagSelectionView.isNotSelected()) {
             taggedImageRepository.findNotTaggedImages()
         } else {
-            taggedImageRepository.findTaggedImages(selectedTagList)
+            taggedImageRepository.findTaggedImages(tagSelectionView.selectedTagList)
         }
         
         thumbnailsView.images = imageList
