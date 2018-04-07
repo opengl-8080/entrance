@@ -42,7 +42,7 @@
                   <contextMenu>
                       <ContextMenu>
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#openManagementImageTagWindow" text="タグ編集" />
+                              <MenuItem mnemonicParsing="false" onAction="#openCategorizeTagWindow" text="タグ編集" />
                           </items>
                       </ContextMenu>
                   </contextMenu>

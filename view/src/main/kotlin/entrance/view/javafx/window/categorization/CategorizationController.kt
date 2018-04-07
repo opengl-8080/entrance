@@ -72,10 +72,13 @@ class CategorizationController (
     }
 
     @FXML
-    fun openManagementImageTagWindow() {
+    fun openCategorizeTagWindow() {
         val selectedImages = thumbnailsView.selectedImages
-        categorizeTagWindow.open(ownStage, CategorizationImageUnit(selectedImages), {
-            search()
-        })
+        
+        if (!selectedImages.isEmpty()) {
+            categorizeTagWindow.open(ownStage, CategorizationImageUnit(selectedImages), {
+                search()
+            })
+        }
     }
 }
