@@ -13,10 +13,18 @@ class RdbImageRepository(
     private val imageTableDao: ImageTableDao,
     private val libraryDirectory: LibraryDirectory
 ): ImageRepository {
-    
+
     override fun find(tagList: List<Tag>): List<Image> {
         val categorizedTagList = imageTableDao.findTaggedImagesByTagIdList(tagList.map { it.id.value })
         return categorizedTagList.map { it ->
+            val localFile = libraryDirectory.resolveFile(RelativePath(it.path))
+            Image(localFile)
+        }
+    }
+    
+    override fun findNotTaggedImage(): List<Image> {
+        val imageItemViewList = imageTableDao.findNotTaggedImages()
+        return imageItemViewList.map { it ->
             val localFile = libraryDirectory.resolveFile(RelativePath(it.path))
             Image(localFile)
         }

@@ -66,7 +66,11 @@ class MainController(
     
     @FXML
     fun search() {
-        thumbnailsView.images = imageRepository.find(tagSelectionView.selectedTagList)
+        thumbnailsView.images = if (tagSelectionView.isNotSelected()) {
+            imageRepository.findNotTaggedImage()
+        } else {
+            imageRepository.find(tagSelectionView.selectedTagList)
+        }
     }
     
     @FXML
