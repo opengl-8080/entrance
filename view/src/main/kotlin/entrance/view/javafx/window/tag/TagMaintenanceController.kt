@@ -1,4 +1,4 @@
-package entrance.view.javafx.tag
+package entrance.view.javafx.window.tag
 
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
@@ -7,11 +7,9 @@ import javafx.collections.FXCollections
 import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.control.ListCell
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
 import javafx.stage.Stage
-import javafx.util.Callback
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*

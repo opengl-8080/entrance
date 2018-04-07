@@ -1,4 +1,4 @@
-package entrance.view.javafx.categorization
+package entrance.view.javafx.window.categorization
 
 import entrance.application.categorization.CategorizeImageService
 import entrance.domain.categorization.CategorizationImageUnit

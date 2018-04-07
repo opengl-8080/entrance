@@ -1,7 +1,7 @@
-package entrance.view.javafx
+package entrance.view.javafx.window
 
 import entrance.view.javafx.util.EntranceFXMLLoader
-import entrance.view.javafx.viewer.SingleImageViewerWindow
+import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.event.EventHandler
 import javafx.scene.Scene
 import javafx.stage.Stage

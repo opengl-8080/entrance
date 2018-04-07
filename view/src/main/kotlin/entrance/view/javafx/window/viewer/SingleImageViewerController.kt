@@ -1,4 +1,4 @@
-package entrance.view.javafx.viewer
+package entrance.view.javafx.window.viewer
 
 import entrance.domain.image.Image
 import javafx.event.ActionEvent

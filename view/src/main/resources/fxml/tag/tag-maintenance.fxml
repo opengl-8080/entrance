@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="300.0" prefWidth="400.0" stylesheets="@tag-maintenance.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.tag.TagMaintenanceController">
+<VBox prefHeight="300.0" prefWidth="400.0" stylesheets="@tag-maintenance.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.tag.TagMaintenanceController">
    <children>
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#add" text="新規登録" />
       <TextField fx:id="filterTextFiled" promptText="検索" />

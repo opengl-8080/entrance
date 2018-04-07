@@ -1,4 +1,4 @@
-package entrance.view.javafx.tag
+package entrance.view.javafx.window.tag
 
 import entrance.application.tag.RegisterTagService
 import entrance.domain.tag.TagFilterWord

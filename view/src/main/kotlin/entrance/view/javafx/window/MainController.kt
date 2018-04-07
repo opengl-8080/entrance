@@ -1,15 +1,15 @@
-package entrance.view.javafx
+package entrance.view.javafx.window
 
 import entrance.domain.image.Image
 import entrance.domain.image.ImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
-import entrance.view.javafx.categorization.CategorizationWindow
+import entrance.view.javafx.window.categorization.CategorizationWindow
 import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.control.TagView
 import entrance.view.javafx.control.ThumbnailView
-import entrance.view.javafx.tag.TagMaintenanceWindow
-import entrance.view.javafx.viewer.SingleImageViewerWindow
+import entrance.view.javafx.window.tag.TagMaintenanceWindow
+import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.collections.FXCollections
 import javafx.event.EventHandler
 import javafx.fxml.FXML

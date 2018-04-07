@@ -1,4 +1,4 @@
-package entrance.view.javafx.tag
+package entrance.view.javafx.window.tag
 
 import entrance.domain.tag.TagName
 import entrance.domain.tag.TagRepository

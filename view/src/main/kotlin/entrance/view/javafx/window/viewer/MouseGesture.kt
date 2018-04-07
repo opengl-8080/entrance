@@ -1,4 +1,4 @@
-package entrance.view.javafx.viewer
+package entrance.view.javafx.window.viewer
 
 import javafx.event.EventHandler
 import javafx.scene.Node

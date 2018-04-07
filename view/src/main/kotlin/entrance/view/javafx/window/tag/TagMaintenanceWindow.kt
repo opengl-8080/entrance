@@ -1,4 +1,4 @@
-package entrance.view.javafx.tag
+package entrance.view.javafx.window.tag
 
 import entrance.view.javafx.util.EntranceFXMLLoader
 import javafx.stage.Stage

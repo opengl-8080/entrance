@@ -1,13 +1,10 @@
-package entrance.view.javafx.tag
+package entrance.view.javafx.window.tag
 
 import entrance.application.tag.ModifyTagService
-import entrance.domain.error.InvalidValueException
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagName
 import entrance.view.javafx.error.Validations
-import entrance.view.javafx.util.Dialog
-import entrance.view.javafx.util.extractRootCause
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
