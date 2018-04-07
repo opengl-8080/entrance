@@ -39,6 +39,13 @@
                            <content>
                               <FlowPane fx:id="tagsFlowPane" hgap="10.0" styleClass="panel" vgap="10.0" />
                            </content>
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#reloadTags" text="タグを再読み込み" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
                         </ScrollPane>
                      </children>
                   </VBox>

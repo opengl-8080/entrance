@@ -81,4 +81,11 @@ class CategorizationController (
             })
         }
     }
+    
+    @FXML
+    fun reloadTags() {
+        tagSelectionView.reload()
+        thumbnailsView.clear()
+        assignedTagFlowPane.children.clear()
+    }
 }

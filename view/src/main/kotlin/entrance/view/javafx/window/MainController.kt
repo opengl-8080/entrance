@@ -75,4 +75,10 @@ class MainController(
             singleImageViewerWindow.open(imageFile, thumbnailsView.images)
         }
     }
+    
+    @FXML
+    fun reloadTags() {
+        tagSelectionView.reload()
+        thumbnailsView.clear()
+    }
 }

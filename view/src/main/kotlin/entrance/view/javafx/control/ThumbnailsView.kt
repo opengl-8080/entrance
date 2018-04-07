@@ -58,4 +58,8 @@ class ThumbnailsView<T: ImageFile>(
                         flowPane.children += thumbnail
                     }
         }
+    
+    fun clear() {
+        images = emptyList()
+    }
 }
