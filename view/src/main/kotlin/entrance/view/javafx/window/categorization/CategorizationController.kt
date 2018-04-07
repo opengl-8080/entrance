@@ -7,7 +7,7 @@ import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.control.TagView
-import entrance.view.javafx.control.ThumbnailView
+import entrance.view.javafx.control.ThumbnailsView
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -37,14 +37,17 @@ class CategorizationController (
     @FXML
     lateinit var selectedTagsListView: ListView<Tag>
     @FXML
-    lateinit var thumbnailsFlowPane: FlowPane
+    lateinit var thumbnailsPane: FlowPane
     @FXML
     lateinit var assignedTagFlowPane: FlowPane
 
-    private val thumbnailViewList = mutableListOf<ThumbnailView<TaggedImage>>()
+    lateinit var thumbnailsView: ThumbnailsView<TaggedImage>
+    
     private val selectedTagList = FXCollections.observableArrayList<Tag>()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        thumbnailsView = ThumbnailsView(thumbnailsPane, multiSelect = true)
+        
         selectedTagsListView.cellFactory = TagListCellFactory()
 
         selectedTagsListView.items = selectedTagList
@@ -70,7 +73,6 @@ class CategorizationController (
     @FXML
     fun search() {
         assignedTagFlowPane.children.clear()
-        thumbnailViewList.clear()
         
         val imageList = if (selectedTagList.isEmpty()) {
             taggedImageRepository.findNotTaggedImages()
@@ -78,30 +80,26 @@ class CategorizationController (
             taggedImageRepository.findTaggedImages(selectedTagList)
         }
         
-        thumbnailsFlowPane.children.clear()
-        imageList.map { ThumbnailView(it) }
-                .forEach { thumbnailView ->
-                    thumbnailViewList += thumbnailView
-                    thumbnailsFlowPane.children += thumbnailView
+        thumbnailsView.images = imageList
+        
+        thumbnailsView.onSelected = {
+            val selectedImageList = thumbnailsView.selectedImages
 
-                    thumbnailView.selectedProperty.addListener { _, _, _ ->
-                        val selectedImageList = thumbnailViewList.filter { it.selected }.map { it.imageFile }.toSet()
-                        val imageUnit = CategorizationImageUnit(selectedImageList)
-                        val commonAssignedTags = imageUnit.commonAssignedTags
-                        
-                        assignedTagFlowPane.children.clear()
+            val imageUnit = CategorizationImageUnit(selectedImageList)
+            val commonAssignedTags = imageUnit.commonAssignedTags
 
-                        commonAssignedTags.names.forEach { tagName ->
-                            assignedTagFlowPane.children += Label(tagName)
-                        }
-                    }
-                }
+            assignedTagFlowPane.children.clear()
+
+            commonAssignedTags.names.forEach { tagName ->
+                assignedTagFlowPane.children += Label(tagName)
+            }
+        }
     }
 
     @FXML
     fun openManagementImageTagWindow() {
-        val selectedImageList = thumbnailViewList.filter { it.selected }.map { it.imageFile }.toSet()
-        categorizeTagWindow.open(ownStage, CategorizationImageUnit(selectedImageList), {
+        val selectedImages = thumbnailsView.selectedImages
+        categorizeTagWindow.open(ownStage, CategorizationImageUnit(selectedImages), {
             search()
         })
     }

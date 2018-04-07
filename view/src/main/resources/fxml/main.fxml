@@ -51,7 +51,7 @@
             </SplitPane>
             <ScrollPane fitToHeight="true" fitToWidth="true">
                <content>
-                  <FlowPane fx:id="thumbnailsFlowPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
+                  <FlowPane fx:id="thumbnailsPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
                </content>
                <contextMenu>
                   <ContextMenu>
