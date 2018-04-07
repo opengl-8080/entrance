@@ -1,3 +1,6 @@
+@import "tag.css";
+@import "thumbnail.css";
+
 .button {
     -fx-font-size: 16px;
 }
