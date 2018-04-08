@@ -30,7 +30,7 @@ class RdbTagRepository(
     
     override fun find(name: TagName): Tag? {
         val tagTable = tagTableDao.findByName(name.value)
-        return tagTable?.let (::rebuild)
+        return tagTable?.let { rebuild(it) }
     }
 
     override fun findAll(): AllTags {
