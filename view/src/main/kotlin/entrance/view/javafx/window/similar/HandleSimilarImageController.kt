@@ -1,0 +1,118 @@
+package entrance.view.javafx.window.similar
+
+import entrance.domain.entry.EntryImage
+import entrance.domain.similar.SimilarImage
+import entrance.domain.similar.SimilarImageHandleResult
+import entrance.view.javafx.util.Dialog
+import entrance.view.javafx.util.FXPrototypeController
+import javafx.beans.binding.StringBinding
+import javafx.beans.property.SimpleIntegerProperty
+import javafx.fxml.FXML
+import javafx.scene.control.Label
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
+import javafx.scene.input.ScrollEvent
+import javafx.scene.layout.BorderPane
+import javafx.stage.Stage
+import java.nio.file.Files
+
+@FXPrototypeController
+class HandleSimilarImageController {
+    lateinit var entryImage: EntryImage
+    lateinit var similarImages: List<SimilarImage>
+    lateinit var stage: Stage
+    
+    @FXML
+    lateinit var entryImageBorderPane: BorderPane
+    @FXML
+    lateinit var entryImageView: ImageView
+    @FXML
+    lateinit var entryImageSizeLabel: Label
+    @FXML
+    lateinit var similarImageBorderPane: BorderPane
+    @FXML
+    lateinit var similarImageView: ImageView
+    @FXML
+    lateinit var similarImageSizeLabel: Label
+    @FXML
+    lateinit var similarImagePageNumberLabel: Label
+    
+    private var similarImageIndex = SimpleIntegerProperty(0)
+    private var _result: SimilarImageHandleResult = SimilarImageHandleResult.noSave()
+
+    fun init(stage: Stage, entryImage: EntryImage, similarImages: List<SimilarImage>) {
+        this.stage = stage
+        this.entryImage = entryImage
+        this.similarImages = similarImages
+        
+        entryImageView.image = Image(entryImage.stringPath)
+        entryImageSizeLabel.text = "${entryImageView.image.width.toInt()} × ${entryImageView.image.height.toInt()}"
+
+        loadSimilarImage()
+
+        entryImageView.fitWidthProperty().bind(stage.widthProperty().multiply(0.45))
+        entryImageView.fitHeightProperty().bind(stage.heightProperty().multiply(0.65))
+
+        similarImageView.fitWidthProperty().bind(stage.widthProperty().multiply(0.45))
+        similarImageView.fitHeightProperty().bind(stage.heightProperty().multiply(0.65))
+
+        similarImagePageNumberLabel.textProperty().bind(object: StringBinding() {
+            init {
+                bind(similarImageIndex)
+            }
+            override fun computeValue(): String {
+                return "(${similarImageIndex.value + 1}/${similarImages.size})"
+            }
+        })
+    }
+    
+    @FXML
+    fun delete() {
+        if (!Dialog.confirm("エントリ画像を削除します.\nよろしいですか？")) {
+            return
+        }
+        
+        Files.delete(entryImage.path)
+        _result = SimilarImageHandleResult.noSave()
+        stage.close()
+    }
+    
+    @FXML
+    fun save() {
+        if (!Dialog.confirm("エントリ画像を保存します.\nよろしいですか？")) {
+            return
+        }
+
+        _result = SimilarImageHandleResult.save()
+        stage.close()
+    }
+    
+    @FXML
+    fun scrollSimilarImage(e: ScrollEvent) {
+        var index = similarImageIndex.value
+        
+        if (0 < e.deltaY) {
+            index++
+        } else {
+            index--
+        }
+        
+        if (index < 0) {
+            index = similarImages.size - 1
+        } else if (similarImages.size <= index) {
+            index = 0
+        }
+
+        similarImageIndex.value = index
+        loadSimilarImage()
+    }
+    
+    private fun loadSimilarImage() {
+        val similarImage = similarImages[similarImageIndex.value]
+        similarImageView.image = Image(similarImage.stringPath)
+        similarImageSizeLabel.text = "${similarImageView.image.width.toInt()} × ${similarImageView.image.height.toInt()}"
+    }
+    
+    val result: SimilarImageHandleResult
+        get() = _result
+}

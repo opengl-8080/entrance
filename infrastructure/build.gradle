@@ -5,6 +5,14 @@ dependencies {
     compile 'org.flywaydb:flyway-core'
     compile 'org.seasar.doma.boot:doma-spring-boot-starter:1.1.1'
     compile project(':application')
+    
+    compile group: 'org.apache.lucene', name: 'lucene-core', version: '6.3.0'
+    compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '6.3.0'
+    compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '6.3.0'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+    compile group: 'com.sangupta', name: 'jopensurf', version: '1.0.0'
+    compile fileTree(dir: 'lib', include: '*.jar')
 }
 
 idea.module.outputDir = file('./out/production/classes')

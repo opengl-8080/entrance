@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="600.0" prefWidth="800.0" stylesheets="@../base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.similar.HandleSimilarImageController">
+   <children>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="panel" text="エントリ画像" />
+                  <BorderPane fx:id="entryImageBorderPane" VBox.vgrow="ALWAYS">
+                     <center>
+                        <ImageView fx:id="entryImageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center></BorderPane>
+                  <Label fx:id="entryImageSizeLabel" maxWidth="1.7976931348623157E308" styleClass="panel" text="Label" />
+               </children></VBox>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" text="類似画像" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="similarImagePageNumberLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" text="Label" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <BorderPane fx:id="similarImageBorderPane" onScroll="#scrollSimilarImage" VBox.vgrow="ALWAYS">
+                     <center>
+                        <ImageView fx:id="similarImageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center></BorderPane>
+                  <Label fx:id="similarImageSizeLabel" maxWidth="1.7976931348623157E308" styleClass="panel" text="Label" />
+               </children>
+            </VBox>
+         </children></HBox>
+      <HBox alignment="CENTER" prefHeight="60.0" spacing="50.0" styleClass="panel">
+         <children>
+            <Button mnemonicParsing="false" onAction="#delete" text="削除" />
+            <Button mnemonicParsing="false" onAction="#save" text="保存" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

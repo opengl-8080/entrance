@@ -9,7 +9,7 @@ import entrance.domain.file.RelativePath
  * @param path 画像ファイルの相対パス
  */
 class EnteredImage(
-    path: RelativePath
+    val path: RelativePath
 ) {
     /**
      * この画像のパスの文字列表現.
