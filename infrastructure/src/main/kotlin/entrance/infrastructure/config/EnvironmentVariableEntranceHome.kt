@@ -8,7 +8,7 @@ import java.nio.file.Path
 
 @Component
 class EnvironmentVariableEntranceHome (
-    @Value("\${ENTRANCE_HOME:.}")
+    @Value("\${ENTRANCE_HOME:./entrance_home}")
     path: Path
 ): EntranceHomeBase() {
     

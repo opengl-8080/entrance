@@ -3,7 +3,10 @@ apply plugin: 'idea'
 dependencies {
     compile 'com.h2database:h2'
     compile 'org.flywaydb:flyway-core'
-    compile 'org.seasar.doma.boot:doma-spring-boot-starter:1.1.1'
+    compile('org.seasar.doma.boot:doma-spring-boot-starter:1.1.1') {
+        exclude group: 'org.seasar.doma', module: 'doma'
+    }
+    compile 'org.seasar.doma:doma:2.19.2'
     compile project(':application')
     
     compile group: 'org.apache.lucene', name: 'lucene-core', version: '6.3.0'
