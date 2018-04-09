@@ -1,6 +1,5 @@
 package entrance.application.similar
 
-import entrance.domain.entry.AllEntryImages
 import entrance.domain.entry.EntryImage
 import entrance.domain.similar.SimilarImageFinder
 import entrance.domain.similar.SimilarImageHandler
@@ -12,22 +11,10 @@ class FilterSimilarImageService(
     private val similarImageHandler: SimilarImageHandler
 ) {
     
-    fun filter(allEntryImages: AllEntryImages): List<EntryImage> {
-        val saveTargetEntryImages = mutableListOf<EntryImage>()
+    fun decideToSave(entryImage: EntryImage): Boolean {
+        val similarImages = similarImageFinder.findSimilarImage(entryImage)
         
-        allEntryImages.forEachImages { entryImage -> 
-            val similarImages = similarImageFinder.findSimilarImage(entryImage)
-            
-            if (similarImages.isEmpty()) {
-                saveTargetEntryImages += entryImage
-            } else {
-                val result = similarImageHandler.handle(entryImage, similarImages)
-                if (result.saveEntryImage) {
-                    saveTargetEntryImages += entryImage
-                }
-            }
-        }
-        
-        return saveTargetEntryImages
+        return similarImages.isEmpty()
+                || similarImageHandler.handle(entryImage, similarImages).saveEntryImage
     }
 }

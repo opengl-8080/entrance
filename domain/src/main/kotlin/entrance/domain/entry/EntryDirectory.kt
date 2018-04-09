@@ -1,5 +1,7 @@
 package entrance.domain.entry
 
+import entrance.domain.file.LocalFile
+import entrance.domain.file.RelativePath
 import java.nio.file.Path
 
 /**
@@ -18,7 +20,10 @@ interface EntryDirectory {
     fun path(): Path
 
     /**
-     * 現在エントリディレクトリに存在する取り込み対象の画像を全て取得する.
+     * エントリディレクトリから相対パスを指定してエントリ画像を取得する.
+     * 
+     * @param relativePath エントリ画像の相対パス
+     * @return 解決したエントリ画像オブジェクト
      */
-    fun getAllEntryImages(): AllEntryImages
+    fun resolveFile(relativePath: RelativePath): EntryImage
 }

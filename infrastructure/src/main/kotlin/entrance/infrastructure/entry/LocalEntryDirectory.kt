@@ -1,7 +1,6 @@
 package entrance.infrastructure.entry
 
 import entrance.domain.config.EntranceHome
-import entrance.domain.entry.AllEntryImages
 import entrance.domain.entry.EntryDirectory
 import entrance.domain.entry.EntryImage
 import entrance.domain.file.RelativePath
@@ -12,10 +11,9 @@ import java.nio.file.Path
 class LocalEntryDirectory (
     entranceHome: EntranceHome
 ): EntryDirectory {
-
     private val dir = entranceHome.initDir(RelativePath("entry"))
-    
-    override fun getAllEntryImages() = AllEntryImages(dir.files().filter { it.isImage() }.map(::EntryImage))
+
+    override fun resolveFile(relativePath: RelativePath): EntryImage = EntryImage(dir.resolveFile(relativePath))
     override fun path(): Path = dir.path
     
 }

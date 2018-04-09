@@ -18,12 +18,10 @@ class WatchingEntryDirectoryTask (
     fun begin() {
         thread(isDaemon = true, name = "WatchingEntryDirectoryThread") {
             logger.info("start watching entry directory (${entryDirectory.path()})")
-            val watcher = DirectoryWatcher(entryDirectory.path())
-            watcher.watchFileCreatedEvent {
-                val allEntryImages = entryDirectory.getAllEntryImages()
-                val saveTargetEntryImages = filterSimilarImageService.filter(allEntryImages)
+            val watcher = DirectoryWatcher(entryDirectory.path(), entryDirectory)
+            watcher.watchFileCreatedEvent { entryImage ->
                 
-                saveTargetEntryImages.forEach { entryImage ->
+                if (filterSimilarImageService.decideToSave(entryImage)) {
                     saveEnteredItemService.save(entryImage)
                 }
             }
