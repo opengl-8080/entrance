@@ -49,12 +49,12 @@ class HandleSimilarImageController {
         entryImageSizeLabel.text = "${entryImageView.image.width.toInt()} × ${entryImageView.image.height.toInt()}"
 
         loadSimilarImage()
+        
+        entryImageView.fitWidthProperty().bind(entryImageBorderPane.widthProperty())
+        entryImageView.fitHeightProperty().bind(entryImageBorderPane.heightProperty())
 
-        entryImageView.fitWidthProperty().bind(stage.widthProperty().multiply(0.45))
-        entryImageView.fitHeightProperty().bind(stage.heightProperty().multiply(0.65))
-
-        similarImageView.fitWidthProperty().bind(stage.widthProperty().multiply(0.45))
-        similarImageView.fitHeightProperty().bind(stage.heightProperty().multiply(0.65))
+        similarImageView.fitWidthProperty().bind(similarImageBorderPane.widthProperty())
+        similarImageView.fitHeightProperty().bind(similarImageBorderPane.heightProperty())
 
         similarImagePageNumberLabel.textProperty().bind(object: StringBinding() {
             init {

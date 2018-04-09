@@ -23,8 +23,6 @@ class FXSimilarImageHandler(
             fxmlLoader.loadWithStage<HandleSimilarImageController>("similar/handle-similar-image.fxml") { stage, controller ->
                 stage.initModality(Modality.APPLICATION_MODAL)
                 stage.title = "類似画像"
-//                stage.width = 800.0
-//                stage.height = 600.0
                 
                 controller.init(stage, entryImage, similarImages)
     
