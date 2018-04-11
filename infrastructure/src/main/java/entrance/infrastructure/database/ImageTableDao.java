@@ -1,6 +1,7 @@
 package entrance.infrastructure.database;
 
 import org.seasar.doma.Dao;
+import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.boot.ConfigAutowireable;
@@ -22,4 +23,7 @@ public interface ImageTableDao {
     
     @Insert
     int insert(ImageTable imageTable);
+    
+    @Delete
+    int delete(ImageTable imageTable);
 }

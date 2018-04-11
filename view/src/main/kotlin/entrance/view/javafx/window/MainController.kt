@@ -1,5 +1,6 @@
 package entrance.view.javafx.window
 
+import entrance.application.deletion.DeleteImageService
 import entrance.domain.image.Image
 import entrance.domain.image.ImageRepository
 import entrance.domain.tag.Tag
@@ -7,6 +8,7 @@ import entrance.domain.tag.TagRepository
 import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.control.TagSelectionView
 import entrance.view.javafx.control.ThumbnailsView
+import entrance.view.javafx.util.Dialog
 import entrance.view.javafx.window.categorization.CategorizationWindow
 import entrance.view.javafx.window.tag.TagMaintenanceWindow
 import entrance.view.javafx.window.viewer.SingleImageViewerWindow
@@ -27,7 +29,8 @@ class MainController(
     private val categorizationWindow: CategorizationWindow,
     private val tagRepository: TagRepository,
     private val imageRepository: ImageRepository,
-    private val singleImageViewerWindow: SingleImageViewerWindow
+    private val singleImageViewerWindow: SingleImageViewerWindow,
+    private val deleteImageService: DeleteImageService
 ) : Initializable {
     
     lateinit internal var primaryStage: Stage
@@ -84,5 +87,15 @@ class MainController(
     fun reloadTags() {
         tagSelectionView.reload()
         thumbnailsView.clear()
+    }
+    
+    @FXML
+    fun deleteImage() {
+        thumbnailsView.selectedThumbnail?.apply {
+            if (Dialog.confirm("削除してもよろしいですか？")) {
+                deleteImageService.delete(imageFile)
+                search()
+            }
+        }
     }
 }

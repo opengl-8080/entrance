@@ -64,6 +64,7 @@
                   <ContextMenu>
                     <items>
                       <MenuItem fx:id="openImageMenuItem" mnemonicParsing="false" onAction="#openImage" text="開く" />
+                        <MenuItem mnemonicParsing="false" onAction="#deleteImage" text="削除" />
                     </items>
                   </ContextMenu>
                </contextMenu>

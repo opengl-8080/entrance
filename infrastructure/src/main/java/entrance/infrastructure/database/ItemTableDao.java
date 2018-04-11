@@ -1,6 +1,7 @@
 package entrance.infrastructure.database;
 
 import org.seasar.doma.Dao;
+import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
@@ -18,4 +19,7 @@ public interface ItemTableDao {
     
     @Update
     int update(ItemTable itemTable);
+    
+    @Delete
+    int delete(ItemTable itemTable);
 }

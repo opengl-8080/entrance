@@ -7,6 +7,7 @@ import net.semanticmetadata.lire.builders.GlobalDocumentBuilder
 import net.semanticmetadata.lire.imageanalysis.features.global.CEDD
 import net.semanticmetadata.lire.utils.LuceneUtils
 import org.apache.lucene.store.FSDirectory
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import javax.imageio.ImageIO
 
@@ -15,6 +16,7 @@ class LireSimilarImageIndexer (
     private val indexDirectory: IndexDirectory,
     private val libraryDirectory: LibraryDirectory
 ): SimilarImageIndexer {
+    private val logger = LoggerFactory.getLogger(LireSimilarImageIndexer::class.java)
     
     override fun indexSimilarImage(enteredImage: EnteredImage) {
         val globalDocumentBuilder = GlobalDocumentBuilder(CEDD::class.java)
@@ -24,6 +26,7 @@ class LireSimilarImageIndexer (
             val bufferedImage = ImageIO.read(localFile.path.toFile())
             val document = globalDocumentBuilder.createDocument(bufferedImage, enteredImage.stringPath)
             writer.addDocument(document)
+            logger.info("indexing image = ${enteredImage.stringPath}")
         }
     }
 }
