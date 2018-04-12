@@ -1,6 +1,6 @@
 package entrance.view.javafx.window.viewer
 
-import entrance.domain.image.Image
+import entrance.domain.viewer.StoredImage
 import entrance.view.javafx.util.FXPrototypeController
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
@@ -29,7 +29,7 @@ class SingleImageViewerController {
     private var rightClicked: Boolean = false
     private var changingPage: Boolean = false
     
-    fun init(stage: Stage, selectedImage: Image, imageList: List<Image>) {
+    fun init(stage: Stage, selectedStoredImage: StoredImage, storedImageList: List<StoredImage>) {
         createContextMenu(stage)
         
         stage.width = 1000.0
@@ -38,7 +38,7 @@ class SingleImageViewerController {
         imageView.fitWidthProperty().bind(stage.widthProperty())
         imageView.fitHeightProperty().bind(stage.heightProperty())
 
-        imageViewModel = ImageViewModel(imageView, imageList, selectedImage)
+        imageViewModel = ImageViewModel(imageView, storedImageList, selectedStoredImage)
         
         initGestureHandlers()
     }

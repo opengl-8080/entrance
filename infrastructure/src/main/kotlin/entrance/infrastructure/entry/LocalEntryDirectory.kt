@@ -1,9 +1,9 @@
 package entrance.infrastructure.entry
 
-import entrance.domain.config.EntranceHome
+import entrance.domain.util.config.EntranceHome
 import entrance.domain.entry.EntryDirectory
 import entrance.domain.entry.EntryImage
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.RelativePath
 import org.springframework.stereotype.Component
 import java.nio.file.Path
 

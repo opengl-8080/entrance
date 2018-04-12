@@ -1,7 +1,7 @@
 package entrance.domain.entry
 
-import entrance.domain.file.LocalFile
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.LocalFile
+import entrance.domain.util.file.RelativePath
 
 /**
  * 取り込まれたファイルを保管するディレクトリ.

@@ -1,7 +1,6 @@
 package entrance.domain.entry
 
-import entrance.domain.RegisteredDateTime
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.RelativePath
 
 /**
  * エントリが完了した画像.

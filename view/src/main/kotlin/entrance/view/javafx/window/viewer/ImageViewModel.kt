@@ -1,21 +1,21 @@
 package entrance.view.javafx.window.viewer
 
-import entrance.domain.image.Image
+import entrance.domain.viewer.StoredImage
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.scene.image.ImageView
 import javafx.scene.image.Image as JavaFxImage
 
 class ImageViewModel (
-    private val imageView: ImageView,
-    private val imageList: List<Image>,
-    initialImage: Image
+        private val imageView: ImageView,
+        private val storedImageList: List<StoredImage>,
+        initialStoredImage: StoredImage
 ) {
-    private var index: Int = imageList.indexOf(initialImage)
+    private var index: Int = storedImageList.indexOf(initialStoredImage)
     private var zooming: Boolean = false
     private val zoomScale = SimpleDoubleProperty(1.0)
     
     init {
-        loadImage(initialImage)
+        loadImage(initialStoredImage)
         this.imageView.scaleXProperty().bind(zoomScale)
         this.imageView.scaleYProperty().bind(zoomScale)
     }
@@ -121,10 +121,10 @@ class ImageViewModel (
     fun loadPreviousImage() {
         index--
         if (index < 0) {
-            index = imageList.size - 1
+            index = storedImageList.size - 1
         }
         
-        loadImage(imageList[index])
+        loadImage(storedImageList[index])
     }
 
     /**
@@ -132,15 +132,15 @@ class ImageViewModel (
      */
     fun loadNextImage() {
         index++
-        if (imageList.size <= index) {
+        if (storedImageList.size <= index) {
             index = 0
         }
         
-        loadImage(imageList[index])
+        loadImage(storedImageList[index])
     }
     
-    private fun loadImage(image: Image) {
-        imageView.image = JavaFxImage(image.stringPath)
+    private fun loadImage(storedImage: StoredImage) {
+        imageView.image = JavaFxImage(storedImage.stringPath)
         reset()
     }
 }

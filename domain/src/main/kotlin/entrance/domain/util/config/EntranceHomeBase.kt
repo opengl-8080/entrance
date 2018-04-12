@@ -1,8 +1,8 @@
-package entrance.domain.config
+package entrance.domain.util.config
 
-import entrance.domain.file.Directory
-import entrance.domain.file.LocalFile
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.Directory
+import entrance.domain.util.file.LocalFile
+import entrance.domain.util.file.RelativePath
 
 abstract class EntranceHomeBase: EntranceHome {
     

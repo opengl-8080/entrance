@@ -2,7 +2,7 @@ package entrance.infrastructure.similar
 
 import entrance.domain.entry.EntryImage
 import entrance.domain.entry.LibraryDirectory
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.RelativePath
 import entrance.domain.similar.SimilarImage
 import entrance.domain.similar.SimilarImageFinder
 import entrance.infrastructure.util.Retry
@@ -12,7 +12,6 @@ import net.semanticmetadata.lire.searchers.GenericFastImageSearcher
 import org.apache.lucene.index.DirectoryReader
 import org.apache.lucene.store.FSDirectory
 import org.springframework.stereotype.Component
-import java.nio.file.Files
 import javax.imageio.IIOException
 import javax.imageio.ImageIO
 

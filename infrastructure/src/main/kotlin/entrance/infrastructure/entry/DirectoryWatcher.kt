@@ -2,7 +2,7 @@ package entrance.infrastructure.entry
 
 import entrance.domain.entry.EntryDirectory
 import entrance.domain.entry.EntryImage
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.RelativePath
 import java.nio.file.FileSystems
 import java.nio.file.Path
 import java.nio.file.StandardWatchEventKinds

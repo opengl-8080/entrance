@@ -1,6 +1,6 @@
 package entrance.view.javafx
 
-import entrance.domain.error.InvalidValueException
+import entrance.domain.util.error.InvalidValueException
 import entrance.view.javafx.util.Dialog
 import entrance.view.javafx.util.extractRootCause
 import entrance.view.javafx.window.MainWindow

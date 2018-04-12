@@ -6,7 +6,7 @@ import entrance.domain.categorization.ReleasedTagSet
 import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.entry.LibraryDirectory
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.RelativePath
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagId

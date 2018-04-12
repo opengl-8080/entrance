@@ -1,4 +1,4 @@
-package entrance.domain.error
+package entrance.domain.util.error
 
 /**
  * ドメインオブジェクトが許容しない値が渡されたことを表す例外.

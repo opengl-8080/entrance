@@ -1,7 +1,6 @@
 package entrance.domain.entry
 
-import entrance.domain.file.LocalFile
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.RelativePath
 import java.nio.file.Path
 
 /**

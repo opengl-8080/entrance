@@ -1,7 +1,7 @@
 package entrance.application.deletion
 
-import entrance.domain.image.Image
-import entrance.domain.image.ImageRepository
+import entrance.domain.viewer.StoredImage
+import entrance.domain.viewer.StoredImageRepository
 import entrance.domain.similar.SimilarImageIndexDeleter
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -10,18 +10,18 @@ import org.springframework.transaction.annotation.Transactional
 @Component
 @Transactional
 class DeleteImageService (
-    private val imageRepository: ImageRepository,
-    private val similarImageIndexDeleter: SimilarImageIndexDeleter
+        private val storedImageRepository: StoredImageRepository,
+        private val similarImageIndexDeleter: SimilarImageIndexDeleter
 ) {
     private val logger = LoggerFactory.getLogger(DeleteImageService::class.java)
     
-    fun delete(image: Image) {
-        logger.info("delete image = ${image.stringRelativePath}")
+    fun delete(storedImage: StoredImage) {
+        logger.info("delete image = ${storedImage.stringRelativePath}")
         logger.info("delete from database")
-        imageRepository.delete(image)
+        storedImageRepository.delete(storedImage)
         logger.info("delete index")
-        similarImageIndexDeleter.deleteIndex(image)
+        similarImageIndexDeleter.deleteIndex(storedImage)
         logger.info("delete local file")
-        image.deleteLocalFile()
+        storedImage.deleteLocalFile()
     }
 }

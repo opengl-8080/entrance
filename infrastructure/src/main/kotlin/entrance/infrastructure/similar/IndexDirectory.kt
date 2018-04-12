@@ -1,7 +1,7 @@
 package entrance.infrastructure.similar
 
-import entrance.domain.config.EntranceHome
-import entrance.domain.file.RelativePath
+import entrance.domain.util.config.EntranceHome
+import entrance.domain.util.file.RelativePath
 import org.springframework.stereotype.Component
 import java.nio.file.Path
 

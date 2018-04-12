@@ -2,7 +2,7 @@ package entrance.domain.categorization
 
 import entrance.domain.ImageFile
 import entrance.domain.ItemId
-import entrance.domain.file.LocalFile
+import entrance.domain.util.file.LocalFile
 import entrance.domain.tag.Tag
 
 class TaggedImage(

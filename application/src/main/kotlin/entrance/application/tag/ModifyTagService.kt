@@ -1,7 +1,7 @@
 package entrance.application.tag
 
-import entrance.domain.error.ErrorMessage
-import entrance.domain.error.InvalidValueException
+import entrance.domain.util.error.ErrorMessage
+import entrance.domain.util.error.InvalidValueException
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagName

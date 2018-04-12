@@ -1,6 +1,6 @@
 package entrance.view.javafx.error
 
-import entrance.domain.error.ErrorMessage
+import entrance.domain.util.error.ErrorMessage
 import javafx.scene.Node
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea

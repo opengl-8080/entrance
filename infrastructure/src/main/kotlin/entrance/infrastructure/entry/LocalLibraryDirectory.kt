@@ -1,15 +1,14 @@
 package entrance.infrastructure.entry
 
-import entrance.domain.config.EntranceHome
+import entrance.domain.util.config.EntranceHome
 import entrance.domain.entry.EnteredImage
 import entrance.domain.entry.EntryImage
 import entrance.domain.entry.LibraryDirectory
-import entrance.domain.file.Directory
-import entrance.domain.file.LocalFile
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.Directory
+import entrance.domain.util.file.LocalFile
+import entrance.domain.util.file.RelativePath
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 import java.time.LocalDate

@@ -1,7 +1,7 @@
 package entrance.domain.similar
 
 import entrance.domain.ImageFile
-import entrance.domain.file.LocalFile
+import entrance.domain.util.file.LocalFile
 
 
 class SimilarImage(

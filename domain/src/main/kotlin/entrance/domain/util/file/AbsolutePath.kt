@@ -1,4 +1,4 @@
-package entrance.domain.file
+package entrance.domain.util.file
 
 import java.net.URI
 import java.nio.file.Path

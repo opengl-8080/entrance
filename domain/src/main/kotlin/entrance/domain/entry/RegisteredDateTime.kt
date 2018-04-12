@@ -1,4 +1,4 @@
-package entrance.domain
+package entrance.domain.entry
 
 import java.time.LocalDateTime
 

@@ -1,7 +1,7 @@
 package entrance.domain.entry
 
 import entrance.domain.ImageFile
-import entrance.domain.file.LocalFile
+import entrance.domain.util.file.LocalFile
 
 /**
  * エントリディレクトリに存在するエントリ対象の画像ファイル.

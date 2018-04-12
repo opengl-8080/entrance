@@ -1,12 +1,12 @@
-package entrance.domain.image
+package entrance.domain.viewer
 
 import entrance.domain.ImageFile
 import entrance.domain.ItemId
-import entrance.domain.file.LocalFile
-import entrance.domain.file.RelativePath
+import entrance.domain.util.file.LocalFile
+import entrance.domain.util.file.RelativePath
 import java.nio.file.Files
 
-class Image (
+class StoredImage(
     val itemId: ItemId,
     relativePath: RelativePath,
     private val localFile: LocalFile

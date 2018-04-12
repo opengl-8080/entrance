@@ -1,4 +1,4 @@
-package entrance.domain.error
+package entrance.domain.util.error
 
 
 class ErrorMessage(val message: String) {

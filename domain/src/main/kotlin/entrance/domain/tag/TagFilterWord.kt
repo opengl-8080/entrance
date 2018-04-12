@@ -1,6 +1,6 @@
 package entrance.domain.tag
 
-import entrance.domain.error.ErrorMessage
+import entrance.domain.util.error.ErrorMessage
 
 data class TagFilterWord(
     val value: String

@@ -1,8 +1,8 @@
 package entrance.view.javafx.window
 
 import entrance.application.deletion.DeleteImageService
-import entrance.domain.image.Image
-import entrance.domain.image.ImageRepository
+import entrance.domain.viewer.StoredImage
+import entrance.domain.viewer.StoredImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.view.javafx.control.TagListCellFactory
@@ -25,12 +25,12 @@ import java.util.*
 
 @Component
 class MainController(
-    private val tagMaintenanceWindow: TagMaintenanceWindow,
-    private val categorizationWindow: CategorizationWindow,
-    private val tagRepository: TagRepository,
-    private val imageRepository: ImageRepository,
-    private val singleImageViewerWindow: SingleImageViewerWindow,
-    private val deleteImageService: DeleteImageService
+        private val tagMaintenanceWindow: TagMaintenanceWindow,
+        private val categorizationWindow: CategorizationWindow,
+        private val tagRepository: TagRepository,
+        private val storedImageRepository: StoredImageRepository,
+        private val singleImageViewerWindow: SingleImageViewerWindow,
+        private val deleteImageService: DeleteImageService
 ) : Initializable {
     
     lateinit internal var primaryStage: Stage
@@ -46,7 +46,7 @@ class MainController(
     @FXML
     lateinit var openImageMenuItem: MenuItem
 
-    lateinit var thumbnailsView: ThumbnailsView<Image>
+    lateinit var thumbnailsView: ThumbnailsView<StoredImage>
     lateinit var tagSelectionView: TagSelectionView
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -70,9 +70,9 @@ class MainController(
     @FXML
     fun search() {
         thumbnailsView.images = if (tagSelectionView.isNotSelected()) {
-            imageRepository.findNotTaggedImage()
+            storedImageRepository.findNotTaggedImage()
         } else {
-            imageRepository.find(tagSelectionView.selectedTagList)
+            storedImageRepository.find(tagSelectionView.selectedTagList)
         }
     }
     

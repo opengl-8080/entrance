@@ -1,6 +1,6 @@
 package entrance.domain.tag
 
-import entrance.domain.error.ErrorMessage
+import entrance.domain.util.error.ErrorMessage
 
 data class TagName(
     val value: String
