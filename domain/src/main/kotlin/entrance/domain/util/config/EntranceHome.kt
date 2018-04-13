@@ -17,4 +17,9 @@ interface EntranceHome {
      * ホームからの相対パスでファイルを解決する.
      */
     fun resolveFile(relativePath: RelativePath): LocalFile
+
+    /**
+     * データベースに接続するための JDBC URL を取得する
+     */
+    fun jdbcUrl(): String
 }

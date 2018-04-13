@@ -9,8 +9,12 @@ import java.nio.file.Path
 @Component
 class EnvironmentVariableEntranceHome (
     @Value("\${ENTRANCE_HOME:./entrance_home}")
-    path: Path
+    path: Path,
+    @Value("\${spring.datasource.url}")
+    private val jdbcUrl: String
 ): EntranceHomeBase() {
     
     override val home: Directory = Directory(path)
+
+    override fun jdbcUrl(): String = jdbcUrl
 }
