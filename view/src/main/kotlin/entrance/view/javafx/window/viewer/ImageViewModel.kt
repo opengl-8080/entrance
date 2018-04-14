@@ -15,12 +15,20 @@ class ImageViewModel (
     private var index: Int = storedImageList.indexOf(initialStoredImage)
     private var zooming: Boolean = false
     private val zoomScale = SimpleDoubleProperty(1.0)
+
+    private var previousImage: Image
+    private var image: Image
+    private var nextImage: Image
     
     init {
         loadingImageProgressBar.managedProperty().bind(loadingImageProgressBar.visibleProperty())
         imageView.managedProperty().bind(imageView.visibleProperty())
         
-        loadImage(initialStoredImage)
+        previousImage = toJavaFxImage(previousIndex())
+        image = toJavaFxImage(index)
+        nextImage = toJavaFxImage(nextIndex())
+        switchImage()
+        
         this.imageView.scaleXProperty().bind(zoomScale)
         this.imageView.scaleYProperty().bind(zoomScale)
     }
@@ -124,35 +132,40 @@ class ImageViewModel (
      * 前の画像を読み込む.
      */
     fun loadPreviousImage() {
-        index--
-        if (index < 0) {
-            index = storedImageList.size - 1
-        }
+        index = previousIndex()
+
+        nextImage = image
+        image = previousImage
+        previousImage = toJavaFxImage(previousIndex())
         
-        loadImage(storedImageList[index])
+        switchImage()
     }
 
     /**
      * 次の画像を読み込む.
      */
     fun loadNextImage() {
-        index++
-        if (storedImageList.size <= index) {
-            index = 0
-        }
+        index = nextIndex()
         
-        loadImage(storedImageList[index])
+        previousImage = image
+        image = nextImage
+        nextImage = toJavaFxImage(nextIndex())
+
+        switchImage()
     }
     
-    private fun loadImage(storedImage: StoredImage) {
-        val image = Image(storedImage.uri.toString(), true)
-        
+    private fun toJavaFxImage(index: Int): Image = Image(storedImageList[index].uri.toString(), true)
+
+    private fun previousIndex(): Int = if (index - 1 < 0) storedImageList.size - 1 else index - 1
+    private fun nextIndex(): Int = if (storedImageList.size <= index + 1) 0 else index + 1
+    
+    private fun switchImage() {
         loadingImageProgressBar.visibleProperty().bind(image.progressProperty().lessThan(1.0))
         loadingImageProgressBar.progressProperty().bind(image.progressProperty())
-        
+
         imageView.visibleProperty().bind(image.progressProperty().isEqualTo(1.0, 0.0))
         imageView.image = image
-        
+
         reset()
     }
 }
