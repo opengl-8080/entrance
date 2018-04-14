@@ -7,6 +7,7 @@ import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.ContextMenu
 import javafx.scene.control.MenuItem
+import javafx.scene.control.ProgressBar
 import javafx.scene.control.SeparatorMenuItem
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
@@ -21,6 +22,8 @@ class SingleImageViewerController {
     lateinit var root: Pane
     @FXML
     lateinit var imageView: ImageView
+    @FXML
+    lateinit var loadingImageProgressBar: ProgressBar
     
     lateinit var imageViewModel: ImageViewModel
     private val contextMenu = ContextMenu()
@@ -38,7 +41,7 @@ class SingleImageViewerController {
         imageView.fitWidthProperty().bind(stage.widthProperty())
         imageView.fitHeightProperty().bind(stage.heightProperty())
 
-        imageViewModel = ImageViewModel(imageView, storedImageList, selectedStoredImage)
+        imageViewModel = ImageViewModel(imageView, loadingImageProgressBar, storedImageList, selectedStoredImage)
         
         initGestureHandlers()
     }

@@ -2,19 +2,24 @@ package entrance.view.javafx.window.viewer
 
 import entrance.domain.viewer.StoredImage
 import javafx.beans.property.SimpleDoubleProperty
+import javafx.scene.control.ProgressBar
+import javafx.scene.image.Image
 import javafx.scene.image.ImageView
-import javafx.scene.image.Image as JavaFxImage
 
 class ImageViewModel (
-        private val imageView: ImageView,
-        private val storedImageList: List<StoredImage>,
-        initialStoredImage: StoredImage
+    private val imageView: ImageView,
+    private val loadingImageProgressBar: ProgressBar,
+    private val storedImageList: List<StoredImage>,
+    initialStoredImage: StoredImage
 ) {
     private var index: Int = storedImageList.indexOf(initialStoredImage)
     private var zooming: Boolean = false
     private val zoomScale = SimpleDoubleProperty(1.0)
     
     init {
+        loadingImageProgressBar.managedProperty().bind(loadingImageProgressBar.visibleProperty())
+        imageView.managedProperty().bind(imageView.visibleProperty())
+        
         loadImage(initialStoredImage)
         this.imageView.scaleXProperty().bind(zoomScale)
         this.imageView.scaleYProperty().bind(zoomScale)
@@ -140,7 +145,14 @@ class ImageViewModel (
     }
     
     private fun loadImage(storedImage: StoredImage) {
-        imageView.image = JavaFxImage(storedImage.stringPath)
+        val image = Image(storedImage.stringPath, true)
+        
+        loadingImageProgressBar.visibleProperty().bind(image.progressProperty().lessThan(1.0))
+        loadingImageProgressBar.progressProperty().bind(image.progressProperty())
+        
+        imageView.visibleProperty().bind(image.progressProperty().isEqualTo(1.0, 0.0))
+        imageView.image = image
+        
         reset()
     }
 }
