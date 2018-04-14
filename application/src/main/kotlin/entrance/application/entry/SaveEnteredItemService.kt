@@ -20,6 +20,7 @@ class SaveEnteredItemService(
     fun save(entryImage: EntryImage) {
         val enteredImage = libraryDirectory.move(entryImage)
         enteredImageRepository.save(enteredImage)
+        enteredImage.createThumbnail()
         similarImageIndexer.indexSimilarImage(enteredImage)
         
         logger.debug("entryImage={}, enteredImage={}", entryImage, enteredImage)

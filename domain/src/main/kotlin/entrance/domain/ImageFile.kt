@@ -1,6 +1,8 @@
 package entrance.domain
 
+import java.net.URI
 
 interface ImageFile {
-    val stringPath: String
+    val uri: URI
+    val thumbnailUri: URI
 }

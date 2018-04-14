@@ -1,5 +1,6 @@
 package entrance.domain.categorization
 
+import entrance.domain.BaseImageFile
 import entrance.domain.ImageFile
 import entrance.domain.ItemId
 import entrance.domain.util.file.LocalFile
@@ -7,11 +8,10 @@ import entrance.domain.tag.Tag
 
 class TaggedImage(
     val itemId: ItemId,
-    val localFile: LocalFile,
+    localFile: LocalFile,
     val tagSet: Set<Tag>
-): ImageFile {
-    override val stringPath: String = localFile.uriString
-
+): BaseImageFile(localFile) {
+    
     /**
      * 新規に選択されたタグセットの中から、この画像に既に割り当てられているタグを除外し、
      * 本当に割り当てられるべき新規タグのセットを取得する.

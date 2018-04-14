@@ -24,9 +24,9 @@ class LireSimilarImageIndexer (
         LuceneUtils.createIndexWriter(FSDirectory.open(indexDirectory.path), false, LuceneUtils.AnalyzerType.WhitespaceAnalyzer).use { writer ->
             val localFile = libraryDirectory.resolveFile(enteredImage.path)
             val bufferedImage = ImageIO.read(localFile.path.toFile())
-            val document = globalDocumentBuilder.createDocument(bufferedImage, enteredImage.stringPath)
+            val document = globalDocumentBuilder.createDocument(bufferedImage, enteredImage.relativeStringPath)
             writer.addDocument(document)
-            logger.info("indexing image = ${enteredImage.stringPath}")
+            logger.info("indexing image = ${enteredImage.relativeStringPath}")
         }
     }
 }

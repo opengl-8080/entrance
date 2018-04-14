@@ -59,6 +59,6 @@ class LocalLibraryDirectory(
         }
 
         val relativePath = dir.relativize(outputFile)
-        return EnteredImage(relativePath)
+        return EnteredImage(outputFile, relativePath)
     }
 }

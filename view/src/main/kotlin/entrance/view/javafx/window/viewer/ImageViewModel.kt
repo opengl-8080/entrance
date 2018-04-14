@@ -145,7 +145,7 @@ class ImageViewModel (
     }
     
     private fun loadImage(storedImage: StoredImage) {
-        val image = Image(storedImage.stringPath, true)
+        val image = Image(storedImage.uri.toString(), true)
         
         loadingImageProgressBar.visibleProperty().bind(image.progressProperty().lessThan(1.0))
         loadingImageProgressBar.progressProperty().bind(image.progressProperty())

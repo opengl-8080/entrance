@@ -45,7 +45,7 @@ class HandleSimilarImageController {
         this.entryImage = entryImage
         this.similarImages = similarImages
         
-        entryImageView.image = Image(entryImage.stringPath)
+        entryImageView.image = Image(entryImage.uri.toString())
         entryImageSizeLabel.text = "${entryImageView.image.width.toInt()} × ${entryImageView.image.height.toInt()}"
 
         loadSimilarImage()
@@ -109,7 +109,7 @@ class HandleSimilarImageController {
     
     private fun loadSimilarImage() {
         val similarImage = similarImages[similarImageIndex.value]
-        similarImageView.image = Image(similarImage.stringPath)
+        similarImageView.image = Image(similarImage.uri.toString())
         similarImageSizeLabel.text = "${similarImageView.image.width.toInt()} × ${similarImageView.image.height.toInt()}"
     }
     
