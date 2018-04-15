@@ -38,8 +38,8 @@ class SingleImageViewerController {
         stage.width = 1000.0
         stage.height = 600.0
 
-        imageView.fitWidthProperty().bind(stage.widthProperty())
-        imageView.fitHeightProperty().bind(stage.heightProperty())
+        imageView.fitWidthProperty().bind(root.widthProperty())
+        imageView.fitHeightProperty().bind(root.heightProperty())
 
         imageViewModel = ImageViewModel(imageView, loadingImageProgressBar, imageList, imageFile)
         
