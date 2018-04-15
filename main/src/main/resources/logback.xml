@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="format" value="[%-5level] %date %-15logger{15} - %m%n" />
+    <property name="log.dir" value="${ENTRANCE_HOME:-./entrance_home}/log" />
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/entrance.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/%d{yyyyMM,aux}/entrance-%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>${format}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${format}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="entrance">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <root level="${LOG_LEVEL:-info}">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
