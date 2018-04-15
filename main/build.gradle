@@ -1,3 +1,8 @@
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+
 dependencies {
     compile project(':view')
     compile project(':infrastructure')
@@ -9,4 +14,19 @@ jar {
     manifest {
         attributes('Main-Class': 'entrance.Main')
     }
+}
+
+task("release", dependsOn: "build") {
+    String entranceHome = System.getenv("ENTRANCE_HOME")
+    String distJarPathString = "${entranceHome}/${jar.archiveName}"
+    
+    Path distJarPath = Paths.get(distJarPathString)
+    
+    if (Files.exists(distJarPath)) {
+        Path backupJarPath = Paths.get("${distJarPathString}.bk")
+        Files.move(distJarPath, backupJarPath, StandardCopyOption.REPLACE_EXISTING)
+    }
+    
+    Path jarPath = jar.archivePath.toPath()
+    Files.copy(jarPath, distJarPath, StandardCopyOption.REPLACE_EXISTING)
 }
