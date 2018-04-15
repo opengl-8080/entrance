@@ -104,6 +104,11 @@ class CategorizationController (
     }
     
     @FXML
+    fun deselectTag() {
+        tagSelectionView.deselectTag()
+    }
+    
+    @FXML
     fun clearImageSelect() {
         thumbnailsView.clearSelect()
     }

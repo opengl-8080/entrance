@@ -12,7 +12,7 @@ class TagSelectionView(
     private val tagRepository: TagRepository,
     private val pane: FlowPane,
     private val filterTextField: TextField,
-    selectedTagListView: ListView<Tag>
+    private val selectedTagListView: ListView<Tag>
 ) {
     private val tagViewList: ObservableList<TagView> = FXCollections.observableArrayList()
     val selectedTagList: ObservableList<Tag> = FXCollections.observableArrayList<Tag>()
@@ -61,5 +61,10 @@ class TagSelectionView(
                 }
             }
         }
+    }
+
+    fun deselectTag() {
+        val tag = selectedTagListView.selectionModel.selectedItem
+        tagViewList.filter { it.tag == tag }.forEach { it.isSelected = false }
     }
 }

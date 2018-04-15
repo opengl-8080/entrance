@@ -37,7 +37,14 @@
                 </VBox>
                 <ScrollPane fitToHeight="true" fitToWidth="true">
                     <content>
-                        <ListView fx:id="selectedTagsListView" />
+                        <ListView fx:id="selectedTagsListView">
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#deselectTag" text="選択を解除" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu></ListView>
                     </content>
                 </ScrollPane>
             </items>

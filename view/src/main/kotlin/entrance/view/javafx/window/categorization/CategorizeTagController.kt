@@ -56,4 +56,9 @@ class CategorizeTagController (
     fun clearTagSelect() {
         tagSelectionView.clearSelect()
     }
+    
+    @FXML
+    fun deselectTag() {
+        tagSelectionView.deselectTag()
+    }
 }

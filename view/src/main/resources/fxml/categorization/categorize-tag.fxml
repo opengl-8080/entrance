@@ -28,7 +28,14 @@
                   </ContextMenu>
                </contextMenu>
             </ScrollPane>
-            <ListView fx:id="selectedTagsListView" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="selectedTagsListView" prefHeight="200.0" prefWidth="200.0">
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#deselectTag" text="選択を解除" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu></ListView>
          </items>
       </SplitPane>
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" text="保存" />
