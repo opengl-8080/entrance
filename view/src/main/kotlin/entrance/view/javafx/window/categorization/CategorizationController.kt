@@ -8,6 +8,7 @@ import entrance.domain.tag.TagRepository
 import entrance.view.javafx.control.TagSelectionView
 import entrance.view.javafx.control.ThumbnailsView
 import entrance.view.javafx.util.FXPrototypeController
+import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
@@ -22,7 +23,8 @@ import java.util.*
 class CategorizationController (
     private val tagRepository: TagRepository,
     private val taggedImageRepository: TaggedImageRepository,
-    private val categorizeTagWindow: CategorizeTagWindow
+    private val categorizeTagWindow: CategorizeTagWindow,
+    private val singleImageViewerWindow: SingleImageViewerWindow
 ): Initializable {
     lateinit var ownStage: Stage
 
@@ -87,5 +89,12 @@ class CategorizationController (
         tagSelectionView.reload()
         thumbnailsView.clear()
         assignedTagFlowPane.children.clear()
+    }
+    
+    @FXML
+    fun openViewer() {
+        thumbnailsView.selectedThumbnail?.apply {
+            singleImageViewerWindow.open(imageFile, thumbnailsView.images)
+        }
     }
 }

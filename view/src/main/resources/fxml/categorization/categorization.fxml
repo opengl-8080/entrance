@@ -50,6 +50,7 @@
                       <ContextMenu>
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#openCategorizeTagWindow" text="タグ編集" />
+                        <MenuItem mnemonicParsing="false" onAction="#openViewer" text="表示" />
                           </items>
                       </ContextMenu>
                   </contextMenu>

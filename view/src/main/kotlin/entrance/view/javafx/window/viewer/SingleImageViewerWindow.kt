@@ -1,6 +1,6 @@
 package entrance.view.javafx.window.viewer
 
-import entrance.domain.viewer.StoredImage
+import entrance.domain.ImageFile
 import entrance.view.javafx.util.EntranceFXMLLoader
 import javafx.stage.Stage
 import org.springframework.stereotype.Component
@@ -17,9 +17,9 @@ class SingleImageViewerWindow(
         }
     }
     
-    fun open(selectedStoredImage: StoredImage, storedImageList: List<StoredImage>) {
+    fun open(imageFile: ImageFile, imageFileList: List<ImageFile>) {
         fxmlLoader.loadWithStage<SingleImageViewerController>("viewer/single-image.fxml") { stage, controller ->
-            controller.init(stage, selectedStoredImage, storedImageList)
+            controller.init(stage, imageFile, imageFileList)
 
             stage.fullScreenExitHint = ""
             openedStages += stage

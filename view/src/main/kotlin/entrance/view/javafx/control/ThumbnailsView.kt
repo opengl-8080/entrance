@@ -15,6 +15,11 @@ class ThumbnailsView<T: ImageFile>(
 
     var selectedThumbnail: ThumbnailView<T>? = null
         private set
+        get() = if (field != null) {
+            field
+        } else {
+            thumbnails.firstOrNull { it.selected }
+        }
     
     val selectedImages: Set<T>
         get() = thumbnails.filter { it.selected }.map { it.imageFile }.toSet()

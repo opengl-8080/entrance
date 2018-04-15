@@ -1,6 +1,6 @@
 package entrance.view.javafx.window.viewer
 
-import entrance.domain.viewer.StoredImage
+import entrance.domain.ImageFile
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.scene.control.ProgressBar
 import javafx.scene.image.Image
@@ -9,10 +9,10 @@ import javafx.scene.image.ImageView
 class ImageViewModel (
     private val imageView: ImageView,
     private val loadingImageProgressBar: ProgressBar,
-    private val storedImageList: List<StoredImage>,
-    initialStoredImage: StoredImage
+    private val imageFileList: List<ImageFile>,
+    initialImageFile: ImageFile
 ) {
-    private var index: Int = storedImageList.indexOf(initialStoredImage)
+    private var index: Int = imageFileList.indexOf(initialImageFile)
     private var zooming: Boolean = false
     private val zoomScale = SimpleDoubleProperty(1.0)
 
@@ -154,10 +154,10 @@ class ImageViewModel (
         switchImage()
     }
     
-    private fun toJavaFxImage(index: Int): Image = Image(storedImageList[index].uri.toString(), true)
+    private fun toJavaFxImage(index: Int): Image = Image(imageFileList[index].uri.toString(), true)
 
-    private fun previousIndex(): Int = if (index - 1 < 0) storedImageList.size - 1 else index - 1
-    private fun nextIndex(): Int = if (storedImageList.size <= index + 1) 0 else index + 1
+    private fun previousIndex(): Int = if (index - 1 < 0) imageFileList.size - 1 else index - 1
+    private fun nextIndex(): Int = if (imageFileList.size <= index + 1) 0 else index + 1
     
     private fun switchImage() {
         loadingImageProgressBar.visibleProperty().bind(image.progressProperty().lessThan(1.0))
