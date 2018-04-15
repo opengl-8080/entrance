@@ -97,4 +97,9 @@ class CategorizationController (
             singleImageViewerWindow.open(imageFile, thumbnailsView.images)
         }
     }
+    
+    @FXML
+    fun clearTagSelect() {
+        tagSelectionView.clear()
+    }
 }

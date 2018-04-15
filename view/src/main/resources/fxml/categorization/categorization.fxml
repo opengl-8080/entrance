@@ -27,6 +27,7 @@
                         <ContextMenu>
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#reloadTags" text="タグを再読み込み" />
+                              <MenuItem mnemonicParsing="false" onAction="#clearTagSelect" text="タグの選択をクリア" />
                           </items>
                         </ContextMenu>
                      </contextMenu>

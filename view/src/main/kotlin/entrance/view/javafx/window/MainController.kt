@@ -90,6 +90,11 @@ class MainController(
     }
     
     @FXML
+    fun clearTagSelect() {
+        tagSelectionView.clear()
+    }
+    
+    @FXML
     fun deleteImage() {
         thumbnailsView.selectedThumbnail?.apply {
             if (Dialog.confirm("削除してもよろしいですか？")) {

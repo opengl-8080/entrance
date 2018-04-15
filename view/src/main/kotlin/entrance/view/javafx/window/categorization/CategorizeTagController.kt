@@ -46,4 +46,14 @@ class CategorizeTagController (
         stage.close()
         onSavedListener.invoke()
     }
+    
+    @FXML
+    fun reloadTags() {
+        tagSelectionView.reload()
+    }
+    
+    @FXML
+    fun clearTagSelect() {
+        tagSelectionView.clear()
+    }
 }

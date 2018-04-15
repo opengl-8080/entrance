@@ -38,6 +38,10 @@ class TagSelectionView(
         }
     }
     
+    fun clear() {
+        tagViewList.filter { it.isSelected }.forEach { it.isSelected = false }
+    }
+    
     fun reload() {
         pane.children.clear()
         tagViewList.clear()
