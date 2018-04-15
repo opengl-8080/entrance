@@ -4,6 +4,8 @@ dependencies {
 }
 
 jar {
+    baseName = 'entrance'
+    
     manifest {
         attributes('Main-Class': 'entrance.Main')
     }
