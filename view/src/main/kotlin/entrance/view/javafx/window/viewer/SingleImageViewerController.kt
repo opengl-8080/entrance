@@ -32,7 +32,7 @@ class SingleImageViewerController {
     private var rightClicked: Boolean = false
     private var changingPage: Boolean = false
     
-    fun init(stage: Stage, imageFile: ImageFile, storedImageList: List<ImageFile>) {
+    fun init(stage: Stage, imageFile: ImageFile, imageList: List<ImageFile>) {
         createContextMenu(stage)
         
         stage.width = 1000.0
@@ -41,7 +41,7 @@ class SingleImageViewerController {
         imageView.fitWidthProperty().bind(stage.widthProperty())
         imageView.fitHeightProperty().bind(stage.heightProperty())
 
-        imageViewModel = ImageViewModel(imageView, loadingImageProgressBar, storedImageList, imageFile)
+        imageViewModel = ImageViewModel(imageView, loadingImageProgressBar, imageList, imageFile)
         
         initGestureHandlers()
     }

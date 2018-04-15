@@ -11,7 +11,7 @@ class ThumbnailsView<T: ImageFile>(
 ) {
 
     private val thumbnails = mutableListOf<ThumbnailView<T>>()
-    private val imagesProperty = mutableListOf<T>()
+    private val _images = mutableListOf<T>()
 
     var selectedThumbnail: ThumbnailView<T>? = null
         private set
@@ -27,15 +27,15 @@ class ThumbnailsView<T: ImageFile>(
     var onSelected: () -> Unit = {}
     
     var images: List<T>
-        get() = imagesProperty
+        get() = _images.toList()
         
         set(value) {
-            imagesProperty.clear()
-            imagesProperty.addAll(value)
+            _images.clear()
+            _images.addAll(value)
 
             thumbnails.clear()
             flowPane.children.clear()
-            imagesProperty
+            _images
                     .map { ThumbnailView(it) }
                     .forEach { thumbnail ->
                         thumbnail.selectedProperty.addListener { _, _, _ ->
