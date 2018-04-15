@@ -6,9 +6,11 @@ import entrance.view.javafx.util.extractRootCause
 import entrance.view.javafx.window.MainWindow
 import javafx.application.Application
 import javafx.stage.Stage
+import org.slf4j.LoggerFactory
 import org.springframework.context.ConfigurableApplicationContext
 
 class EntranceApplication: Application() {
+    private val logger = LoggerFactory.getLogger(EntranceApplication::class.java)
     
     companion object {
         var context: ConfigurableApplicationContext? = null
@@ -22,6 +24,7 @@ class EntranceApplication: Application() {
                     Dialog.warn(rootCause.message)
                 }
                 else -> {
+                    logger.error("unknown error", throwable)
                     Dialog.error(rootCause)
                 }
             }
