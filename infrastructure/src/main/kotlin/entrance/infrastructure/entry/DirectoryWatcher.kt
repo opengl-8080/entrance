@@ -1,7 +1,7 @@
 package entrance.infrastructure.entry
 
 import entrance.domain.entry.EntryDirectory
-import entrance.domain.entry.EntryImage
+import entrance.domain.util.file.LocalFile
 import entrance.domain.util.file.RelativePath
 import java.nio.file.FileSystems
 import java.nio.file.Path
@@ -15,7 +15,7 @@ class DirectoryWatcher (
     private val entryDirectory: EntryDirectory
 ) {
     
-    fun watchFileCreatedEvent(listener: (EntryImage) -> Unit) {
+    fun watchFileCreatedEvent(listener: (LocalFile) -> Unit) {
         val watcher = FileSystems.getDefault().newWatchService()
         dir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY)
         
@@ -25,8 +25,8 @@ class DirectoryWatcher (
             key.pollEvents().forEach { event ->
                 if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
                     val relativePath = RelativePath(event.context() as Path)
-                    val entryImage = entryDirectory.resolveFile(relativePath)
-                    listener(entryImage)
+                    val localFile = entryDirectory.resolveFile(relativePath)
+                    listener(localFile)
                 }
             }
         } while (key.reset())

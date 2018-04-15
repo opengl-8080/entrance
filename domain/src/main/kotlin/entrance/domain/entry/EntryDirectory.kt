@@ -1,5 +1,6 @@
 package entrance.domain.entry
 
+import entrance.domain.util.file.LocalFile
 import entrance.domain.util.file.RelativePath
 import java.nio.file.Path
 
@@ -19,10 +20,10 @@ interface EntryDirectory {
     fun path(): Path
 
     /**
-     * エントリディレクトリから相対パスを指定してエントリ画像を取得する.
+     * エントリディレクトリから相対パスを指定してファイルオブジェクトを取得する.
      * 
-     * @param relativePath エントリ画像の相対パス
-     * @return 解決したエントリ画像オブジェクト
+     * @param relativePath エントリディレクトリからの相対パス
+     * @return 解決したファイルオブジェクト
      */
-    fun resolveFile(relativePath: RelativePath): EntryImage
+    fun resolveFile(relativePath: RelativePath): LocalFile
 }
