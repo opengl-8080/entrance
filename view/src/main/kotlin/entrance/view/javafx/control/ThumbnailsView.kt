@@ -30,6 +30,7 @@ class ThumbnailsView<T: ImageFile>(
         get() = _images.toList()
         
         set(value) {
+            selectedThumbnail = null
             _images.clear()
             _images.addAll(value)
 
