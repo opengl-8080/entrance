@@ -38,7 +38,7 @@ class LireSimilarImageFinder (
             for (i in 0 until hits.length()) {
                 val score = hits.score(i)
 
-                if (score < 5.0) {
+                if (score < 2.5) {
                     val document = reader.document(hits.documentID(i))
                     val values = document.getValues(DocumentBuilder.FIELD_NAME_IDENTIFIER)
                     val filePath = values[0]
