@@ -38,7 +38,7 @@ class TagSelectionView(
         }
     }
     
-    fun clear() {
+    fun clearSelect() {
         tagViewList.filter { it.isSelected }.forEach { it.isSelected = false }
         filterTextField.text = ""
     }

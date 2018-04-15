@@ -68,4 +68,8 @@ class ThumbnailsView<T: ImageFile>(
     fun clear() {
         images = emptyList()
     }
+
+    fun clearSelect() {
+        thumbnails.filter { it.selected }.forEach { it.deselect() }
+    }
 }

@@ -91,7 +91,7 @@ class MainController(
     
     @FXML
     fun clearTagSelect() {
-        tagSelectionView.clear()
+        tagSelectionView.clearSelect()
     }
     
     @FXML
