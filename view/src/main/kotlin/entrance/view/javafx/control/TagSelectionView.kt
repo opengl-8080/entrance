@@ -11,7 +11,7 @@ import javafx.scene.layout.FlowPane
 class TagSelectionView(
     private val tagRepository: TagRepository,
     private val pane: FlowPane,
-    filterTextField: TextField,
+    private val filterTextField: TextField,
     selectedTagListView: ListView<Tag>
 ) {
     private val tagViewList: ObservableList<TagView> = FXCollections.observableArrayList()
@@ -40,6 +40,7 @@ class TagSelectionView(
     
     fun clear() {
         tagViewList.filter { it.isSelected }.forEach { it.isSelected = false }
+        filterTextField.text = ""
     }
     
     fun reload() {
