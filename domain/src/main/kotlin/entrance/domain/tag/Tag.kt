@@ -23,8 +23,15 @@ class Tag (
      */
     fun matches(text: String): Boolean {
         val upperCaseText = text.toUpperCase()
-        return name.value.toUpperCase().contains(upperCaseText)
-                || filterWord.value.toUpperCase().contains(upperCaseText)
+        val upperCaseName = name.value.toUpperCase()
+        val upperCaseFilterWord = filterWord.value.toUpperCase()
+        
+        return upperCaseText
+                .split(" ")
+                .filter { it != "" }
+                .all { token ->
+                    upperCaseName.contains(token) || upperCaseFilterWord.contains(token)
+                }
     }
 
     override fun equals(other: Any?): Boolean {
