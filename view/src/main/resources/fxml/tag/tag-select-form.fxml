@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane dividerPositions="0.7" orientation="VERTICAL" stylesheets="@../base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.control.TagSelectController">
+    <items>
+        <VBox>
+            <children>
+                <TextField fx:id="tagFilterTextField" />
+                <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                    <content>
+                        <FlowPane fx:id="tagsFlowPane" hgap="10.0" styleClass="panel" vgap="10.0" />
+                    </content>
+                    <contextMenu>
+                        <ContextMenu>
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#reloadTags" text="タグを再読み込み" />
+                                <MenuItem mnemonicParsing="false" onAction="#clearTagSelect" text="タグの選択をクリア" />
+                            </items>
+                        </ContextMenu>
+                    </contextMenu>
+                </ScrollPane>
+            </children>
+        </VBox>
+        <ScrollPane fitToHeight="true" fitToWidth="true">
+            <content>
+                <ListView fx:id="selectedTagsListView">
+                    <contextMenu>
+                        <ContextMenu>
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#deselectTag" text="選択を解除" />
+                            </items>
+                        </ContextMenu>
+                    </contextMenu></ListView>
+            </content>
+        </ScrollPane>
+    </items>
+</SplitPane>
