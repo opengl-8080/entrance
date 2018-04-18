@@ -3,12 +3,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -19,34 +17,9 @@
                 <VBox>
                     <children>
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" text="検索" />
-                        <TextField fx:id="tagFilterTextField" />
-                        <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
-                            <content>
-                                <FlowPane fx:id="tagsFlowPane" hgap="10.0" styleClass="panel" vgap="10.0" />
-                            </content>
-                     <contextMenu>
-                        <ContextMenu>
-                          <items>
-                            <MenuItem mnemonicParsing="false" onAction="#reloadTags" text="タグを再読み込み" />
-                              <MenuItem mnemonicParsing="false" onAction="#clearTagSelect" text="タグの選択をクリア" />
-                          </items>
-                        </ContextMenu>
-                     </contextMenu>
-                        </ScrollPane>
+                        <fx:include fx:id="tagSelect" VBox.vgrow="ALWAYS" source="../tag/tag-select-form.fxml" />
                     </children>
                 </VBox>
-                <ScrollPane fitToHeight="true" fitToWidth="true">
-                    <content>
-                        <ListView fx:id="selectedTagsListView">
-                     <contextMenu>
-                        <ContextMenu>
-                          <items>
-                            <MenuItem mnemonicParsing="false" onAction="#deselectTag" text="選択を解除" />
-                          </items>
-                        </ContextMenu>
-                     </contextMenu></ListView>
-                    </content>
-                </ScrollPane>
             </items>
         </SplitPane>
       <SplitPane dividerPositions="0.8" orientation="VERTICAL">

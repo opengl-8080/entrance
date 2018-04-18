@@ -1,43 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
-
 <VBox prefHeight="500.0" prefWidth="700.0" stylesheets="@../base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.categorization.CategorizeTagController">
    <children>
-      <TextField fx:id="tagFilterTextField" />
-      <SplitPane dividerPositions="0.7" orientation="VERTICAL" VBox.vgrow="ALWAYS">
-         <items>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
-               <content>
-                  <FlowPane fx:id="tagsFlowPane" hgap="10.0" styleClass="panel" vgap="10.0" />
-               </content>
-               <contextMenu>
-                  <ContextMenu>
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#reloadTags" text="タグを再読み込み" />
-                        <MenuItem mnemonicParsing="false" onAction="#clearTagSelect" text="タグの選択をクリア" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu>
-            </ScrollPane>
-            <ListView fx:id="selectedTagsListView" prefHeight="200.0" prefWidth="200.0">
-               <contextMenu>
-                  <ContextMenu>
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#deselectTag" text="選択を解除" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu></ListView>
-         </items>
-      </SplitPane>
+       <fx:include source="../tag/tag-select-form.fxml" fx:id="tagSelect" VBox.vgrow="ALWAYS" />
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" text="保存" />
    </children>
 </VBox>

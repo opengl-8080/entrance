@@ -25,6 +25,8 @@ class TagSelectController(
     @FXML
     lateinit var selectedTagsListView: ListView<Tag>
 
+    var onReloaded: () -> Unit = {}
+    
     private val tagViewList: ObservableList<TagView> = FXCollections.observableArrayList()
     val selectedTagList: ObservableList<Tag> = FXCollections.observableArrayList<Tag>()
     
@@ -68,6 +70,8 @@ class TagSelectController(
                 }
             }
         }
+
+        onReloaded()
     }
     
     @FXML
