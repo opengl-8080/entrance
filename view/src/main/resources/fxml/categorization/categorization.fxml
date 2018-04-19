@@ -12,12 +12,12 @@
 
 <SplitPane dividerPositions="0.35" prefHeight="600.0" prefWidth="900.0" stylesheets="@../base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.categorization.CategorizationController">
     <items>
-        <SplitPane dividerPositions="0.7" orientation="VERTICAL">
+        <SplitPane orientation="VERTICAL">
             <items>
                 <VBox>
                     <children>
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" text="検索" />
-                        <fx:include fx:id="tagSelect" VBox.vgrow="ALWAYS" source="../tag/tag-select-form.fxml" />
+                        <fx:include fx:id="tagSelect" source="../tag/tag-select-form.fxml" VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
             </items>
@@ -25,10 +25,10 @@
       <SplitPane dividerPositions="0.8" orientation="VERTICAL">
          <items>
               <ScrollPane fitToHeight="true" fitToWidth="true">
-                  <content>
-                      <FlowPane fx:id="thumbnailsPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
-                  </content>
-                  <contextMenu>
+               <content>
+                  <VBox fx:id="imagesVBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="panel" />
+               </content>
+               <contextMenu>
                       <ContextMenu>
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#openCategorizeTagWindow" text="タグ編集" />
@@ -37,7 +37,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#clearImageSelect" text="選択を解除" />
                           </items>
                       </ContextMenu>
-                  </contextMenu>
+               </contextMenu>
               </ScrollPane>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>

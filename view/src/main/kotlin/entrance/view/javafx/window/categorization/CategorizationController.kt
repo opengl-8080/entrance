@@ -1,16 +1,15 @@
 package entrance.view.javafx.window.categorization
 
 import entrance.domain.categorization.CategorizationImageUnit
-import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.view.javafx.control.TagSelectController
-import entrance.view.javafx.control.ThumbnailsView
 import entrance.view.javafx.util.FXPrototypeController
 import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
 import javafx.scene.layout.FlowPane
+import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import java.net.URL
 import java.util.*
@@ -26,23 +25,24 @@ class CategorizationController (
     @FXML
     lateinit var tagSelectController: TagSelectController
     @FXML
-    lateinit var thumbnailsPane: FlowPane
-    @FXML
     lateinit var assignedTagFlowPane: FlowPane
-
-    lateinit var thumbnailsView: ThumbnailsView<TaggedImage>
+    @FXML
+    lateinit var imagesVBox: VBox
+    
+    lateinit var taggedImageCardListView: TaggedImageCardListView
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        thumbnailsView = ThumbnailsView(thumbnailsPane, multiSelect = true)
+        taggedImageCardListView = TaggedImageCardListView(imagesVBox)
 
         tagSelectController.onReloaded = {
-            thumbnailsView.clear()
+            taggedImageCardListView.clear()
             assignedTagFlowPane.children.clear()
         }
     }
 
     @FXML
     fun search() {
+        taggedImageCardListView.clear()
         assignedTagFlowPane.children.clear()
         
         val imageList = if (tagSelectController.isNotSelected()) {
@@ -50,17 +50,16 @@ class CategorizationController (
         } else {
             taggedImageRepository.findTaggedImages(tagSelectController.selectedTagList)
         }
-        
-        thumbnailsView.images = imageList
-        
-        thumbnailsView.onSelected = {
-            val selectedImageList = thumbnailsView.selectedImages
 
-            val imageUnit = CategorizationImageUnit(selectedImageList)
+        taggedImageCardListView.add(imageList)
+
+        taggedImageCardListView.onSelected = {
+            val selectedImages = taggedImageCardListView.selectedImages.toSet()
+
+            val imageUnit = CategorizationImageUnit(selectedImages)
             val commonAssignedTags = imageUnit.commonAssignedTags
 
             assignedTagFlowPane.children.clear()
-
             commonAssignedTags.names.forEach { tagName ->
                 assignedTagFlowPane.children += Label(tagName)
             }
@@ -69,10 +68,8 @@ class CategorizationController (
 
     @FXML
     fun openCategorizeTagWindow() {
-        val selectedImages = thumbnailsView.selectedImages
-        
-        if (!selectedImages.isEmpty()) {
-            categorizeTagWindow.open(ownStage, CategorizationImageUnit(selectedImages), {
+        if (taggedImageCardListView.selected) {
+            categorizeTagWindow.open(ownStage, CategorizationImageUnit(taggedImageCardListView.selectedImages.toSet()), {
                 search()
             })
         }
@@ -80,13 +77,15 @@ class CategorizationController (
     
     @FXML
     fun openViewer() {
-        thumbnailsView.selectedThumbnail?.apply {
-            singleImageViewerWindow.open(imageFile, thumbnailsView.selectedImages.toList())
+        if (taggedImageCardListView.selected) {
+            val selectedImages = taggedImageCardListView.selectedImages
+            val firstImage = selectedImages.first()
+            singleImageViewerWindow.open(firstImage, selectedImages)
         }
     }
     
     @FXML
     fun clearImageSelect() {
-        thumbnailsView.clearSelect()
+        taggedImageCardListView.clearSelect()
     }
 }

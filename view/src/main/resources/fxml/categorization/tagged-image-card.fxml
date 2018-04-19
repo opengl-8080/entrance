@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<fx:root minHeight="-Infinity" prefHeight="200.0" style="-fx-border-radius: 5px;" stylesheets="@../base.css, @tagged-image-card.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="ALWAYS" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <BorderPane fx:id="imageBorderPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" styleClass="tagged-image-card__thumbnail" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <ScrollPane fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1">
+         <content>
+            <FlowPane fx:id="tagsFlowPane" hgap="10.0" styleClass="panel" vgap="10.0" />
+         </content>
+      </ScrollPane>
+   </children>
+   <styleClass>
+      <String fx:value="tagged-image-card" />
+      <String fx:value="panel" />
+   </styleClass>
+</fx:root>
