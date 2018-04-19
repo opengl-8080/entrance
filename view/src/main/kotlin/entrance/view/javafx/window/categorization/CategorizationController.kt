@@ -81,7 +81,7 @@ class CategorizationController (
     @FXML
     fun openViewer() {
         thumbnailsView.selectedThumbnail?.apply {
-            singleImageViewerWindow.open(imageFile, thumbnailsView.images)
+            singleImageViewerWindow.open(imageFile, thumbnailsView.selectedImages.toList())
         }
     }
     
