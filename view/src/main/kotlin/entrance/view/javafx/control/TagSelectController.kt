@@ -28,6 +28,8 @@ class TagSelectController(
     var onReloaded: () -> Unit = {}
     
     private val tagViewList: ObservableList<TagView> = FXCollections.observableArrayList()
+    val selectedTagViewList: List<TagView>
+        get() = tagViewList.filter { it.isSelected }
     val selectedTagList: ObservableList<Tag> = FXCollections.observableArrayList<Tag>()
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -49,6 +51,10 @@ class TagSelectController(
         tagViewList.filter { tagSet.contains(it.tag) }.forEach {
             it.isSelected = true
         }
+    }
+    
+    fun select(tag: Tag) {
+        tagViewList.firstOrNull { it.tag == tag }?.isSelected = true
     }
     
     @FXML

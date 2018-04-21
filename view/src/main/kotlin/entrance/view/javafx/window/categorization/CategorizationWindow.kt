@@ -19,8 +19,8 @@ class CategorizationWindow (
         fxmlLoader.loadWithStage<CategorizationController>("categorization/categorization.fxml") { stage, controller ->
             stage.title = "分類"
             stage.initOwner(owner)
-
-            controller.ownStage = stage
+            
+            controller.init(stage)
 
             opened = true
             stage.showAndWait()

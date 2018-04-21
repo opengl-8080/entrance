@@ -4,6 +4,7 @@ import entrance.domain.categorization.CategorizationImageUnit
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.view.javafx.control.TagSelectController
 import entrance.view.javafx.util.FXPrototypeController
+import entrance.view.javafx.window.tag.TagAssignToolBoxWindow
 import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -18,9 +19,10 @@ import java.util.*
 class CategorizationController (
     private val taggedImageRepository: TaggedImageRepository,
     private val categorizeTagWindow: CategorizeTagWindow,
-    private val singleImageViewerWindow: SingleImageViewerWindow
+    private val singleImageViewerWindow: SingleImageViewerWindow,
+    private val tagAssignToolBoxWindow: TagAssignToolBoxWindow
 ): Initializable {
-    lateinit var ownStage: Stage
+    private lateinit var ownStage: Stage
     
     @FXML
     lateinit var tagSelectController: TagSelectController
@@ -38,6 +40,11 @@ class CategorizationController (
             taggedImageCardListView.clear()
             assignedTagFlowPane.children.clear()
         }
+    }
+    
+    fun init(ownStage: Stage) {
+        this.ownStage = ownStage
+        tagAssignToolBoxWindow.open(ownStage)
     }
 
     @FXML
@@ -68,11 +75,11 @@ class CategorizationController (
 
     @FXML
     fun openCategorizeTagWindow() {
-        if (taggedImageCardListView.selected) {
-            categorizeTagWindow.open(ownStage, CategorizationImageUnit(taggedImageCardListView.selectedImages.toSet()), {
-                search()
-            })
-        }
+//        if (taggedImageCardListView.selected) {
+//            categorizeTagWindow.open(ownStage, CategorizationImageUnit(taggedImageCardListView.selectedImages.toSet()), {
+//                search()
+//            })
+//        }
     }
     
     @FXML

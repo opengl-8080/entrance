@@ -18,6 +18,8 @@ class TagView(val tag: Tag): ToggleButton(tag.name.value) {
         }
     }
     
+    fun hasSameTag(tag: Tag): Boolean = tag == this.tag
+    
     fun controlVisibility(text: String) {
         isVisible = tag.matches(text)
     }
