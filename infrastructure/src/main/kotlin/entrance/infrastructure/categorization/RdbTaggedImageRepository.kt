@@ -6,11 +6,11 @@ import entrance.domain.categorization.ReleasedTagSet
 import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.entry.LibraryDirectory
-import entrance.domain.util.file.RelativePath
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagId
 import entrance.domain.tag.TagName
+import entrance.domain.util.file.RelativePath
 import entrance.infrastructure.database.*
 import org.springframework.stereotype.Component
 
@@ -44,22 +44,40 @@ class RdbTaggedImageRepository(
                     TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = relationalTagSet)
                 }
     }
-
-    override fun save(taggedImage: TaggedImage, newAssignedTagSet: NewAssignedTagSet, releasedTagSet: ReleasedTagSet) {
+    
+    override fun save(taggedImage: TaggedImage) {
         val itemId = taggedImage.itemId.value
-        
-        newAssignedTagSet.tagSet.forEach { newAssignedTag ->
+
+        taggedImage.newAssignedTagSet.tagSet.forEach {  newAssignedTag ->
             val itemTagTable = ItemTagTable()
             itemTagTable.itemId = itemId
             itemTagTable.tagId = newAssignedTag.id.value
             itemTagTableDao.insert(itemTagTable)
         }
-        
-        releasedTagSet.tagSet.forEach { releasedTag ->
+
+        taggedImage.releasedTagSet.tagSet.forEach { releasedTag ->
             val itemTagTable = ItemTagTable()
             itemTagTable.itemId = itemId
             itemTagTable.tagId = releasedTag.id.value
             itemTagTableDao.delete(itemTagTable)
         }
     }
+//
+//    override fun save(taggedImage: TaggedImage, newAssignedTagSet: NewAssignedTagSet, releasedTagSet: ReleasedTagSet) {
+//        val itemId = taggedImage.itemId.value
+//        
+//        newAssignedTagSet.tagSet.forEach { newAssignedTag ->
+//            val itemTagTable = ItemTagTable()
+//            itemTagTable.itemId = itemId
+//            itemTagTable.tagId = newAssignedTag.id.value
+//            itemTagTableDao.insert(itemTagTable)
+//        }
+//        
+//        releasedTagSet.tagSet.forEach { releasedTag ->
+//            val itemTagTable = ItemTagTable()
+//            itemTagTable.itemId = itemId
+//            itemTagTable.tagId = releasedTag.id.value
+//            itemTagTableDao.delete(itemTagTable)
+//        }
+//    }
 }

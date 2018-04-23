@@ -1,6 +1,7 @@
 package entrance.view.javafx.window.categorization
 
 import entrance.domain.categorization.TaggedImage
+import entrance.domain.tag.Tag
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
 import javafx.fxml.FXML
@@ -38,12 +39,8 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
         imageView.image = Image(taggedImage.thumbnailUri.toString())
         imageView.fitWidthProperty().bind(imageBorderPane.widthProperty())
         imageView.fitHeightProperty().bind(imageBorderPane.heightProperty())
-        
-        taggedImage.tagSet.map { 
-            Label(it.name.value).apply { this.styleClass += "tagged-image-card__tag" }
-        }.forEach {
-            tagsFlowPane.children += it
-        }
+
+        renderTags()
 
         imageView.onMouseClicked = EventHandler { e ->
             if (e.button != MouseButton.PRIMARY) {
@@ -59,6 +56,26 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
             } else {
                 imageView.styleClass -= selectedCssClass
             }
+        }
+    }
+    
+    fun assign(tags: Set<Tag>) {
+        taggedImage.add(tags)
+        renderTags()
+    }
+    
+    fun release(tags: Set<Tag>) {
+        taggedImage.remove(tags)
+        renderTags()
+    }
+    
+    private fun renderTags() {
+        tagsFlowPane.children.clear()
+
+        taggedImage.tagSet.map {
+            Label(it.name.value).apply { this.styleClass += "tagged-image-card__tag" }
+        }.forEach {
+            tagsFlowPane.children += it
         }
     }
 }

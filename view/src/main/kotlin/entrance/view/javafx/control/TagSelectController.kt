@@ -53,12 +53,9 @@ class TagSelectController(
         }
     }
     
-    fun select(tag: Tag) {
-        tagViewList.firstOrNull { it.tag == tag }?.isSelected = true
-    }
-    
     @FXML
     fun reloadTags() {
+        tagFilterTextField.text = ""
         tagsFlowPane.children.clear()
         tagViewList.clear()
         selectedTagList.clear()

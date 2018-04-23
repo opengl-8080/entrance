@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root minHeight="-Infinity" prefHeight="200.0" style="-fx-border-radius: 5px;" stylesheets="@../base.css, @tagged-image-card.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root style="-fx-border-radius: 5px;" stylesheets="@../base.css, @tagged-image-card.css" type="GridPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" />
       <ColumnConstraints hgrow="ALWAYS" />
@@ -18,7 +18,7 @@
       <RowConstraints vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <BorderPane fx:id="imageBorderPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+      <BorderPane fx:id="imageBorderPane" minHeight="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0">
          <center>
             <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" styleClass="tagged-image-card__thumbnail" BorderPane.alignment="CENTER" />
          </center>
