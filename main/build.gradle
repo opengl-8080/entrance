@@ -17,16 +17,18 @@ jar {
 }
 
 task("release", dependsOn: "build") {
-    String entranceHome = System.getenv("ENTRANCE_HOME")
-    String distJarPathString = "${entranceHome}/${jar.archiveName}"
-    
-    Path distJarPath = Paths.get(distJarPathString)
-    
-    if (Files.exists(distJarPath)) {
-        Path backupJarPath = Paths.get("${distJarPathString}.bk")
-        Files.move(distJarPath, backupJarPath, StandardCopyOption.REPLACE_EXISTING)
+    doLast {
+        String entranceHome = System.getenv("ENTRANCE_HOME")
+        String distJarPathString = "${entranceHome}/${jar.archiveName}"
+
+        Path distJarPath = Paths.get(distJarPathString)
+
+        if (Files.exists(distJarPath)) {
+            Path backupJarPath = Paths.get("${distJarPathString}.bk")
+            Files.move(distJarPath, backupJarPath, StandardCopyOption.REPLACE_EXISTING)
+        }
+
+        Path jarPath = jar.archivePath.toPath()
+        Files.copy(jarPath, distJarPath, StandardCopyOption.REPLACE_EXISTING)
     }
-    
-    Path jarPath = jar.archivePath.toPath()
-    Files.copy(jarPath, distJarPath, StandardCopyOption.REPLACE_EXISTING)
 }
