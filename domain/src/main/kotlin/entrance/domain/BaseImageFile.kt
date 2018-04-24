@@ -7,7 +7,7 @@ import java.util.regex.Pattern
 abstract class BaseImageFile(
     protected val localFile: LocalFile
 ): ImageFile {
-    private val fileNamePattern = Pattern.compile("""^(?<baseName>.*)\.(?<extension>[^.]+)$""")
+    private val fileNamePattern = Pattern.compile("""^(?<baseName>.*)\.[^.]+$""")
 
     override val uri: URI = localFile.path.toUri()
     
@@ -17,8 +17,7 @@ abstract class BaseImageFile(
         val matcher = fileNamePattern.matcher(fileName)
         matcher.find()
         val baseName = matcher.group("baseName")
-        val extension = matcher.group("extension")
-        val thumbnailFileName = "${baseName}_thumb.$extension"
+        val thumbnailFileName = "${baseName}_thumb.jpg"
 
         it.path.parent.resolve(thumbnailFileName).toUri()
     }

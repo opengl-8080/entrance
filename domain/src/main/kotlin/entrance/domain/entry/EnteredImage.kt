@@ -32,11 +32,11 @@ class EnteredImage(
         val originalHeight = originalImage.height
         
         val (width, height) = if (originalWidth < originalHeight) {
-            val height = 100.0
+            val height = 200.0
             val width = originalWidth * (height / originalHeight)
             width to height
         } else {
-            val width = 100.0
+            val width = 200.0
             val height = originalHeight * (width / originalWidth)
             width to height
         }
