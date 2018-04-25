@@ -33,4 +33,14 @@ data class RelativePath (
      * @return 文字列形式の相対パス
      */
     fun stringPath() = path.toString().replace("\\", "/")
+
+    /**
+     * ファイル名だけを置き換えた新しい相対パスを生成する.
+     * 
+     * @param newFileName 新しいファイル名
+     * @return ファイル名が置き換えられた新しい相対パス
+     */
+    fun replaceFileName(newFileName: String): RelativePath {
+        return RelativePath(path.parent.resolve(newFileName))
+    }
 }

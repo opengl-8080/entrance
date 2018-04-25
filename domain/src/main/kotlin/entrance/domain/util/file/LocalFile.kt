@@ -12,9 +12,9 @@ class LocalFile (
 ) {
 
     /**
-     * このファイルのパスの URI 文字列
+     * この画像の拡張子を除いたベース名.
      */
-    val uriString = path.toUri().toString()
+    val baseName: String = path.fileName.toString().substringBeforeLast(".")
     
     /**
      * このファイルの拡張子.

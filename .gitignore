@@ -6,3 +6,4 @@ out/
 .idea/
 *.db
 classes/
+tool/*.class

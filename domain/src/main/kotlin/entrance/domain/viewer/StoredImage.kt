@@ -17,5 +17,9 @@ class StoredImage(
     fun deleteLocalFile() {
         Files.delete(localFile.path)
         Files.delete(Paths.get(thumbnailUri))
+        val originalImagePath = Paths.get(originalSizeImageUri)
+        if (Files.exists(originalImagePath)) {
+            Files.delete(originalImagePath)
+        }
     }
 }

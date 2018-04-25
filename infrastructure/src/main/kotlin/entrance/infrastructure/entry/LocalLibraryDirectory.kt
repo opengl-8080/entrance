@@ -1,9 +1,9 @@
 package entrance.infrastructure.entry
 
-import entrance.domain.util.config.EntranceHome
 import entrance.domain.entry.EnteredImage
 import entrance.domain.entry.EntryImage
 import entrance.domain.entry.LibraryDirectory
+import entrance.domain.util.config.EntranceHome
 import entrance.domain.util.file.Directory
 import entrance.domain.util.file.LocalFile
 import entrance.domain.util.file.RelativePath
@@ -57,8 +57,14 @@ class LocalLibraryDirectory(
                 }
             }
         }
-
+        
         val relativePath = dir.relativize(outputFile)
-        return EnteredImage(outputFile, relativePath)
+        val enteredImage = EnteredImage(outputFile, relativePath)
+        
+        return if (enteredImage.isTooLarge()) {
+            enteredImage.createSmallSizeImage()
+        } else {
+            enteredImage
+        }
     }
 }
