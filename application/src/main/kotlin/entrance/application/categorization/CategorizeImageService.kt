@@ -16,14 +16,4 @@ class CategorizeImageService (
             taggedImageRepository.save(taggedImage)
         }
     }
-    
-//    fun categorize(imageUnit: CategorizationImageUnit, selectedTagList: Set<Tag>) {
-//        val newSelectedTagSet = imageUnit.commonAssignedTags.filterNewSelectedTagSet(selectedTagList)
-//        val releasedTagSet = imageUnit.commonAssignedTags.filterReleasedTagSet(selectedTagList)
-//        
-//        imageUnit.imageList.forEach { image ->
-//            val newAssignedTagSet = image.filterNewAssignedTagSet(newSelectedTagSet)
-//            taggedImageRepository.save(image, newAssignedTagSet, releasedTagSet)
-//        }
-//    }
 }

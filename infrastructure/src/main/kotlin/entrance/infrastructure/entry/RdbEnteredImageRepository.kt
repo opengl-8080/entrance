@@ -17,6 +17,7 @@ class RdbEnteredImageRepository (
     override fun save(enteredImage: EnteredImage) {
         val itemTable = ItemTable()
         itemTable.registeredDateTime = enteredImage.registeredDateTime
+        itemTable.rank = 1
         itemTableDao.insert(itemTable)
 
         val imageTable = ImageTable()

@@ -1,8 +1,7 @@
 package entrance.infrastructure.categorization
 
 import entrance.domain.ItemId
-import entrance.domain.categorization.NewAssignedTagSet
-import entrance.domain.categorization.ReleasedTagSet
+import entrance.domain.Rank
 import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.entry.LibraryDirectory
@@ -17,16 +16,16 @@ import org.springframework.stereotype.Component
 @Component
 class RdbTaggedImageRepository(
     private val imageTableDao: ImageTableDao,
-    private val itemTableDao: ItemTableDao,
     private val itemTagTableDao: ItemTagTableDao,
     private val libraryDirectory: LibraryDirectory,
-    private val tagTableDao: TagTableDao
+    private val tagTableDao: TagTableDao,
+    private val itemTableDao: ItemTableDao
 ): TaggedImageRepository {
     override fun findNotTaggedImages(): List<TaggedImage> {
         return imageTableDao.findNotTaggedImages()
                 .map { imageItemView ->
                     val localFile = libraryDirectory.resolveFile(RelativePath(imageItemView.path))
-                    TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = emptySet())
+                    TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = emptySet(), rank= Rank(imageItemView.rank))
                 }
     }
 
@@ -41,7 +40,7 @@ class RdbTaggedImageRepository(
                     }.toSet()
                     
                     val localFile = libraryDirectory.resolveFile(RelativePath(imageItemView.path))
-                    TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = relationalTagSet)
+                    TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = relationalTagSet, rank= Rank(imageItemView.rank))
                 }
     }
     
@@ -61,23 +60,9 @@ class RdbTaggedImageRepository(
             itemTagTable.tagId = releasedTag.id.value
             itemTagTableDao.delete(itemTagTable)
         }
+
+        val itemTable = itemTableDao.find(itemId)
+        itemTable.rank = taggedImage.rank.value
+        itemTableDao.update(itemTable)
     }
-//
-//    override fun save(taggedImage: TaggedImage, newAssignedTagSet: NewAssignedTagSet, releasedTagSet: ReleasedTagSet) {
-//        val itemId = taggedImage.itemId.value
-//        
-//        newAssignedTagSet.tagSet.forEach { newAssignedTag ->
-//            val itemTagTable = ItemTagTable()
-//            itemTagTable.itemId = itemId
-//            itemTagTable.tagId = newAssignedTag.id.value
-//            itemTagTableDao.insert(itemTagTable)
-//        }
-//        
-//        releasedTagSet.tagSet.forEach { releasedTag ->
-//            val itemTagTable = ItemTagTable()
-//            itemTagTable.itemId = itemId
-//            itemTagTable.tagId = releasedTag.id.value
-//            itemTagTableDao.delete(itemTagTable)
-//        }
-//    }
 }

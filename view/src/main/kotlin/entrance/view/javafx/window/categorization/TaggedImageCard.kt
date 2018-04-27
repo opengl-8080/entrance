@@ -1,5 +1,6 @@
 package entrance.view.javafx.window.categorization
 
+import entrance.domain.Rank
 import entrance.domain.categorization.TaggedImage
 import entrance.domain.tag.Tag
 import javafx.beans.property.SimpleBooleanProperty
@@ -7,6 +8,8 @@ import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.Label
+import javafx.scene.control.RadioButton
+import javafx.scene.control.ToggleGroup
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.input.MouseButton
@@ -23,8 +26,20 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
     lateinit var imageView: ImageView
     @FXML
     lateinit var tagsFlowPane: FlowPane
+    @FXML
+    lateinit var rankGroup: ToggleGroup
+    @FXML
+    lateinit var rankRadioButton1: RadioButton
+    @FXML
+    lateinit var rankRadioButton2: RadioButton
+    @FXML
+    lateinit var rankRadioButton3: RadioButton
+    @FXML
+    lateinit var rankRadioButton4: RadioButton
+    @FXML
+    lateinit var rankRadioButton5: RadioButton
     
-    var selectedProperty = SimpleBooleanProperty(false)
+    private var selectedProperty = SimpleBooleanProperty(false)
     var selected: Boolean
         get() = selectedProperty.value
         set(value) { selectedProperty.value = value }
@@ -56,6 +71,29 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
             } else {
                 imageView.styleClass -= selectedCssClass
             }
+        }
+
+        rankRadioButton1.userData = 1
+        rankRadioButton2.userData = 2
+        rankRadioButton3.userData = 3
+        rankRadioButton4.userData = 4
+        rankRadioButton5.userData = 5
+        
+        rankGroup.selectToggle(when (taggedImage.rank) {
+            Rank(1) -> rankRadioButton1
+            Rank(2) -> rankRadioButton2
+            Rank(3) -> rankRadioButton3
+            Rank(4) -> rankRadioButton4
+            Rank(5) -> rankRadioButton5
+            else -> throw Exception("unknown rank > ${taggedImage.rank}")
+        })
+
+        rankGroup.selectedToggleProperty().addListener { _, _, rankRadioButton ->
+            if (rankRadioButton == null) {
+                return@addListener
+            }
+
+            taggedImage.rank = Rank(rankRadioButton.userData as Int)
         }
     }
     

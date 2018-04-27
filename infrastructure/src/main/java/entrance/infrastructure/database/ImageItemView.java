@@ -14,6 +14,7 @@ public class ImageItemView {
     @Column(name = "REGISTERED_DATETIME")
     public LocalDateTime registeredDateTime;
     public String path;
+    public short rank;
 
     @Override
     public String toString() {
@@ -21,6 +22,7 @@ public class ImageItemView {
                 "id=" + id +
                 ", registeredDateTime=" + registeredDateTime +
                 ", path='" + path + '\'' +
+                ", rank=" + rank +
                 '}';
     }
 }

@@ -18,12 +18,15 @@ public class ItemTable {
     public Long id;
     @Column(name = "REGISTERED_DATETIME")
     public LocalDateTime registeredDateTime;
+    
+    public short rank;
 
     @Override
     public String toString() {
         return "ItemTable{" +
                 "id=" + id +
                 ", registeredDateTime=" + registeredDateTime +
+                ", rank=" + rank +
                 '}';
     }
 }
