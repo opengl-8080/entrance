@@ -3,6 +3,7 @@ package entrance.view.javafx.window.categorization
 import entrance.application.categorization.CategorizeImageService
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.tag.Tag
+import entrance.view.javafx.control.RankSelectController
 import entrance.view.javafx.control.TagSelectController
 import entrance.view.javafx.control.TagView
 import entrance.view.javafx.util.Dialog
@@ -26,6 +27,8 @@ class CategorizationController (
     
     @FXML
     lateinit var tagSelectController: TagSelectController
+    @FXML
+    lateinit var rankSelectController: RankSelectController
     @FXML
     lateinit var tagSelect2Controller: TagSelectController
     @FXML
@@ -52,9 +55,9 @@ class CategorizationController (
     @FXML
     fun search() {
         val imageList = if (tagSelectController.isNotSelected()) {
-            taggedImageRepository.findNotTaggedImages()
+            taggedImageRepository.findNotTaggedImages(rankSelectController.condition)
         } else {
-            taggedImageRepository.findTaggedImages(tagSelectController.selectedTagList)
+            taggedImageRepository.findTaggedImages(tagSelectController.selectedTagList, rankSelectController.condition)
         }
 
         taggedImageCardListView.replaceAll(imageList)

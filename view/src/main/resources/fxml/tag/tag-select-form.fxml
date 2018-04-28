@@ -13,7 +13,7 @@
     <items>
         <VBox>
             <children>
-                <TextField fx:id="tagFilterTextField" />
+                <TextField fx:id="tagFilterTextField" promptText="タグ絞り込み" />
                 <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
                     <content>
                         <FlowPane fx:id="tagsFlowPane" hgap="10.0" styleClass="panel" vgap="10.0" />

@@ -2,6 +2,7 @@ package entrance.infrastructure.categorization
 
 import entrance.domain.ItemId
 import entrance.domain.Rank
+import entrance.domain.RankCondition
 import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.entry.LibraryDirectory
@@ -21,16 +22,16 @@ class RdbTaggedImageRepository(
     private val tagTableDao: TagTableDao,
     private val itemTableDao: ItemTableDao
 ): TaggedImageRepository {
-    override fun findNotTaggedImages(): List<TaggedImage> {
-        return imageTableDao.findNotTaggedImages()
+    override fun findNotTaggedImages(rankCondition: RankCondition): List<TaggedImage> {
+        return imageTableDao.findNotTaggedImages(rankCondition.min.value, rankCondition.max.value)
                 .map { imageItemView ->
                     val localFile = libraryDirectory.resolveFile(RelativePath(imageItemView.path))
-                    TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = emptySet(), rank= Rank(imageItemView.rank))
+                    TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = emptySet(), rank= Rank.of(imageItemView.rank))
                 }
     }
 
-    override fun findTaggedImages(tagList: List<Tag>): List<TaggedImage> {
-        return imageTableDao.findTaggedImagesByTagIdList(tagList.map { it.id.value })
+    override fun findTaggedImages(tagList: List<Tag>, rankCondition: RankCondition): List<TaggedImage> {
+        return imageTableDao.findTaggedImagesByTagIdList(tagList.map { it.id.value }, rankCondition.min.value, rankCondition.max.value)
                 .map { imageItemView -> 
                     val relationalTagSet = tagTableDao.findByItemId(imageItemView.id).map { tagTable ->
                         val tagId = TagId(tagTable.id)
@@ -40,7 +41,7 @@ class RdbTaggedImageRepository(
                     }.toSet()
                     
                     val localFile = libraryDirectory.resolveFile(RelativePath(imageItemView.path))
-                    TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = relationalTagSet, rank= Rank(imageItemView.rank))
+                    TaggedImage(itemId = ItemId(imageItemView.id), localFile = localFile, tagSet = relationalTagSet, rank= Rank.of(imageItemView.rank))
                 }
     }
     

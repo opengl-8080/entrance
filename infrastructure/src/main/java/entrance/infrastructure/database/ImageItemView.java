@@ -14,7 +14,7 @@ public class ImageItemView {
     @Column(name = "REGISTERED_DATETIME")
     public LocalDateTime registeredDateTime;
     public String path;
-    public short rank;
+    public int rank;
 
     @Override
     public String toString() {

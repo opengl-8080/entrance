@@ -3,6 +3,7 @@ package entrance.view.javafx.window
 import entrance.application.deletion.DeleteImageService
 import entrance.domain.viewer.StoredImage
 import entrance.domain.viewer.StoredImageRepository
+import entrance.view.javafx.control.RankSelectController
 import entrance.view.javafx.control.TagSelectController
 import entrance.view.javafx.control.ThumbnailsView
 import entrance.view.javafx.util.Dialog
@@ -28,6 +29,8 @@ class MainController(
 ) : Initializable {
     @FXML
     lateinit var tagSelectController: TagSelectController
+    @FXML
+    lateinit var rankSelectController: RankSelectController
     
     lateinit internal var primaryStage: Stage
     
@@ -55,9 +58,9 @@ class MainController(
     @FXML
     fun search() {
         thumbnailsView.images = if (tagSelectController.isNotSelected()) {
-            storedImageRepository.findNotTaggedImage()
+            storedImageRepository.findNotTaggedImage(rankSelectController.condition)
         } else {
-            storedImageRepository.find(tagSelectController.selectedTagList)
+            storedImageRepository.find(tagSelectController.selectedTagList, rankSelectController.condition)
         }
     }
     

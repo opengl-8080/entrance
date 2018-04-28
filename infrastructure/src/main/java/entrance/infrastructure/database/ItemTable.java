@@ -19,7 +19,7 @@ public class ItemTable {
     @Column(name = "REGISTERED_DATETIME")
     public LocalDateTime registeredDateTime;
     
-    public short rank;
+    public int rank;
 
     @Override
     public String toString() {

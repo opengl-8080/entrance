@@ -80,12 +80,11 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
         rankRadioButton5.userData = 5
         
         rankGroup.selectToggle(when (taggedImage.rank) {
-            Rank(1) -> rankRadioButton1
-            Rank(2) -> rankRadioButton2
-            Rank(3) -> rankRadioButton3
-            Rank(4) -> rankRadioButton4
-            Rank(5) -> rankRadioButton5
-            else -> throw Exception("unknown rank > ${taggedImage.rank}")
+            Rank.ONE -> rankRadioButton1
+            Rank.TWO -> rankRadioButton2
+            Rank.THREE -> rankRadioButton3
+            Rank.FOUR -> rankRadioButton4
+            Rank.FIVE -> rankRadioButton5
         })
 
         rankGroup.selectedToggleProperty().addListener { _, _, rankRadioButton ->
@@ -93,7 +92,7 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
                 return@addListener
             }
 
-            taggedImage.rank = Rank(rankRadioButton.userData as Int)
+            taggedImage.rank = Rank.of(rankRadioButton.userData as Int)
         }
     }
     
