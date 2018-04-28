@@ -1,5 +1,7 @@
 package entrance.domain.tag
 
+import entrance.domain.tag.category.TagCategory
+
 /**
  * 変更不可の参照のタグオブジェクト.
  * 
@@ -12,7 +14,8 @@ package entrance.domain.tag
 class Tag (
     val id: TagId,
     val name: TagName,
-    val filterWord: TagFilterWord
+    val filterWord: TagFilterWord,
+    val tagCategory: TagCategory
 ) {
 
     /**

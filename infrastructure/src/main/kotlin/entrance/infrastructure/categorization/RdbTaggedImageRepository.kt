@@ -10,6 +10,9 @@ import entrance.domain.tag.Tag
 import entrance.domain.tag.TagFilterWord
 import entrance.domain.tag.TagId
 import entrance.domain.tag.TagName
+import entrance.domain.tag.category.TagCategory
+import entrance.domain.tag.category.TagCategoryId
+import entrance.domain.tag.category.TagCategoryName
 import entrance.domain.util.file.RelativePath
 import entrance.infrastructure.database.*
 import org.springframework.stereotype.Component
@@ -20,7 +23,8 @@ class RdbTaggedImageRepository(
     private val itemTagTableDao: ItemTagTableDao,
     private val libraryDirectory: LibraryDirectory,
     private val tagTableDao: TagTableDao,
-    private val itemTableDao: ItemTableDao
+    private val itemTableDao: ItemTableDao,
+    private val tagCategoryTableDao: TagCategoryTableDao
 ): TaggedImageRepository {
     override fun findNotTaggedImages(rankCondition: RankCondition): List<TaggedImage> {
         return imageTableDao.findNotTaggedImages(rankCondition.min.value, rankCondition.max.value)
@@ -37,7 +41,13 @@ class RdbTaggedImageRepository(
                         val tagId = TagId(tagTable.id)
                         val tagName = TagName(tagTable.name)
                         val tagFilterWord = TagFilterWord(tagTable.filterWord)
-                        Tag(id = tagId, name = tagName, filterWord = tagFilterWord)
+
+                        val tagCategoryTable = tagCategoryTableDao.find(tagTable.tagCategoryId)
+                        val tagCategoryId = TagCategoryId(tagCategoryTable.id)
+                        val tagCategoryName = TagCategoryName(tagCategoryTable.name)
+                        val tagCategory = TagCategory(id = tagCategoryId, name = tagCategoryName)
+                        
+                        Tag(id = tagId, name = tagName, filterWord = tagFilterWord, tagCategory = tagCategory)
                     }.toSet()
                     
                     val localFile = libraryDirectory.resolveFile(RelativePath(imageItemView.path))

@@ -1,4 +1,4 @@
 SELECT *
   FROM TAG
- WHERE NAME = /*name*/'name'
+ WHERE TAG.NAME = /*name*/'name'
    FOR UPDATE

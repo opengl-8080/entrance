@@ -1,8 +1,10 @@
 package entrance.domain.tag
 
-class ModifiableTag (
+import entrance.domain.tag.category.TagCategory
+
+data class ModifiableTag (
     val id: TagId,
     var name: TagName,
-    var filterWord: TagFilterWord
-) {
-}
+    var filterWord: TagFilterWord,
+    var tagCategory: TagCategory
+)

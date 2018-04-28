@@ -1,8 +1,10 @@
 package entrance.infrastructure.database;
 
+import entrance.domain.tag.category.TagCategory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.seasar.doma.Dao;
+import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
@@ -12,32 +14,28 @@ import java.util.List;
 
 @Dao
 @ConfigAutowireable
-public interface TagTableDao {
-    
+public interface TagCategoryTableDao {
     @Select
     @NotNull
-    List<TagTable> findAll();
-    
+    List<TagCategoryTable> findAll();
+
     @Select
-    TagTable find(Long id);
-    
-    @Select
-    List<TagTable> findByItemId(Long itemId);
-    
-    @Select
-    @Nullable
-    TagTable findByName(String name);
+    TagCategoryTable find(Long id);
 
     @Select
     @Nullable
-    TagTable findByNameForUpdate(String name);
-    
+    TagCategoryTable findByName(String name);
+
     @Select
-    List<TagTable> findByTagCategoryIdForUpdate(Long tagCategoryId);
-    
+    @Nullable
+    TagCategoryTable findByNameForUpdate(String name);
+
     @Insert
-    int insert(TagTable tagTable);
-    
+    int insert(TagCategoryTable tagCategoryTable);
+
     @Update
-    int update(TagTable tagTable);
+    int update(TagCategoryTable tagCategoryTable);
+
+    @Delete
+    int delete(TagCategoryTable tagCategoryTable);
 }

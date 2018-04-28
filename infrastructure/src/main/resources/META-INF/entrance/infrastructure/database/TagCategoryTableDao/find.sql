@@ -1,0 +1,3 @@
+SELECT *
+  FROM TAG_CATEGORY
+ WHERE ID = /*id*/-1

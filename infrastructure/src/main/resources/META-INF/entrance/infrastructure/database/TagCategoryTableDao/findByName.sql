@@ -1,0 +1,3 @@
+SELECT *
+  FROM TAG_CATEGORY
+ WHERE NAME = /*name*/'name'

@@ -9,6 +9,7 @@ import entrance.view.javafx.control.ThumbnailsView
 import entrance.view.javafx.util.Dialog
 import entrance.view.javafx.window.categorization.CategorizationWindow
 import entrance.view.javafx.window.tag.TagMaintenanceWindow
+import entrance.view.javafx.window.tag.category.TagCategoryMaintenanceWindow
 import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -21,11 +22,12 @@ import java.util.*
 
 @Component
 class MainController(
-        private val tagMaintenanceWindow: TagMaintenanceWindow,
-        private val categorizationWindow: CategorizationWindow,
-        private val storedImageRepository: StoredImageRepository,
-        private val singleImageViewerWindow: SingleImageViewerWindow,
-        private val deleteImageService: DeleteImageService
+    private val tagMaintenanceWindow: TagMaintenanceWindow,
+    private val categorizationWindow: CategorizationWindow,
+    private val storedImageRepository: StoredImageRepository,
+    private val singleImageViewerWindow: SingleImageViewerWindow,
+    private val deleteImageService: DeleteImageService,
+    private val tagCategoryMaintenanceWindow: TagCategoryMaintenanceWindow
 ) : Initializable {
     @FXML
     lateinit var tagSelectController: TagSelectController
@@ -43,6 +45,11 @@ class MainController(
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         thumbnailsView = ThumbnailsView(thumbnailsPane)
+    }
+    
+    @FXML
+    fun openTagCategoryMaintenance() {
+        tagCategoryMaintenanceWindow.open(primaryStage)
     }
     
     @FXML

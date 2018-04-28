@@ -1,5 +1,7 @@
 package entrance.domain.tag
 
+import entrance.domain.tag.category.TagCategory
+
 interface TagRepository {
     
     fun findForUpdate(name: TagName): ModifiableTag?
@@ -11,4 +13,6 @@ interface TagRepository {
     fun register(newTag: NewTag)
     
     fun modify(modifiableTag: ModifiableTag)
+    
+    fun findByTagCategoryForUpdate(tagCategory: TagCategory): List<ModifiableTag>
 }
