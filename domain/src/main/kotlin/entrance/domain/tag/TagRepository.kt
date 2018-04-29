@@ -13,6 +13,8 @@ interface TagRepository {
     fun register(newTag: NewTag)
     
     fun modify(modifiableTag: ModifiableTag)
+
+    fun findByTagCategory(tagCategory: TagCategory): List<Tag>
     
     fun findByTagCategoryForUpdate(tagCategory: TagCategory): List<ModifiableTag>
 }

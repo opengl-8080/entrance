@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<fx:root fx:id="tiledPane" stylesheets="@../base.css" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <ScrollPane fitToHeight="true" fitToWidth="true">
+         <content>
+   </content>
+         <content>
+            <FlowPane fx:id="tagsFlowPane" hgap="10.0" styleClass="panel" vgap="10.0" />
+         </content>
+      </ScrollPane>
+   </content>
+</fx:root>

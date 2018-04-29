@@ -14,7 +14,11 @@ class RdbTagRepository(
     private val tagTableDao: TagTableDao,
     private val tagCategoryTableDao: TagCategoryTableDao
 ): TagRepository {
-    
+    override fun findByTagCategory(tagCategory: TagCategory): List<Tag> {
+        val tagTables = tagTableDao.findByTagCategoryId(tagCategory.id.value)
+        return tagTables.map { toTag(it) }
+    }
+
     override fun findByTagCategoryForUpdate(tagCategory: TagCategory): List<ModifiableTag> {
         val tagTables = tagTableDao.findByTagCategoryIdForUpdate(tagCategory.id.value)
         return tagTables.map { toModifiableTag(it) }

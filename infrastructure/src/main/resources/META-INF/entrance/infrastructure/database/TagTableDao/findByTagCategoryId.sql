@@ -1,0 +1,4 @@
+  SELECT *
+    FROM TAG
+   WHERE TAG.TAG_CATEGORY_ID = /*tagCategoryId*/1
+ORDER BY TAG.NAME ASC

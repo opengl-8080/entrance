@@ -31,6 +31,9 @@ public interface TagTableDao {
     @Select
     @Nullable
     TagTable findByNameForUpdate(String name);
+
+    @Select
+    List<TagTable> findByTagCategoryId(Long tagCategoryId);
     
     @Select
     List<TagTable> findByTagCategoryIdForUpdate(Long tagCategoryId);
