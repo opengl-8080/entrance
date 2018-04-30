@@ -21,6 +21,9 @@ public interface ImageTableDao {
     @Select
     List<ImageItemView> findTaggedImagesByTagIdList(List<Long> tagIdList, int minRank, int maxRank);
     
+    @Select
+    List<ImageItemView> findWallpapers(int minRank, int maxRank);
+    
     @Insert
     int insert(ImageTable imageTable);
     

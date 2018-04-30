@@ -6,5 +6,6 @@ data class RankCondition(
 ) {
     companion object {
         val ALL = RankCondition(Rank.FIVE, Rank.ONE)
+        val DEFAULT = RankCondition(Rank.FIVE, Rank.THREE)
     }
 }
