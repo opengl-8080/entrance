@@ -3,6 +3,7 @@ package entrance.infrastructure.database;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.seasar.doma.Dao;
+import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
@@ -43,4 +44,7 @@ public interface TagTableDao {
     
     @Update
     int update(TagTable tagTable);
+    
+    @Delete
+    int delete(TagTable tagTable);
 }

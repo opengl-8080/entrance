@@ -1,8 +1,13 @@
 package entrance.view.javafx.window.tag
 
+import entrance.application.tag.DeleteTagService
+import entrance.domain.Rank
+import entrance.domain.RankCondition
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
+import entrance.domain.viewer.StoredImageRepository
 import entrance.view.javafx.control.TagListCellFactory
+import entrance.view.javafx.util.Dialog
 import javafx.collections.FXCollections
 import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
@@ -19,7 +24,9 @@ import java.util.function.Predicate
 class TagMaintenanceController (
     private val registerTagWindow: RegisterTagWindow,
     private val modifyTagWindow: ModifyTagWindow,
-    private val tagRepository: TagRepository
+    private val tagRepository: TagRepository,
+    private val imageRepository: StoredImageRepository,
+    private val deleteTagService: DeleteTagService
 ): Initializable {
     
     lateinit internal var stage: Stage
@@ -60,7 +67,25 @@ class TagMaintenanceController (
     
     @FXML
     fun remove() {
-        
+        val selectedTag = tagListView.selectionModel.selectedItem
+        if (selectedTag != null) {
+            val tags = listOf<Tag>(selectedTag)
+            val rankCondition = RankCondition(Rank.FIVE, Rank.ONE)
+            val images = imageRepository.find(tags, rankCondition)
+            
+            val message = if (images.isEmpty()) {
+                "タグを削除します。よろしいですか？"
+            } else {
+                """このタグを使用している画像が存在します。
+                |タグを削除すると、画像からもタグの割り当てが解除されます。
+                |削除してもよろしいですか？""".trimMargin()
+            }
+            
+            if (Dialog.confirm(message)) {
+                deleteTagService.delete(selectedTag)
+                loadTags()
+            }
+        }
     }
     
     private fun loadTags() {

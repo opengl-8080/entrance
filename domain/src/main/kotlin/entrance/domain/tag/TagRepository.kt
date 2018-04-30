@@ -17,4 +17,6 @@ interface TagRepository {
     fun findByTagCategory(tagCategory: TagCategory): List<Tag>
     
     fun findByTagCategoryForUpdate(tagCategory: TagCategory): List<ModifiableTag>
+    
+    fun delete(tag: Tag)
 }

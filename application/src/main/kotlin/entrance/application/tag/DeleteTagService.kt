@@ -1,0 +1,35 @@
+package entrance.application.tag
+
+import entrance.domain.RankCondition
+import entrance.domain.categorization.TaggedImageRepository
+import entrance.domain.tag.Tag
+import entrance.domain.tag.TagRepository
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
+@Service
+@Transactional
+class DeleteTagService (
+    private val tagRepository: TagRepository,
+    private val imageRepository: TaggedImageRepository
+) {
+    private val logger = LoggerFactory.getLogger(DeleteTagService::class.java)
+    
+    fun delete(tag: Tag) {
+        // lock
+        val mutableTag = tagRepository.findForUpdate(tag.name)
+
+        val tagList = listOf(tag)
+        
+        val images = imageRepository.findTaggedImages(tagList, RankCondition.ALL)
+        images.forEach { image ->
+            image.remove(tagList.toSet())
+            imageRepository.save(image)
+            logger.debug("remove tag (${tag.name.value}) from image (${image.uri})")
+        }
+        
+        logger.info("delete tag (${tag.name.value})")
+        tagRepository.delete(tag)
+    }
+}

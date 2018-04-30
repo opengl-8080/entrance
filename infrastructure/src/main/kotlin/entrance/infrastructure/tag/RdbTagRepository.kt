@@ -14,6 +14,11 @@ class RdbTagRepository(
     private val tagTableDao: TagTableDao,
     private val tagCategoryTableDao: TagCategoryTableDao
 ): TagRepository {
+    override fun delete(tag: Tag) {
+        val tagTable = tagTableDao.find(tag.id.value)
+        tagTableDao.delete(tagTable)
+    }
+
     override fun findByTagCategory(tagCategory: TagCategory): List<Tag> {
         val tagTables = tagTableDao.findByTagCategoryId(tagCategory.id.value)
         return tagTables.map { toTag(it) }
