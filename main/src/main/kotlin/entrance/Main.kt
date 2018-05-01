@@ -2,7 +2,6 @@ package entrance
 
 import entrance.application.wallpaper.WallpaperService
 import entrance.domain.util.config.EntranceHome
-import entrance.infrastructure.entry.WatchingEntryDirectoryTask
 import entrance.view.javafx.EntranceApplication
 import javafx.application.Application
 import org.h2.tools.Shell
@@ -21,9 +20,6 @@ fun main(args: Array<String>) {
 
     val wallpaperService = context.getBean(WallpaperService::class.java)
     wallpaperService.doService()
-
-    val task = context.getBean(WatchingEntryDirectoryTask::class.java)
-    task.begin()
 
     EntranceApplication.context = context
     Application.launch(EntranceApplication::class.java, *args)

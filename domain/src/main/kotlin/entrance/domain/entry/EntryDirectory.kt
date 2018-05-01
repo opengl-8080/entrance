@@ -14,6 +14,11 @@ import java.nio.file.Path
 interface EntryDirectory {
 
     /**
+     * エントリディレクトリ内の画像を全て取得する.
+     */
+    fun readAllImages(): AllEntryImages
+
+    /**
      * このディレクトリのパスを取得する
      * @return ディレクトリのパス
      */

@@ -8,6 +8,7 @@ import entrance.view.javafx.control.TagSelectController
 import entrance.view.javafx.control.ThumbnailsView
 import entrance.view.javafx.util.Dialog
 import entrance.view.javafx.window.categorization.CategorizationWindow
+import entrance.view.javafx.window.entry.EntryProgressWindow
 import entrance.view.javafx.window.tag.TagMaintenanceWindow
 import entrance.view.javafx.window.tag.category.TagCategoryMaintenanceWindow
 import entrance.view.javafx.window.viewer.SingleImageViewerWindow
@@ -27,7 +28,8 @@ class MainController(
     private val storedImageRepository: StoredImageRepository,
     private val singleImageViewerWindow: SingleImageViewerWindow,
     private val deleteImageService: DeleteImageService,
-    private val tagCategoryMaintenanceWindow: TagCategoryMaintenanceWindow
+    private val tagCategoryMaintenanceWindow: TagCategoryMaintenanceWindow,
+    private val entryProgressWindow: EntryProgressWindow
 ) : Initializable {
     @FXML
     lateinit var tagSelectController: TagSelectController
@@ -85,6 +87,13 @@ class MainController(
                 deleteImageService.delete(imageFile)
                 search()
             }
+        }
+    }
+    
+    @FXML
+    fun executeEntry() {
+        if (Dialog.confirm("画像の読み込みを開始します。\nよろしいですか？")) {
+            entryProgressWindow.open(primaryStage)
         }
     }
 }

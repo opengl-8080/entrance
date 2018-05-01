@@ -6,10 +6,12 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
+
 <BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.MainController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
@@ -18,7 +20,13 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#openTagMaintenance" text="タグメンテナンス" />
                 <MenuItem mnemonicParsing="false" onAction="#openTagCategoryMaintenance" text="タグカテゴリメンテナンス" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#openCategorizationWindow" text="分類" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="エントリ">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#executeEntry" text="画像を読み込む" />
               </items>
             </Menu>
          </menus>
