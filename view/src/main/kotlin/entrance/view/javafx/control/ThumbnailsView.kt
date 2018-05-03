@@ -5,27 +5,27 @@ import javafx.event.EventHandler
 import javafx.scene.input.MouseButton
 import javafx.scene.layout.FlowPane
 
+/**
+ * 複数のサムネイル画像をまとめたビュー.
+ */
 class ThumbnailsView<T: ImageFile>(
-    private val flowPane: FlowPane,
-    private val multiSelect: Boolean = false
+    private val flowPane: FlowPane
 ) {
-
-    private val thumbnails = mutableListOf<ThumbnailView<T>>()
-    private val _images = mutableListOf<T>()
-
+    /**
+     * 現在選択されているサムネイル.
+     * 
+     * １つも選択されていない場合は null になります.
+     */
     var selectedThumbnail: ThumbnailView<T>? = null
         private set
-        get() = if (field != null) {
-            field
-        } else {
-            thumbnails.firstOrNull { it.selected }
-        }
-    
-    val selectedImages: Set<T>
-        get() = thumbnails.filter { it.selected }.map { it.imageFile }.toSet()
-    
-    var onSelected: () -> Unit = {}
-    
+
+    private val _images = mutableListOf<T>()
+
+    /**
+     * サムネイルとして表示する画像オブジェクトのリスト.
+     * 
+     * このプロパティに画像リストをセットすることで、全てのサムネイルを完全に置き換えることができます.
+     */
     var images: List<T>
         get() = _images.toList()
         
@@ -33,43 +33,27 @@ class ThumbnailsView<T: ImageFile>(
             selectedThumbnail = null
             _images.clear()
             _images.addAll(value)
-
-            thumbnails.clear()
             flowPane.children.clear()
+
             _images
-                    .map { ThumbnailView(it) }
-                    .forEach { thumbnail ->
-                        thumbnail.selectedProperty.addListener { _, _, _ ->
-                            onSelected()
+                .map { ThumbnailView(it) }
+                .forEach { thumbnail ->
+                    flowPane.children += thumbnail
+                    
+                    thumbnail.onMouseClicked = EventHandler { e ->
+                        if (e.button != MouseButton.PRIMARY) {
+                            return@EventHandler
                         }
-                        
-                        if (!multiSelect) {
-                            thumbnail.onMouseClicked = EventHandler { e ->
-                                if (e.button != MouseButton.PRIMARY) {
-                                    return@EventHandler
-                                }
-
-                                if (selectedThumbnail == thumbnail) {
-                                    thumbnail.deselect()
-                                    selectedThumbnail = null
-                                } else {
-                                    selectedThumbnail?.deselect()
-                                    thumbnail.select()
-                                    selectedThumbnail = thumbnail
-                                }
-                            }
-                        }
-
-                        thumbnails += thumbnail
-                        flowPane.children += thumbnail
-                    }
-        }
     
-    fun clear() {
-        images = emptyList()
-    }
-
-    fun clearSelect() {
-        thumbnails.filter { it.selected }.forEach { it.deselect() }
-    }
+                        if (selectedThumbnail == thumbnail) {
+                            thumbnail.deselect()
+                            selectedThumbnail = null
+                        } else {
+                            selectedThumbnail?.deselect()
+                            thumbnail.select()
+                            selectedThumbnail = thumbnail
+                        }
+                    }
+                }
+        }
 }

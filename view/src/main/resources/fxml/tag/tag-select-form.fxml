@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.7" orientation="VERTICAL" stylesheets="@../base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.control.TagSelectController">
+<SplitPane dividerPositions="0.7" orientation="VERTICAL" stylesheets="@../base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.component.TagSelectController">
     <items>
         <VBox>
             <children>

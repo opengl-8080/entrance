@@ -1,8 +1,10 @@
-package entrance.view.javafx.control
+package entrance.view.javafx.component
 
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.domain.tag.category.TagCategoryRepository
+import entrance.view.javafx.control.TagListCellFactory
+import entrance.view.javafx.control.TagView
 import entrance.view.javafx.util.FXPrototypeController
 import entrance.view.javafx.window.tag.TagsPaneController
 import javafx.collections.FXCollections
@@ -34,6 +36,7 @@ class TagSelectController(
     
     val selectedTagViewList: List<TagView>
         get() = tagsPaneList.flatMap { it.selectedTagViewList }
+    
     val selectedTagList: ObservableList<Tag> = FXCollections.observableArrayList<Tag>()
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -97,7 +100,8 @@ class TagSelectController(
     
     @FXML
     fun deselectTag() {
-        val tag = selectedTagsListView.selectionModel.selectedItem
-        tagsPaneList.forEach { it.deselectTag(tag) }
+        selectedTagsListView.selectionModel.selectedItem?.let { tag ->
+            tagsPaneList.forEach { it.deselectTag(tag) }
+        }
     }
 }

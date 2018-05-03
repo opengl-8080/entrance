@@ -6,7 +6,7 @@
 <HBox xmlns="http://javafx.com/javafx"
       stylesheets="@./base.css"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="entrance.view.javafx.control.RankSelectController">
+            fx:controller="entrance.view.javafx.component.RankSelectController">
     <children>
         <Label maxHeight="1.7976931348623157E308" styleClass="panel" text="評価" />
         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" styleClass="panel" HBox.hgrow="ALWAYS">

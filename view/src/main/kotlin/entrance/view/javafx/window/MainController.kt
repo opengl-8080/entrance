@@ -3,8 +3,8 @@ package entrance.view.javafx.window
 import entrance.application.deletion.DeleteImageService
 import entrance.domain.viewer.StoredImage
 import entrance.domain.viewer.StoredImageRepository
-import entrance.view.javafx.control.RankSelectController
-import entrance.view.javafx.control.TagSelectController
+import entrance.view.javafx.component.RankSelectController
+import entrance.view.javafx.component.TagSelectController
 import entrance.view.javafx.control.ThumbnailsView
 import entrance.view.javafx.util.Dialog
 import entrance.view.javafx.window.categorization.CategorizationWindow
@@ -36,7 +36,7 @@ class MainController(
     @FXML
     lateinit var rankSelectController: RankSelectController
     
-    lateinit internal var primaryStage: Stage
+    lateinit var primaryStage: Stage
     
     @FXML
     lateinit var thumbnailsPane: FlowPane

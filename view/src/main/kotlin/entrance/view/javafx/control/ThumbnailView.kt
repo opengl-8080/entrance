@@ -1,24 +1,24 @@
 package entrance.view.javafx.control
 
 import entrance.domain.ImageFile
-import javafx.beans.property.ReadOnlyBooleanProperty
-import javafx.beans.property.ReadOnlyBooleanWrapper
-import javafx.beans.value.ObservableBooleanValue
 import javafx.event.EventHandler
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.input.MouseButton
 
+/**
+ * サムネイル画像のビュー.
+ */
 class ThumbnailView<out T: ImageFile>(
     val imageFile: T
 ): ImageView(Image(imageFile.thumbnailUri.toString())) {
     private val selectedCssClass = "thumbnail--selected"
     
-    private val _selectedProperty = ReadOnlyBooleanWrapper(false)
-    val selectedProperty: ReadOnlyBooleanProperty
-        get() = _selectedProperty.readOnlyProperty
-    val selected: Boolean
-        get() = selectedProperty.get()
+    /**
+     * このサムネイルが選択されているかどうかのフラグ.
+     */
+    var selected: Boolean = false
+        private set
     
     init {
         fitWidth = 100.0
@@ -32,7 +32,10 @@ class ThumbnailView<out T: ImageFile>(
             }
         }
     }
-    
+
+    /**
+     * このサムネイルの選択状態を切り替える.
+     */
     private fun switchSelect() {
         if (selected) {
             deselect()
@@ -40,22 +43,28 @@ class ThumbnailView<out T: ImageFile>(
             select()
         }
     }
-    
+
+    /**
+     * このサムネイルを選択状態にする.
+     */
     fun select() {
         if (selected) {
             return
         }
 
         styleClass.add(selectedCssClass)
-        _selectedProperty.value = true
+        selected = true
     }
-    
+
+    /**
+     * このサムネイルの選択状態を解除する.
+     */
     fun deselect() {
         if (!selected) {
             return
         }
 
         styleClass.remove(selectedCssClass)
-        _selectedProperty.value = false
+        selected = false
     }
 }

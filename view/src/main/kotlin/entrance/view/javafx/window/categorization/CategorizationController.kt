@@ -3,8 +3,8 @@ package entrance.view.javafx.window.categorization
 import entrance.application.categorization.CategorizeImageService
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.tag.Tag
-import entrance.view.javafx.control.RankSelectController
-import entrance.view.javafx.control.TagSelectController
+import entrance.view.javafx.component.RankSelectController
+import entrance.view.javafx.component.TagSelectController
 import entrance.view.javafx.control.TagView
 import entrance.view.javafx.util.Dialog
 import entrance.view.javafx.util.FXPrototypeController

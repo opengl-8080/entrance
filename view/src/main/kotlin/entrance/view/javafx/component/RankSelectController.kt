@@ -1,4 +1,4 @@
-package entrance.view.javafx.control
+package entrance.view.javafx.component
 
 import entrance.domain.Rank
 import entrance.domain.RankCondition
