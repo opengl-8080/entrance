@@ -5,6 +5,7 @@ import entrance.domain.util.file.LocalFile
 import entrance.domain.util.file.RelativePath
 import java.awt.image.BufferedImage
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 import javax.imageio.ImageIO
@@ -48,60 +49,47 @@ class EnteredImage(
      * この画像を小さくした画像を生成する.
      */
     fun createSmallSizeImage(): EnteredImage {
-        val originalSizeImagePath = localFile.path
-        val originalImage = ImageIO.read(originalSizeImagePath.toFile())
-        val originalWidth = originalImage.width
-        val originalHeight = originalImage.height
+        val originalPath = localFile.path
+        val originalSizePath = Paths.get(originalSizeImageUri)
+        val smallSizePath = localFile.path.parent.resolve("${localFile.baseName}.jpg")
 
-        val (width, height) = if (originalWidth < originalHeight) {
-            val height = 2000.0
-            val width = originalWidth * (height / originalHeight)
-            width to height
-        } else {
-            val width = 2000.0
-            val height = originalHeight * (width / originalWidth)
-            width to height
-        }
-
-        val scaledImage = originalImage.getScaledInstance(width.toInt(), height.toInt(), BufferedImage.SCALE_SMOOTH)
-
-        val smallSizeImage = BufferedImage(width.toInt(), height.toInt(), BufferedImage.TYPE_INT_RGB)
-        val graphics = smallSizeImage.createGraphics()
-        graphics.drawImage(scaledImage, 0, 0, null)
-
-        val originalSizeImageFile = Paths.get(originalSizeImageUri)
-        val smallSizeImageFile = localFile.path.parent.resolve("${localFile.baseName}.jpg")
-        Files.move(originalSizeImagePath, originalSizeImageFile, StandardCopyOption.ATOMIC_MOVE)
-        ImageIO.write(smallSizeImage, "jpg", smallSizeImageFile.toFile())
+        resizeImage(originalPath, smallSizePath, 2000.0, BufferedImage.SCALE_SMOOTH)
         
-        return EnteredImage(localFile=LocalFile(smallSizeImageFile), path = this.path.replaceFileName(smallSizeImageFile.fileName.toString()))
+        Files.move(originalPath, originalSizePath, StandardCopyOption.ATOMIC_MOVE)
+        
+        return EnteredImage(localFile=LocalFile(smallSizePath), path = this.path.replaceFileName(smallSizePath.fileName.toString()))
     }
 
     /**
      * この画像のサムネイル画像を生成する.
      */
     fun createThumbnail() {
-        val originalImage = ImageIO.read(localFile.path.toFile())
+        resizeImage(localFile.path, Paths.get(thumbnailUri), 200.0, BufferedImage.SCALE_FAST)
+    }
+    
+    private fun resizeImage(original: Path, dist: Path, limitSize: Double, hint: Int) {
+        val originalImage = ImageIO.read(original.toFile())
         val originalWidth = originalImage.width
         val originalHeight = originalImage.height
+
+        val distWidth: Double
+        val distHeight: Double
         
-        val (width, height) = if (originalWidth < originalHeight) {
-            val height = 200.0
-            val width = originalWidth * (height / originalHeight)
-            width to height
+        if (originalWidth < originalHeight) {
+            distWidth = originalWidth * (limitSize / originalHeight)
+            distHeight = limitSize
         } else {
-            val width = 200.0
-            val height = originalHeight * (width / originalWidth)
-            width to height
+            distWidth = limitSize
+            distHeight = originalHeight * (limitSize / originalWidth)
         }
 
-        val scaledImage = originalImage.getScaledInstance(width.toInt(), height.toInt(), BufferedImage.SCALE_FAST)
+        val distImage = BufferedImage(distWidth.toInt(), distHeight.toInt(), BufferedImage.TYPE_INT_RGB)
+        val graphics = distImage.createGraphics()
+        
+        val resizedImage = originalImage.getScaledInstance(distWidth.toInt(), distHeight.toInt(), hint)
+        graphics.drawImage(resizedImage, 0, 0, null)
 
-        val thumbnailImage = BufferedImage(width.toInt(), height.toInt(), BufferedImage.TYPE_INT_RGB)
-        val graphics = thumbnailImage.createGraphics()
-        graphics.drawImage(scaledImage, 0, 0, null)
-
-        ImageIO.write(thumbnailImage, "jpg", Paths.get(thumbnailUri).toFile())
+        ImageIO.write(distImage, "jpg", dist.toFile())
     }
 
     override fun toString(): String {
