@@ -69,7 +69,7 @@ class MainController(
         thumbnailsView.images = if (tagSelectController.isNotSelected()) {
             storedImageRepository.findNotTaggedImage(rankSelectController.condition)
         } else {
-            storedImageRepository.find(tagSelectController.selectedTagList, rankSelectController.condition)
+            storedImageRepository.find(tagSelectController.selectedTagSet, rankSelectController.condition)
         }
     }
     

@@ -1,7 +1,7 @@
 package entrance.view.javafx.window.categorization
 
+import entrance.domain.tag.SelectedTagSet
 import entrance.domain.categorization.TaggedImage
-import entrance.domain.tag.Tag
 import javafx.scene.layout.Pane
 
 class TaggedImageCardListView (
@@ -18,8 +18,8 @@ class TaggedImageCardListView (
     private val selectedCards: List<TaggedImageCard>
             get() = cardList.filter { it.selected }
     
-    fun assign(tags: Set<Tag>) = selectedCards.forEach {it.assign(tags)}
-    fun release(tags: Set<Tag>) = selectedCards.forEach { it.release(tags) }
+    fun assign(selectedTagSet: SelectedTagSet) = selectedCards.forEach {it.assign(selectedTagSet)}
+    fun release(selectedTagSet: SelectedTagSet) = selectedCards.forEach { it.release(selectedTagSet) }
 
     fun filterModifiedImages(): List<TaggedImage> = cardList.map { it.taggedImage }.filter { it.isModified() }
     

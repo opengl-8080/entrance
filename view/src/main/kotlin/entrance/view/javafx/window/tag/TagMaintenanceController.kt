@@ -3,6 +3,7 @@ package entrance.view.javafx.window.tag
 import entrance.application.tag.DeleteTagService
 import entrance.domain.Rank
 import entrance.domain.RankCondition
+import entrance.domain.tag.SelectedTagSet
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.domain.viewer.StoredImageRepository
@@ -69,9 +70,9 @@ class TagMaintenanceController (
     fun remove() {
         val selectedTag = tagListView.selectionModel.selectedItem
         if (selectedTag != null) {
-            val tags = listOf<Tag>(selectedTag)
+            val selectedTagSet = SelectedTagSet(selectedTag)
             val rankCondition = RankCondition(Rank.FIVE, Rank.ONE)
-            val images = imageRepository.find(tags, rankCondition)
+            val images = imageRepository.find(selectedTagSet, rankCondition)
             
             val message = if (images.isEmpty()) {
                 "タグを削除します。よろしいですか？"

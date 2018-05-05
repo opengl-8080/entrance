@@ -9,10 +9,9 @@ import java.nio.file.Paths
 
 class StoredImage(
     val itemId: ItemId,
-    relativePath: RelativePath,
+    val relativePath: RelativePath,
     localFile: LocalFile
 ): BaseImageFile(localFile) {
-    val stringRelativePath: String = relativePath.stringPath()
     
     fun deleteLocalFile() {
         Files.delete(localFile.path)

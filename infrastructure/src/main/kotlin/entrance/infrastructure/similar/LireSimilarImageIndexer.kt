@@ -22,11 +22,11 @@ class LireSimilarImageIndexer (
         val globalDocumentBuilder = GlobalDocumentBuilder(CEDD::class.java)
         
         LuceneUtils.createIndexWriter(FSDirectory.open(indexDirectory.path), false, LuceneUtils.AnalyzerType.WhitespaceAnalyzer).use { writer ->
-            val localFile = libraryDirectory.resolveFile(enteredImage.path)
+            val localFile = libraryDirectory.resolveFile(enteredImage.relativePath)
             val bufferedImage = ImageIO.read(localFile.path.toFile())
-            val document = globalDocumentBuilder.createDocument(bufferedImage, enteredImage.relativeStringPath)
+            val document = globalDocumentBuilder.createDocument(bufferedImage, enteredImage.relativePath.asString())
             writer.addDocument(document)
-            logger.info("indexing image = ${enteredImage.relativeStringPath}")
+            logger.info("indexing image = ${enteredImage.relativePath}")
         }
     }
 }

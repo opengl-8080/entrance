@@ -1,7 +1,7 @@
 package entrance.infrastructure.similar
 
-import entrance.domain.viewer.StoredImage
 import entrance.domain.similar.SimilarImageIndexDeleter
+import entrance.domain.viewer.StoredImage
 import net.semanticmetadata.lire.builders.DocumentBuilder
 import net.semanticmetadata.lire.utils.LuceneUtils
 import org.apache.lucene.index.Term
@@ -16,7 +16,7 @@ class LireIndexDeleter(
     override fun deleteIndex(storedImage: StoredImage) {
 
         LuceneUtils.createIndexWriter(FSDirectory.open(indexDirectory.path), false, LuceneUtils.AnalyzerType.WhitespaceAnalyzer).use { writer ->
-            val term = Term(DocumentBuilder.FIELD_NAME_IDENTIFIER, storedImage.stringRelativePath)
+            val term = Term(DocumentBuilder.FIELD_NAME_IDENTIFIER, storedImage.relativePath.asString())
             writer.deleteDocuments(term)
         }
     }

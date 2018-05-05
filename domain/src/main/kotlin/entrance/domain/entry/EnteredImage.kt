@@ -13,18 +13,16 @@ import javax.imageio.ImageIO
 /**
  * エントリが完了した画像.
  * 
- * @param path 画像ファイルの相対パス
+ * @param relativePath 画像ファイルの相対パス
  */
 class EnteredImage(
     localFile: LocalFile,
-    val path: RelativePath
+    val relativePath: RelativePath
 ): BaseImageFile(localFile) {
     /**
      * エントリが完了した日時.
      */
     val registeredDateTime = RegisteredDateTime.now().value
-    
-    val relativeStringPath: String = path.stringPath()
 
     /**画像サイズが大きすぎるかどうかの閾値*/
     private val tooLargeImageSize = 10000 * 10000
@@ -57,7 +55,7 @@ class EnteredImage(
         
         Files.move(originalPath, originalSizePath, StandardCopyOption.ATOMIC_MOVE)
         
-        return EnteredImage(localFile=LocalFile(smallSizePath), path = this.path.replaceFileName(smallSizePath.fileName.toString()))
+        return EnteredImage(localFile=LocalFile(smallSizePath), relativePath = this.relativePath.replaceFileName(smallSizePath.fileName.toString()))
     }
 
     /**
@@ -93,6 +91,6 @@ class EnteredImage(
     }
 
     override fun toString(): String {
-        return "EnteredImage(path=$path, registeredDateTime=$registeredDateTime, relativeStringPath='$relativeStringPath')"
+        return "EnteredImage(path=$relativePath, registeredDateTime=$registeredDateTime)"
     }
 }

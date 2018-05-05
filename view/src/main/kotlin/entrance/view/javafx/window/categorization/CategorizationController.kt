@@ -2,7 +2,6 @@ package entrance.view.javafx.window.categorization
 
 import entrance.application.categorization.CategorizeImageService
 import entrance.domain.categorization.TaggedImageRepository
-import entrance.domain.tag.Tag
 import entrance.view.javafx.component.RankSelectController
 import entrance.view.javafx.component.TagSelectController
 import entrance.view.javafx.control.TagView
@@ -57,7 +56,7 @@ class CategorizationController (
         val imageList = if (tagSelectController.isNotSelected()) {
             taggedImageRepository.findNotTaggedImages(rankSelectController.condition)
         } else {
-            taggedImageRepository.findTaggedImages(tagSelectController.selectedTagList, rankSelectController.condition)
+            taggedImageRepository.findTaggedImages(tagSelectController.selectedTagSet, rankSelectController.condition)
         }
 
         taggedImageCardListView.replaceAll(imageList)
@@ -90,21 +89,21 @@ class CategorizationController (
     
     @FXML
     fun assignTag() {
-        val selectedTagList = tagSelect2Controller.selectedTagList
-        taggedImageCardListView.assign(selectedTagList.toSet())
-        saveHistory(selectedTagList)
+        val selectedTagSet = tagSelect2Controller.selectedTagSet
+        taggedImageCardListView.assign(selectedTagSet)
+        saveHistory()
         tagSelect2Controller.clearTagSelect()
     }
 
     @FXML
     fun releaseTag() {
-        val selectedTagList = tagSelect2Controller.selectedTagList
-        taggedImageCardListView.release(selectedTagList.toSet())
-        saveHistory(selectedTagList)
+        val selectedTagSet = tagSelect2Controller.selectedTagSet
+        taggedImageCardListView.release(selectedTagSet)
+        saveHistory()
         tagSelect2Controller.clearTagSelect()
     }
 
-    private fun saveHistory(selectedTagList: List<Tag>) {
+    private fun saveHistory() {
         val newHistories = tagSelect2Controller
                 .selectedTagViewList
                 .filter { originalTagView ->

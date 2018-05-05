@@ -1,6 +1,7 @@
 package entrance.application.tag
 
 import entrance.domain.RankCondition
+import entrance.domain.tag.SelectedTagSet
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
@@ -20,11 +21,11 @@ class DeleteTagService (
         // lock
         val mutableTag = tagRepository.findForUpdate(tag.name)
 
-        val tagList = listOf(tag)
+        val selectedTagSet = SelectedTagSet(tag)
         
-        val images = imageRepository.findTaggedImages(tagList, RankCondition.ALL)
+        val images = imageRepository.findTaggedImages(selectedTagSet, RankCondition.ALL)
         images.forEach { image ->
-            image.remove(tagList.toSet())
+            image.remove(selectedTagSet)
             imageRepository.save(image)
             logger.debug("remove tag (${tag.name.value}) from image (${image.uri})")
         }

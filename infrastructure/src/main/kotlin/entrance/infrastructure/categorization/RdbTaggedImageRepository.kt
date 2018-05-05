@@ -3,6 +3,7 @@ package entrance.infrastructure.categorization
 import entrance.domain.ItemId
 import entrance.domain.Rank
 import entrance.domain.RankCondition
+import entrance.domain.tag.SelectedTagSet
 import entrance.domain.categorization.TaggedImage
 import entrance.domain.categorization.TaggedImageRepository
 import entrance.domain.entry.LibraryDirectory
@@ -34,8 +35,8 @@ class RdbTaggedImageRepository(
                 }
     }
 
-    override fun findTaggedImages(tagList: List<Tag>, rankCondition: RankCondition): List<TaggedImage> {
-        return imageTableDao.findTaggedImagesByTagIdList(tagList.map { it.id.value }, rankCondition.min.value, rankCondition.max.value)
+    override fun findTaggedImages(selectedTagSet: SelectedTagSet, rankCondition: RankCondition): List<TaggedImage> {
+        return imageTableDao.findTaggedImagesByTagIdList(selectedTagSet.idList, rankCondition.min.value, rankCondition.max.value)
                 .map { imageItemView -> 
                     val relationalTagSet = tagTableDao.findByItemId(imageItemView.id).map { tagTable ->
                         val tagId = TagId(tagTable.id)

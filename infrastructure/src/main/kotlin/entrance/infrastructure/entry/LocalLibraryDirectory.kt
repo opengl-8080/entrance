@@ -9,8 +9,6 @@ import entrance.domain.util.file.LocalFile
 import entrance.domain.util.file.RelativePath
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -46,7 +44,7 @@ class LocalLibraryDirectory(
         while (true) {
             TimeUnit.MILLISECONDS.sleep(500)
             try {
-                Files.move(entryImage.path, outputFile.path, StandardCopyOption.ATOMIC_MOVE)
+                entryImage.moveTo(outputFile)
                 break
             } catch (e: FileSystemException) {
                 logger.warn(e.message)

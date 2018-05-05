@@ -3,6 +3,7 @@ package entrance.domain.categorization
 import entrance.domain.BaseImageFile
 import entrance.domain.ItemId
 import entrance.domain.Rank
+import entrance.domain.tag.SelectedTagSet
 import entrance.domain.tag.Tag
 import entrance.domain.util.file.LocalFile
 
@@ -23,8 +24,8 @@ class TaggedImage(
     
     private val originalTagSet = tagSet.toSet()
     private val currentTagSet = tagSet.toMutableSet()
-    val tagSet: Set<Tag>
-        get() = currentTagSet
+    
+    fun forEachTag(iterator: (Tag) -> Unit) = currentTagSet.forEach(iterator)
     
     fun isModified(): Boolean {
         val tagWasModified = originalTagSet != currentTagSet
@@ -36,8 +37,8 @@ class TaggedImage(
         currentTagSet.addAll(tags)
     }
     
-    fun remove(tags: Set<Tag>) {
-        currentTagSet.removeAll(tags)
+    fun remove(selectedTagSet: SelectedTagSet) {
+        currentTagSet.removeAll(selectedTagSet.tags)
     }
     
     val newAssignedTagSet: NewAssignedTagSet

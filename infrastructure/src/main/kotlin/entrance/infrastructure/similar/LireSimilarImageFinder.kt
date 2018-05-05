@@ -2,9 +2,9 @@ package entrance.infrastructure.similar
 
 import entrance.domain.entry.EntryImage
 import entrance.domain.entry.LibraryDirectory
-import entrance.domain.util.file.RelativePath
 import entrance.domain.similar.SimilarImage
 import entrance.domain.similar.SimilarImageFinder
+import entrance.domain.util.file.RelativePath
 import entrance.infrastructure.util.Retry
 import net.semanticmetadata.lire.builders.DocumentBuilder
 import net.semanticmetadata.lire.imageanalysis.features.global.CEDD
@@ -13,7 +13,6 @@ import org.apache.lucene.index.DirectoryReader
 import org.apache.lucene.store.FSDirectory
 import org.springframework.stereotype.Component
 import javax.imageio.IIOException
-import javax.imageio.ImageIO
 
 @Component
 class LireSimilarImageFinder (
@@ -32,7 +31,7 @@ class LireSimilarImageFinder (
             val searcher = GenericFastImageSearcher(5, CEDD::class.java)
             
             val retry = Retry { e -> isImageReadException(e) }
-            val image = retry.with { ImageIO.read(entryImage.path.toFile()) }
+            val image = retry.with { entryImage.readImage() }
             val hits = searcher.search(image, reader)
 
             for (i in 0 until hits.length()) {

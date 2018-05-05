@@ -14,7 +14,6 @@ import javafx.scene.image.ImageView
 import javafx.scene.input.ScrollEvent
 import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
-import java.nio.file.Files
 
 @FXPrototypeController
 class HandleSimilarImageController {
@@ -71,8 +70,8 @@ class HandleSimilarImageController {
         if (!Dialog.confirm("エントリ画像を削除します.\nよろしいですか？")) {
             return
         }
-        
-        Files.delete(entryImage.path)
+
+        entryImage.delete()
         _result = SimilarImageHandleResult.noSave()
         stage.close()
     }

@@ -1,6 +1,7 @@
 package entrance.view.javafx.window.categorization
 
 import entrance.domain.Rank
+import entrance.domain.tag.SelectedTagSet
 import entrance.domain.categorization.TaggedImage
 import entrance.domain.tag.Tag
 import javafx.beans.property.SimpleBooleanProperty
@@ -96,23 +97,32 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
         }
     }
     
-    fun assign(tags: Set<Tag>) {
-        taggedImage.add(tags)
+    fun assign(selectedTagSet: SelectedTagSet) {
+        taggedImage.add(selectedTagSet.tags)
         renderTags()
     }
     
-    fun release(tags: Set<Tag>) {
-        taggedImage.remove(tags)
+    fun release(selectedTagSet: SelectedTagSet) {
+        taggedImage.remove(selectedTagSet)
         renderTags()
     }
     
     private fun renderTags() {
         tagsFlowPane.children.clear()
 
-        taggedImage.tagSet.map {
-            Label(it.name.value).apply { this.styleClass += "tagged-image-card__tag" }
-        }.forEach {
-            tagsFlowPane.children += it
+        taggedImage.forEachTag {
+            val label = mapToTagLabel(it)
+            addToFlowPane(label)
         }
+    }
+    
+    private fun mapToTagLabel(tag: Tag): Label {
+        val label = Label(tag.name.value)
+        label.styleClass += "tagged-image-card__tag"
+        return label
+    }
+    
+    private fun addToFlowPane(label: Label) {
+        tagsFlowPane.children += label
     }
 }

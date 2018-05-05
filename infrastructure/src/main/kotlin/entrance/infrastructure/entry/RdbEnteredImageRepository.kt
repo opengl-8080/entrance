@@ -22,7 +22,7 @@ class RdbEnteredImageRepository (
 
         val imageTable = ImageTable()
         imageTable.itemId = itemTable.id
-        imageTable.path = enteredImage.relativeStringPath
+        imageTable.path = enteredImage.relativePath.asString()
         imageTableDao.insert(imageTable)
     }
 }

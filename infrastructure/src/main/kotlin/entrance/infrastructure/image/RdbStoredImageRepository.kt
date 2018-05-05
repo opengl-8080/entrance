@@ -2,11 +2,11 @@ package entrance.infrastructure.image
 
 import entrance.domain.ItemId
 import entrance.domain.RankCondition
+import entrance.domain.tag.SelectedTagSet
 import entrance.domain.entry.LibraryDirectory
 import entrance.domain.util.file.RelativePath
 import entrance.domain.viewer.StoredImage
 import entrance.domain.viewer.StoredImageRepository
-import entrance.domain.tag.Tag
 import entrance.infrastructure.database.ImageTableDao
 import entrance.infrastructure.database.ItemTableDao
 import entrance.infrastructure.database.ItemTagTableDao
@@ -20,9 +20,9 @@ class RdbStoredImageRepository(
     private val libraryDirectory: LibraryDirectory
 ): StoredImageRepository {
 
-    override fun find(tagList: List<Tag>, rankCondition: RankCondition): List<StoredImage> {
+    override fun find(selectedTagSet: SelectedTagSet, rankCondition: RankCondition): List<StoredImage> {
         val categorizedTagList =
-                imageTableDao.findTaggedImagesByTagIdList(tagList.map { it.id.value }, rankCondition.min.value, rankCondition.max.value)
+                imageTableDao.findTaggedImagesByTagIdList(selectedTagSet.idList, rankCondition.min.value, rankCondition.max.value)
         return categorizedTagList.map { it ->
             val localFile = libraryDirectory.resolveFile(RelativePath(it.path))
             StoredImage(ItemId(it.id), RelativePath(it.path), localFile)

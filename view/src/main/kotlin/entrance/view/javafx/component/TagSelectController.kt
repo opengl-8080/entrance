@@ -1,5 +1,6 @@
 package entrance.view.javafx.component
 
+import entrance.domain.tag.SelectedTagSet
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import entrance.domain.tag.category.TagCategoryRepository
@@ -37,7 +38,9 @@ class TagSelectController(
     val selectedTagViewList: List<TagView>
         get() = tagsPaneList.flatMap { it.selectedTagViewList }
     
-    val selectedTagList: ObservableList<Tag> = FXCollections.observableArrayList<Tag>()
+    private val selectedTagList: ObservableList<Tag> = FXCollections.observableArrayList<Tag>()
+    val selectedTagSet: SelectedTagSet
+        get() = SelectedTagSet(selectedTagList.toSet())
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         reloadTags()
