@@ -1,6 +1,6 @@
 package entrance.infrastructure.similar
 
-import entrance.domain.entry.EnteredImage
+import entrance.domain.entry.image.EnteredImage
 import entrance.domain.entry.LibraryDirectory
 import entrance.domain.similar.SimilarImageIndexer
 import net.semanticmetadata.lire.builders.GlobalDocumentBuilder

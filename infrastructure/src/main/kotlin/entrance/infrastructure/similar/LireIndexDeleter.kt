@@ -1,7 +1,7 @@
 package entrance.infrastructure.similar
 
 import entrance.domain.similar.SimilarImageIndexDeleter
-import entrance.domain.viewer.StoredImage
+import entrance.domain.viewer.image.StoredImage
 import net.semanticmetadata.lire.builders.DocumentBuilder
 import net.semanticmetadata.lire.utils.LuceneUtils
 import org.apache.lucene.index.Term

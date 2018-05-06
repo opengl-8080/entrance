@@ -56,6 +56,17 @@ data class Directory (
     }
 
     /**
+     * このディレクトリから指定したディレクトリへ辿る相対パスを生成する.
+     *
+     * @param dir 相対パスを求めたいファイルオブジェクト
+     * @return このディレクトリから指定したファイルへの相対パス
+     */
+    fun relativize(dir: Directory): RelativePath {
+        val relativePath = path.relativize(dir.path)
+        return RelativePath(relativePath)
+    }
+
+    /**
      * このディレクトリの直下に存在する全てのファイルを取得する.
      * 
      * @return ディレクトリ直下に存在するファイルのリスト

@@ -19,6 +19,7 @@
                 <VBox>
                     <children>
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" text="検索" />
+                        <fx:include fx:id="itemTypeSelect" source="../component/item-type-select.fxml" />
                         <fx:include fx:id="rankSelect" source="../rank-select.fxml" />
                         <fx:include fx:id="tagSelect" source="../tag/tag-select-form.fxml" VBox.vgrow="ALWAYS" />
                     </children>

@@ -1,6 +1,6 @@
 package entrance.domain.similar
 
-import entrance.domain.viewer.StoredImage
+import entrance.domain.viewer.image.StoredImage
 
 
 interface SimilarImageIndexDeleter {

@@ -1,6 +1,6 @@
 package entrance.view.javafx.window.viewer
 
-import entrance.domain.ImageFile
+import entrance.domain.image.ImageFile
 import entrance.view.javafx.util.EntranceFXMLLoader
 import javafx.stage.Stage
 import org.springframework.stereotype.Component

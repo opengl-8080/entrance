@@ -1,8 +1,10 @@
 package entrance.infrastructure.entry
 
-import entrance.domain.entry.EnteredImage
-import entrance.domain.entry.EntryImage
 import entrance.domain.entry.LibraryDirectory
+import entrance.domain.entry.book.EnteredBook
+import entrance.domain.entry.book.EntryBook
+import entrance.domain.entry.image.EnteredImage
+import entrance.domain.entry.image.EntryImage
 import entrance.domain.util.config.EntranceHome
 import entrance.domain.util.file.Directory
 import entrance.domain.util.file.LocalFile
@@ -18,6 +20,7 @@ import java.util.concurrent.TimeUnit
 class LocalLibraryDirectory(
     entranceHome: EntranceHome
 ): LibraryDirectory {
+
     private val logger = LoggerFactory.getLogger(LocalLibraryDirectory::class.java)
 
     private val dir: Directory = entranceHome.initDir(RelativePath("library"))
@@ -30,13 +33,33 @@ class LocalLibraryDirectory(
         return dir.resolveFile(relativePath)
     }
     
-    override fun move(entryImage: EntryImage): EnteredImage {
+    override fun resolveDirectory(relativePath: RelativePath): Directory {
+        return dir.resolveDir(relativePath)
+    }
+    
+    override fun move(entryBook: EntryBook): EnteredBook {
+        val dateDir = dateDir()
+        val outputDir = dateDir.resolveDir(RelativePath(entryBook.name.value))
+        
+        entryBook.moveTo(outputDir)
+        val relativeDirPath = dir.relativize(outputDir)
+        
+        return EnteredBook(entryBook.name, outputDir, relativeDirPath)
+    }
+    
+    private fun dateDir(): Directory {
         val today = LocalDate.now()
         val yearDir = dir.resolveDir(RelativePath(today.format(yearFormatter)))
         val monthDir = yearDir.resolveDir(RelativePath(today.format(monthFormatter)))
         val dateDir = monthDir.resolveDir(RelativePath(today.format(dateFormatter)))
         dateDir.createIfNotExists()
-
+        
+        return dateDir
+    }
+    
+    override fun move(entryImage: EntryImage): EnteredImage {
+        val dateDir = dateDir()
+        
         val fileName = UUID.randomUUID().toString() + "." + entryImage.extension
         val outputFile = dateDir.resolveFile(RelativePath(fileName))
         var retryCount = 0

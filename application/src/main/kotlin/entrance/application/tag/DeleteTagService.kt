@@ -2,7 +2,7 @@ package entrance.application.tag
 
 import entrance.domain.RankCondition
 import entrance.domain.tag.SelectedTagSet
-import entrance.domain.categorization.TaggedImageRepository
+import entrance.domain.categorization.image.CategorizedImageRepository
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
 import org.slf4j.LoggerFactory
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class DeleteTagService (
     private val tagRepository: TagRepository,
-    private val imageRepository: TaggedImageRepository
+    private val imageRepository: CategorizedImageRepository
 ) {
     private val logger = LoggerFactory.getLogger(DeleteTagService::class.java)
     

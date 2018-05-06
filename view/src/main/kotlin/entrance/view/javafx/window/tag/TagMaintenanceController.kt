@@ -6,7 +6,7 @@ import entrance.domain.RankCondition
 import entrance.domain.tag.SelectedTagSet
 import entrance.domain.tag.Tag
 import entrance.domain.tag.TagRepository
-import entrance.domain.viewer.StoredImageRepository
+import entrance.domain.viewer.image.StoredImageRepository
 import entrance.view.javafx.control.TagListCellFactory
 import entrance.view.javafx.util.Dialog
 import javafx.collections.FXCollections
@@ -23,11 +23,11 @@ import java.util.function.Predicate
 
 @Component
 class TagMaintenanceController (
-    private val registerTagWindow: RegisterTagWindow,
-    private val modifyTagWindow: ModifyTagWindow,
-    private val tagRepository: TagRepository,
-    private val imageRepository: StoredImageRepository,
-    private val deleteTagService: DeleteTagService
+        private val registerTagWindow: RegisterTagWindow,
+        private val modifyTagWindow: ModifyTagWindow,
+        private val tagRepository: TagRepository,
+        private val imageRepository: StoredImageRepository,
+        private val deleteTagService: DeleteTagService
 ): Initializable {
     
     lateinit internal var stage: Stage

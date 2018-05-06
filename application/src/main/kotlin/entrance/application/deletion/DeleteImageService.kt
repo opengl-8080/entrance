@@ -1,7 +1,7 @@
 package entrance.application.deletion
 
-import entrance.domain.viewer.StoredImage
-import entrance.domain.viewer.StoredImageRepository
+import entrance.domain.viewer.image.StoredImage
+import entrance.domain.viewer.image.StoredImageRepository
 import entrance.domain.similar.SimilarImageIndexDeleter
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component

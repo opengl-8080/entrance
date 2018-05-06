@@ -21,4 +21,6 @@ data class TagFilterWord(
     init {
         validate(value)?.throwAsInvalidValueException()
     }
+    
+    fun matches(token: String): Boolean = value.toUpperCase().contains(token.toUpperCase())
 }

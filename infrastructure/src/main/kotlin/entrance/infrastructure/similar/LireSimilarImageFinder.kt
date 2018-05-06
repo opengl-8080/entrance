@@ -1,6 +1,6 @@
 package entrance.infrastructure.similar
 
-import entrance.domain.entry.EntryImage
+import entrance.domain.entry.image.EntryImage
 import entrance.domain.entry.LibraryDirectory
 import entrance.domain.similar.SimilarImage
 import entrance.domain.similar.SimilarImageFinder

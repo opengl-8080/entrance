@@ -1,8 +1,8 @@
 package entrance.infrastructure.tag.category
 
 import entrance.domain.tag.category.*
-import entrance.infrastructure.database.TagCategoryTable
-import entrance.infrastructure.database.TagCategoryTableDao
+import entrance.infrastructure.database.tag.category.TagCategoryTable
+import entrance.infrastructure.database.tag.category.TagCategoryTableDao
 import org.springframework.stereotype.Component
 
 @Component

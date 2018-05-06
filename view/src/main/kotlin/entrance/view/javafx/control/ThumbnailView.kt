@@ -1,6 +1,6 @@
 package entrance.view.javafx.control
 
-import entrance.domain.ImageFile
+import entrance.domain.ThumbnailImage
 import javafx.event.EventHandler
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
@@ -9,9 +9,9 @@ import javafx.scene.input.MouseButton
 /**
  * サムネイル画像のビュー.
  */
-class ThumbnailView<out T: ImageFile>(
-    val imageFile: T
-): ImageView(Image(imageFile.thumbnailUri.toString())) {
+class ThumbnailView<out T: ThumbnailImage>(
+    val thumbnailImage: T
+): ImageView(Image(thumbnailImage.thumbnailUri.toString())) {
     private val selectedCssClass = "thumbnail--selected"
     
     /**

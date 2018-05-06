@@ -21,4 +21,6 @@ data class TagName(
     init {
         validate(value)?.throwAsInvalidValueException()
     }
+    
+    fun matches(token: String): Boolean = value.toUpperCase().contentEquals(token.toUpperCase())
 }

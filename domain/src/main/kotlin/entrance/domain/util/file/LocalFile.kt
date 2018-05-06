@@ -9,7 +9,7 @@ import java.nio.file.Path
  */
 class LocalFile (
     val path: Path
-) {
+): Comparable<LocalFile> {
 
     /**
      * この画像の拡張子を除いたベース名.
@@ -27,4 +27,6 @@ class LocalFile (
      * @return 画像ファイルの場合は true
      */
     fun isImage() = listOf("jpg", "jpeg", "png", "gif", "bmp").any { it.equals(extension, ignoreCase = true) }
+    
+    override fun compareTo(other: LocalFile): Int = path.compareTo(other.path)
 }

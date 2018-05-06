@@ -1,6 +1,6 @@
 package entrance.view.javafx.window.similar
 
-import entrance.domain.entry.EntryImage
+import entrance.domain.entry.image.EntryImage
 import entrance.domain.similar.SimilarImage
 import entrance.domain.similar.SimilarImageHandleResult
 import entrance.domain.similar.SimilarImageHandler

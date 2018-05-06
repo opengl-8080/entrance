@@ -60,8 +60,9 @@ class EntryTask(
     
     override fun call(): Void? {
         val allImages = entryDirectory.readAllImages()
+        val allBooks = entryDirectory.readAllBooks()
         
-        val total = allImages.size.toLong()
+        val total = allImages.size + allBooks.size
         var count = 0L
                 
         updateProgress(count, total)
@@ -79,10 +80,22 @@ class EntryTask(
             count++
             updateProgress(count, total)
         }
+
+        allBooks.forEachBooks { entryBook ->
+            if (isCancelled) {
+                logger.debug("cancel entry task")
+                return@forEachBooks
+            }
+
+            saveEnteredItemService.save(entryBook)
+
+            count++
+            updateProgress(count, total)
+        }
         
         return null
     }
-
+    
     override fun updateProgress(workDone: Long, max: Long) {
         super.updateProgress(workDone, max)
         updateMessage("読み込み中($workDone/$max)")

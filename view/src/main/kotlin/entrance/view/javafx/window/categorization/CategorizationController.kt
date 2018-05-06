@@ -1,7 +1,12 @@
 package entrance.view.javafx.window.categorization
 
-import entrance.application.categorization.CategorizeImageService
-import entrance.domain.categorization.TaggedImageRepository
+import entrance.application.categorization.CategorizeService
+import entrance.domain.ItemType
+import entrance.domain.categorization.book.CategorizedBook
+import entrance.domain.categorization.book.CategorizedBookRepository
+import entrance.domain.categorization.image.CategorizedImage
+import entrance.domain.categorization.image.CategorizedImageRepository
+import entrance.view.javafx.component.ItemTypeSelectController
 import entrance.view.javafx.component.RankSelectController
 import entrance.view.javafx.component.TagSelectController
 import entrance.view.javafx.control.TagView
@@ -18,14 +23,17 @@ import java.util.*
 
 @FXPrototypeController
 class CategorizationController (
-    private val taggedImageRepository: TaggedImageRepository,
+    private val categorizedImageRepository: CategorizedImageRepository,
+    private val categorizedBookRepository: CategorizedBookRepository,
     private val singleImageViewerWindow: SingleImageViewerWindow,
-    private val categorizeImageService: CategorizeImageService
+    private val categorizeService: CategorizeService
 ): Initializable {
     private lateinit var ownStage: Stage
     
     @FXML
     lateinit var tagSelectController: TagSelectController
+    @FXML
+    lateinit var itemTypeSelectController: ItemTypeSelectController
     @FXML
     lateinit var rankSelectController: RankSelectController
     @FXML
@@ -53,21 +61,48 @@ class CategorizationController (
 
     @FXML
     fun search() {
-        val imageList = if (tagSelectController.isNotSelected()) {
-            taggedImageRepository.findNotTaggedImages(rankSelectController.condition)
-        } else {
-            taggedImageRepository.findTaggedImages(tagSelectController.selectedTagSet, rankSelectController.condition)
-        }
+        when (itemTypeSelectController.itemType) {
+            ItemType.IMAGE -> {
+                val images = if (tagSelectController.isNotSelected()) {
+                    categorizedImageRepository.findNotTaggedImages(rankSelectController.condition)
+                } else {
+                    categorizedImageRepository.findTaggedImages(tagSelectController.selectedTagSet, rankSelectController.condition)
+                }
 
-        taggedImageCardListView.replaceAll(imageList)
+                taggedImageCardListView.replaceAll(images)
+            }
+            
+            ItemType.BOOK -> {
+                val books = if (tagSelectController.isNotSelected()) {
+                    categorizedBookRepository.findNotTaggedBooks(rankSelectController.condition)
+                } else {
+                    categorizedBookRepository.findTaggedBooks(tagSelectController.selectedTagSet, rankSelectController.condition)
+                }
+
+                taggedImageCardListView.replaceAll(books)
+            }
+        }
     }
     
+    // メイン表示
     @FXML
     fun openViewer() {
-        if (taggedImageCardListView.selected) {
-            val selectedImages = taggedImageCardListView.selectedImages
-            val firstImage = selectedImages.first()
-            singleImageViewerWindow.open(firstImage, selectedImages)
+        if (!taggedImageCardListView.selected) {
+            return
+        }
+        
+        when (itemTypeSelectController.itemType) {
+            ItemType.IMAGE -> {
+                val selectedImages = taggedImageCardListView.selectedImages.map { it as CategorizedImage }
+                val firstImage = selectedImages.first()
+                singleImageViewerWindow.open(firstImage, selectedImages)
+            }
+            
+            ItemType.BOOK -> {
+                val selectedBooks = taggedImageCardListView.selectedImages.map { it as CategorizedBook }
+                val topImages = selectedBooks.map { it.images.first() }
+                singleImageViewerWindow.open(topImages.first(), topImages)
+            }
         }
     }
     
@@ -81,12 +116,23 @@ class CategorizationController (
         if (!Dialog.confirm("タグの編集を保存します\nよろしいですか？")) {
             return
         }
+
+        when (itemTypeSelectController.itemType) {
+            ItemType.IMAGE -> {
+                val modifiedImages = taggedImageCardListView.filterModifiedItems().map { it as CategorizedImage }
+                categorizeService.categorizeImages(modifiedImages)
+            }
+            
+            ItemType.BOOK -> {
+                val modifiedBooks = taggedImageCardListView.filterModifiedItems().map { it as CategorizedBook }
+                categorizeService.categorizeBooks(modifiedBooks)
+            }
+        }
         
-        val modifiedImages = taggedImageCardListView.filterModifiedImages()
-        categorizeImageService.categorize(modifiedImages)
         search()
     }
     
+    // タグ割り当て
     @FXML
     fun assignTag() {
         val selectedTagSet = tagSelect2Controller.selectedTagSet

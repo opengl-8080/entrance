@@ -1,6 +1,6 @@
 package entrance.application.similar
 
-import entrance.domain.entry.EntryImage
+import entrance.domain.entry.image.EntryImage
 import entrance.domain.similar.SimilarImageFinder
 import entrance.domain.similar.SimilarImageHandler
 import org.springframework.stereotype.Component

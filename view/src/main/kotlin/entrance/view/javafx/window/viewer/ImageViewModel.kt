@@ -1,16 +1,16 @@
 package entrance.view.javafx.window.viewer
 
-import entrance.domain.ImageFile
+import entrance.domain.image.ImageFile
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.scene.control.ProgressBar
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 
 class ImageViewModel (
-    private val imageView: ImageView,
-    private val loadingImageProgressBar: ProgressBar,
-    private val imageFileList: List<ImageFile>,
-    initialImageFile: ImageFile
+        private val imageView: ImageView,
+        private val loadingImageProgressBar: ProgressBar,
+        private val imageFileList: List<ImageFile>,
+        initialImageFile: ImageFile
 ) {
     private var index: Int = imageFileList.indexOf(initialImageFile)
     private var zooming: Boolean = false

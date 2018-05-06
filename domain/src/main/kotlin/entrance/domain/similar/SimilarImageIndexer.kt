@@ -1,6 +1,6 @@
 package entrance.domain.similar
 
-import entrance.domain.entry.EnteredImage
+import entrance.domain.entry.image.EnteredImage
 
 
 interface SimilarImageIndexer {

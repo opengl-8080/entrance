@@ -4,15 +4,15 @@ import entrance.domain.tag.*
 import entrance.domain.tag.category.TagCategory
 import entrance.domain.tag.category.TagCategoryId
 import entrance.domain.tag.category.TagCategoryName
-import entrance.infrastructure.database.TagCategoryTableDao
-import entrance.infrastructure.database.TagTable
-import entrance.infrastructure.database.TagTableDao
+import entrance.infrastructure.database.tag.category.TagCategoryTableDao
+import entrance.infrastructure.database.tag.TagTable
+import entrance.infrastructure.database.tag.TagTableDao
 import org.springframework.stereotype.Component
 
 @Component
 class RdbTagRepository(
-    private val tagTableDao: TagTableDao,
-    private val tagCategoryTableDao: TagCategoryTableDao
+        private val tagTableDao: TagTableDao,
+        private val tagCategoryTableDao: TagCategoryTableDao
 ): TagRepository {
     override fun delete(tag: Tag) {
         val tagTable = tagTableDao.find(tag.id.value)

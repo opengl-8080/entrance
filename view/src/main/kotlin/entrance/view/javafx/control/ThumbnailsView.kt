@@ -1,6 +1,6 @@
 package entrance.view.javafx.control
 
-import entrance.domain.ImageFile
+import entrance.domain.ThumbnailImage
 import javafx.event.EventHandler
 import javafx.scene.input.MouseButton
 import javafx.scene.layout.FlowPane
@@ -8,7 +8,7 @@ import javafx.scene.layout.FlowPane
 /**
  * 複数のサムネイル画像をまとめたビュー.
  */
-class ThumbnailsView<T: ImageFile>(
+class ThumbnailsView<T: ThumbnailImage>(
     private val flowPane: FlowPane
 ) {
     /**

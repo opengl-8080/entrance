@@ -25,15 +25,11 @@ class Tag (
      * @return マッチする場合は true
      */
     fun matches(text: String): Boolean {
-        val upperCaseText = text.toUpperCase()
-        val upperCaseName = name.value.toUpperCase()
-        val upperCaseFilterWord = filterWord.value.toUpperCase()
-        
-        return upperCaseText
+        return text
                 .split(" ")
                 .filter { it != "" }
                 .all { token ->
-                    upperCaseName.contains(token) || upperCaseFilterWord.contains(token)
+                    name.matches(token) || filterWord.matches(token)
                 }
     }
 

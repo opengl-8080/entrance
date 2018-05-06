@@ -1,5 +1,7 @@
 package entrance.domain.entry
 
+import entrance.domain.entry.book.AllEntryBooks
+import entrance.domain.entry.image.AllEntryImages
 import entrance.domain.util.file.LocalFile
 import entrance.domain.util.file.RelativePath
 import java.nio.file.Path
@@ -17,6 +19,11 @@ interface EntryDirectory {
      * エントリディレクトリ内の画像を全て取得する.
      */
     fun readAllImages(): AllEntryImages
+
+    /**
+     * エントリディレクトリ内のブックを全て取得する.
+     */
+    fun readAllBooks(): AllEntryBooks
 
     /**
      * このディレクトリのパスを取得する

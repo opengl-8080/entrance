@@ -1,8 +1,8 @@
 package entrance.view.javafx.window.categorization
 
 import entrance.domain.Rank
+import entrance.domain.categorization.Categorized
 import entrance.domain.tag.SelectedTagSet
-import entrance.domain.categorization.TaggedImage
 import entrance.domain.tag.Tag
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
@@ -18,7 +18,7 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.GridPane
 
-class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
+class TaggedImageCard(val categorizedImage: Categorized) : GridPane()  {
     private val selectedCssClass = "tagged-image-card__thumbnail--selected"
     
     @FXML
@@ -52,7 +52,7 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
         
         loader.load<Any>()
         
-        imageView.image = Image(taggedImage.thumbnailUri.toString())
+        imageView.image = Image(categorizedImage.thumbnailUri.toString())
         imageView.fitWidthProperty().bind(imageBorderPane.widthProperty())
         imageView.fitHeightProperty().bind(imageBorderPane.heightProperty())
 
@@ -80,7 +80,7 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
         rankRadioButton4.userData = 4
         rankRadioButton5.userData = 5
         
-        rankGroup.selectToggle(when (taggedImage.rank) {
+        rankGroup.selectToggle(when (categorizedImage.rank) {
             Rank.ONE -> rankRadioButton1
             Rank.TWO -> rankRadioButton2
             Rank.THREE -> rankRadioButton3
@@ -93,24 +93,24 @@ class TaggedImageCard(val taggedImage: TaggedImage) : GridPane() {
                 return@addListener
             }
 
-            taggedImage.rank = Rank.of(rankRadioButton.userData as Int)
+            categorizedImage.rank = Rank.of(rankRadioButton.userData as Int)
         }
     }
     
     fun assign(selectedTagSet: SelectedTagSet) {
-        taggedImage.add(selectedTagSet.tags)
+        categorizedImage.add(selectedTagSet.tags)
         renderTags()
     }
     
     fun release(selectedTagSet: SelectedTagSet) {
-        taggedImage.remove(selectedTagSet)
+        categorizedImage.remove(selectedTagSet)
         renderTags()
     }
     
     private fun renderTags() {
         tagsFlowPane.children.clear()
 
-        taggedImage.forEachTag {
+        categorizedImage.forEachTag {
             val label = mapToTagLabel(it)
             addToFlowPane(label)
         }

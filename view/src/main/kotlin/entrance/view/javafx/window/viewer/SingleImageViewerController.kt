@@ -1,6 +1,6 @@
 package entrance.view.javafx.window.viewer
 
-import entrance.domain.ImageFile
+import entrance.domain.image.ImageFile
 import entrance.view.javafx.util.FXPrototypeController
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
