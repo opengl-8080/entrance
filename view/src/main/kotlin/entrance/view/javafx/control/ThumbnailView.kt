@@ -11,7 +11,7 @@ import javafx.scene.input.MouseButton
  */
 class ThumbnailView<out T: ThumbnailImage>(
     val thumbnailImage: T
-): ImageView(Image(thumbnailImage.thumbnailUri.toString())) {
+): ImageView(Image(thumbnailImage.thumbnailUri.toString(), true)) {
     private val selectedCssClass = "thumbnail--selected"
     
     /**
