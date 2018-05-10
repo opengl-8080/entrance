@@ -2,6 +2,7 @@ package entrance.view.javafx.window.categorization
 
 import entrance.application.categorization.CategorizeService
 import entrance.domain.ItemType
+import entrance.domain.Rank
 import entrance.domain.categorization.book.CategorizedBook
 import entrance.domain.categorization.book.CategorizedBookRepository
 import entrance.domain.categorization.image.CategorizedImage
@@ -53,6 +54,8 @@ class CategorizationController (
         tagSelectController.onReloaded = {
             taggedImageCardListView.clear()
         }
+
+        rankSelectController.minRank = Rank.ONE
     }
     
     fun init(ownStage: Stage) {

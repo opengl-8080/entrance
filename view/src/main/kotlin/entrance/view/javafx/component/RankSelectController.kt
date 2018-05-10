@@ -18,11 +18,15 @@ class RankSelectController: Initializable {
     @FXML
     lateinit var maxRankChoiceBox: ChoiceBox<Rank>
     
-    private val minRank = ReadOnlyObjectWrapper<Rank>(Rank.THREE)
-    private val maxRank = ReadOnlyObjectWrapper<Rank>(Rank.FIVE)
+    private val _minRank = ReadOnlyObjectWrapper<Rank>(Rank.THREE)
+    var minRank: Rank
+        get() = _minRank.value
+        set(value) = minRankChoiceBox.selectionModel.select(value)
+    
+    private val _maxRank = ReadOnlyObjectWrapper<Rank>(Rank.FIVE)
     
     val condition: RankCondition
-        get() = RankCondition(max= maxRank.value, min= minRank.value)
+        get() = RankCondition(max= _maxRank.value, min= _minRank.value)
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         val ranks = Rank.values().sortedBy { it.value }
@@ -32,11 +36,11 @@ class RankSelectController: Initializable {
         minRankChoiceBox.converter = RankStringConverter
         maxRankChoiceBox.converter = RankStringConverter
         
-        minRankChoiceBox.selectionModel.select(minRank.value)
-        maxRankChoiceBox.selectionModel.select(maxRank.value)
+        minRankChoiceBox.selectionModel.select(_minRank.value)
+        maxRankChoiceBox.selectionModel.select(_maxRank.value)
         
-        minRank.bind(minRankChoiceBox.selectionModel.selectedItemProperty())
-        maxRank.bind(maxRankChoiceBox.selectionModel.selectedItemProperty())
+        _minRank.bind(minRankChoiceBox.selectionModel.selectedItemProperty())
+        _maxRank.bind(maxRankChoiceBox.selectionModel.selectedItemProperty())
     }
 }
 
