@@ -40,3 +40,11 @@
     -fx-max-width: 99999;
     -fx-max-height: 99999;
 }
+
+.separate-border {
+    -fx-border-style: solid;
+    -fx-border-color: lightgray;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-margin: 5px;
+}

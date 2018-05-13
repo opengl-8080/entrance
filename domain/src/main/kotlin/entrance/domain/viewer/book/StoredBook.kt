@@ -3,6 +3,10 @@ package entrance.domain.viewer.book
 import entrance.domain.book.BaseBook
 import entrance.domain.book.BookName
 import entrance.domain.ItemId
+import entrance.domain.Rank
+import entrance.domain.sort.BaseSortableImage
+import entrance.domain.sort.SortableItem
+import entrance.domain.tag.Tag
 import entrance.domain.util.file.Directory
 import entrance.domain.util.file.RelativePath
 import java.io.IOException
@@ -15,11 +19,13 @@ import java.time.Instant
 
 
 class StoredBook (
-        val itemId: ItemId,
-        val name: BookName,
-        val relativePath: RelativePath,
-        directory: Directory
-): BaseBook(directory) {
+    val itemId: ItemId,
+    val name: BookName,
+    val relativePath: RelativePath,
+    directory: Directory,
+    tags: List<Tag>,
+    rank: Rank
+): BaseBook(directory), SortableItem by BaseSortableImage(tags, rank) {
     
     fun delete() {
         Files.walkFileTree(directory.path, object: SimpleFileVisitor<Path>() {

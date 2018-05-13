@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox stylesheets="@../base.css"
-      xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="entrance.view.javafx.component.ItemTypeSelectController"
-      alignment="CENTER" spacing="20.0" styleClass="panel">
+<HBox alignment="CENTER" spacing="20.0" stylesheets="@../base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.component.ItemTypeSelectController">
     <children>
         <RadioButton fx:id="imageRadioButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="画像">
             <toggleGroup>
@@ -17,4 +14,8 @@
         </RadioButton>
         <RadioButton fx:id="bookRadioButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="ブック" toggleGroup="$itemTypeGroup" />
     </children>
+   <styleClass>
+      <String fx:value="panel" />
+      <String fx:value="separate-border" />
+   </styleClass>
 </HBox>

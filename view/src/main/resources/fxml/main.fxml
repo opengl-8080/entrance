@@ -5,17 +5,14 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.MainController">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.MainController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
          <menus>
@@ -38,11 +35,20 @@
    <center>
       <SplitPane dividerPositions="0.35" BorderPane.alignment="CENTER">
          <items>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" text="検索" />
-                <fx:include fx:id="itemTypeSelect" source="component/item-type-select.fxml" />
-                <fx:include fx:id="rankSelect" source="rank-select.fxml" />
-                <fx:include fx:id="tagSelect" source="tag/tag-select-form.fxml" VBox.vgrow="ALWAYS" />
+            <VBox spacing="10.0" styleClass="panel">
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" text="検索" />
+                <SplitPane dividerPositions="0.4" orientation="VERTICAL">
+                  <items>
+                      <ScrollPane fitToHeight="true" fitToWidth="true">
+                          <VBox spacing="10.0" styleClass="panel">
+                              <fx:include fx:id="itemTypeSelect" source="component/item-type-select.fxml" />
+                              <fx:include fx:id="rankSelect" source="rank-select.fxml" />
+                              <fx:include fx:id="tagCategorySort" source="tag/category/tag-category-sort.fxml" />
+                          </VBox>
+                      </ScrollPane>
+                      <fx:include fx:id="tagSelect" source="tag/tag-select-form.fxml" />
+                  </items>
+                </SplitPane>
             </VBox>
             <ScrollPane fitToHeight="true" fitToWidth="true">
                <content>

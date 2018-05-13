@@ -10,6 +10,7 @@ import entrance.domain.viewer.image.StoredImage
 import entrance.domain.viewer.image.StoredImageRepository
 import entrance.view.javafx.component.ItemTypeSelectController
 import entrance.view.javafx.component.RankSelectController
+import entrance.view.javafx.component.TagCategorySortController
 import entrance.view.javafx.component.TagSelectController
 import entrance.view.javafx.control.ThumbnailView
 import entrance.view.javafx.control.ThumbnailsView
@@ -48,6 +49,8 @@ class MainController(
     lateinit var itemTypeSelectController: ItemTypeSelectController
     @FXML
     lateinit var rankSelectController: RankSelectController
+    @FXML
+    lateinit var tagCategorySortController: TagCategorySortController
     
     @FXML
     lateinit var thumbnailsPane: FlowPane
@@ -70,8 +73,8 @@ class MainController(
                     storedImageRepository.findNotTaggedImage(rankSelectController.condition)
                 } else {
                     storedImageRepository.find(tagSelectController.selectedTagSet, rankSelectController.condition)
-                }
-
+                }.sortedWith(tagCategorySortController.comparator)
+                
                 images.clear()
                 images.addAll(storedImages)
                 thumbnailsView.images = images
@@ -82,7 +85,7 @@ class MainController(
                     storedBookRepository.findNotTaggedBook(rankSelectController.condition)
                 } else {
                     storedBookRepository.find(tagSelectController.selectedTagSet, rankSelectController.condition)
-                }
+                }.sortedWith(tagCategorySortController.comparator)
 
                 books.clear()
                 books.addAll(storedBooks)

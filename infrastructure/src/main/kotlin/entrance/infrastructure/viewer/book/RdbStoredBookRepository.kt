@@ -2,9 +2,11 @@ package entrance.infrastructure.viewer.book
 
 import entrance.domain.book.BookName
 import entrance.domain.ItemId
+import entrance.domain.Rank
 import entrance.domain.RankCondition
 import entrance.domain.entry.LibraryDirectory
 import entrance.domain.tag.SelectedTagSet
+import entrance.domain.tag.TagRepository
 import entrance.domain.util.file.RelativePath
 import entrance.domain.viewer.book.StoredBook
 import entrance.domain.viewer.book.StoredBookRepository
@@ -16,10 +18,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class RdbStoredBookRepository(
-        private val itemTableDao: ItemTableDao,
-        private val bookTableDao: BookTableDao,
-        private val itemTagTableDao: ItemTagTableDao,
-        private val libraryDirectory: LibraryDirectory
+    private val itemTableDao: ItemTableDao,
+    private val bookTableDao: BookTableDao,
+    private val itemTagTableDao: ItemTagTableDao,
+    private val libraryDirectory: LibraryDirectory,
+    private val tagRepository: TagRepository
 ): StoredBookRepository {
 
     override fun find(selectedTagSet: SelectedTagSet, rankCondition: RankCondition): List<StoredBook> {
@@ -36,7 +39,9 @@ class RdbStoredBookRepository(
         val relativePath = RelativePath(bookItemView.path)
         val directory = libraryDirectory.resolveDirectory(relativePath)
         val bookName = BookName(bookItemView.name)
-        return StoredBook(ItemId(bookItemView.id), bookName, relativePath, directory)
+        val tags = tagRepository.findByItemId(ItemId(bookItemView.id))
+        val rank = Rank.of(bookItemView.rank)
+        return StoredBook(ItemId(bookItemView.id), bookName, relativePath, directory, tags, rank)
     }
 
     override fun delete(storedBook: StoredBook) {

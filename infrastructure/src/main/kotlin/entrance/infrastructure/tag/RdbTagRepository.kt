@@ -1,5 +1,6 @@
 package entrance.infrastructure.tag
 
+import entrance.domain.ItemId
 import entrance.domain.tag.*
 import entrance.domain.tag.category.TagCategory
 import entrance.domain.tag.category.TagCategoryId
@@ -14,6 +15,21 @@ class RdbTagRepository(
         private val tagTableDao: TagTableDao,
         private val tagCategoryTableDao: TagCategoryTableDao
 ): TagRepository {
+    override fun findByItemId(itemId: ItemId): List<Tag> {
+        return tagTableDao.findByItemId(itemId.value).map { tagTable ->
+            val tagId = TagId(tagTable.id)
+            val tagName = TagName(tagTable.name)
+            val tagFilterWord = TagFilterWord(tagTable.filterWord)
+
+            val tagCategoryTable = tagCategoryTableDao.find(tagTable.tagCategoryId)
+            val tagCategoryId = TagCategoryId(tagCategoryTable.id)
+            val tagCategoryName = TagCategoryName(tagCategoryTable.name)
+            val tagCategory = TagCategory(id = tagCategoryId, name = tagCategoryName)
+
+            Tag(id = tagId, name = tagName, filterWord = tagFilterWord, tagCategory = tagCategory)
+        }
+    }
+
     override fun delete(tag: Tag) {
         val tagTable = tagTableDao.find(tag.id.value)
         tagTableDao.delete(tagTable)

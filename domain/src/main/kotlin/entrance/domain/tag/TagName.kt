@@ -4,7 +4,8 @@ import entrance.domain.util.error.ErrorMessage
 
 data class TagName(
     val value: String
-) {
+): Comparable<TagName> {
+
     companion object {
         fun validate(value: String): ErrorMessage? {
             if (value.isEmpty()) {
@@ -23,4 +24,8 @@ data class TagName(
     }
     
     fun matches(token: String): Boolean = value.toUpperCase().contentEquals(token.toUpperCase())
+    
+    override fun compareTo(other: TagName): Int {
+        return value.compareTo(other.value)
+    }
 }
