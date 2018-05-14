@@ -16,7 +16,7 @@
     <items>
         <SplitPane orientation="VERTICAL">
             <items>
-                <VBox>
+                <VBox spacing="10.0" styleClass="panel">
                     <children>
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" text="検索" />
                         <fx:include fx:id="itemTypeSelect" source="../component/item-type-select.fxml" />
