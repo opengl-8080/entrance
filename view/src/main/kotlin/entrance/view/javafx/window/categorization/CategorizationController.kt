@@ -56,6 +56,10 @@ class CategorizationController (
         }
 
         rankSelectController.minRank = Rank.ONE
+
+        tagSelect2Controller.onReloaded = {
+            clearTagHistory()
+        }
     }
     
     fun init(ownStage: Stage) {
