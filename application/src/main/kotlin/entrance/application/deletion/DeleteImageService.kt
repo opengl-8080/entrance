@@ -16,7 +16,7 @@ class DeleteImageService (
     private val logger = LoggerFactory.getLogger(DeleteImageService::class.java)
     
     fun delete(storedImage: StoredImage) {
-        logger.info("delete image = ${storedImage.relativePath.asString()}")
+        logger.info("delete image = ${storedImage.relativePath.value}")
         logger.info("delete from database")
         storedImageRepository.delete(storedImage)
         logger.info("delete index")

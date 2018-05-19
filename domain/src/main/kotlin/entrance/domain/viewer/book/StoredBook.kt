@@ -1,14 +1,14 @@
 package entrance.domain.viewer.book
 
-import entrance.domain.book.BaseBook
-import entrance.domain.book.BookName
 import entrance.domain.ItemId
 import entrance.domain.Rank
+import entrance.domain.base.file.LocalDirectory
+import entrance.domain.base.file.RelativePath
+import entrance.domain.book.BaseBook
+import entrance.domain.book.BookName
 import entrance.domain.sort.BaseSortableImage
 import entrance.domain.sort.SortableItem
 import entrance.domain.tag.Tag
-import entrance.domain.util.file.Directory
-import entrance.domain.util.file.RelativePath
 import java.io.IOException
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
@@ -22,13 +22,13 @@ class StoredBook (
     val itemId: ItemId,
     val name: BookName,
     val relativePath: RelativePath,
-    directory: Directory,
+    directory: LocalDirectory,
     tags: List<Tag>,
     rank: Rank
 ): BaseBook(directory), SortableItem by BaseSortableImage(tags, rank) {
     
     fun delete() {
-        Files.walkFileTree(directory.path, object: SimpleFileVisitor<Path>() {
+        Files.walkFileTree(directory.javaPath, object: SimpleFileVisitor<Path>() {
             override fun visitFile(file: Path?, attrs: BasicFileAttributes?): FileVisitResult {
                 Files.delete(file)
                 return super.visitFile(file, attrs)

@@ -2,11 +2,11 @@ package entrance.domain.categorization.image
 
 import entrance.domain.ItemId
 import entrance.domain.Rank
+import entrance.domain.base.file.LocalFile
 import entrance.domain.categorization.CategorizedItem
 import entrance.domain.image.BaseImageFile
 import entrance.domain.image.ImageFile
 import entrance.domain.tag.Tag
-import entrance.domain.util.file.LocalFile
 
 class CategorizedImage(
     val itemId: ItemId,

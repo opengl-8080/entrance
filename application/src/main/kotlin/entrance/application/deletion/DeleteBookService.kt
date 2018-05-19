@@ -14,7 +14,7 @@ class DeleteBookService (
     private val logger = LoggerFactory.getLogger(DeleteBookService::class.java)
     
     fun delete(storedBook: StoredBook) {
-        logger.info("delete book = " + storedBook.relativePath.asString())
+        logger.info("delete book = " + storedBook.relativePath.value)
         logger.debug("delete from database")
         storedBookRepository.delete(storedBook)
         logger.debug("delete from local")

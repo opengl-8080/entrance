@@ -3,14 +3,14 @@ package entrance.infrastructure.categorization.book
 import entrance.domain.ItemId
 import entrance.domain.Rank
 import entrance.domain.RankCondition
+import entrance.domain.base.file.RelativePath
 import entrance.domain.categorization.book.CategorizedBook
 import entrance.domain.categorization.book.CategorizedBookRepository
-import entrance.domain.entry.LibraryDirectory
+import entrance.domain.entry.library.LibraryDirectory
 import entrance.domain.tag.*
 import entrance.domain.tag.category.TagCategory
 import entrance.domain.tag.category.TagCategoryId
 import entrance.domain.tag.category.TagCategoryName
-import entrance.domain.util.file.RelativePath
 import entrance.infrastructure.database.book.BookTableDao
 import entrance.infrastructure.database.item.ItemTableDao
 import entrance.infrastructure.database.tag.ItemTagTable
@@ -22,12 +22,12 @@ import org.springframework.stereotype.Component
 
 @Component
 class RdbCategorizedBookRepository(
-    private val imageTableDao: BookTableDao,
-    private val itemTagTableDao: ItemTagTableDao,
-    private val libraryDirectory: LibraryDirectory,
-    private val tagTableDao: TagTableDao,
-    private val itemTableDao: ItemTableDao,
-    private val tagCategoryTableDao: TagCategoryTableDao
+        private val imageTableDao: BookTableDao,
+        private val itemTagTableDao: ItemTagTableDao,
+        private val libraryDirectory: LibraryDirectory,
+        private val tagTableDao: TagTableDao,
+        private val itemTableDao: ItemTableDao,
+        private val tagCategoryTableDao: TagCategoryTableDao
 ): CategorizedBookRepository {
 
     override fun findNotTaggedBooks(rankCondition: RankCondition): List<CategorizedBook> {

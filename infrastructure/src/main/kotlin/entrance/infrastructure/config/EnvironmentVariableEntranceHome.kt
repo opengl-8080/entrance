@@ -1,7 +1,9 @@
 package entrance.infrastructure.config
 
+import entrance.domain.base.file.AbsolutePath
+import entrance.domain.base.file.LocalDirectory
 import entrance.domain.util.config.EntranceHomeBase
-import entrance.domain.util.file.Directory
+import entrance.domain.util.file.DeprecatedDirectory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.nio.file.Paths
@@ -13,8 +15,9 @@ class EnvironmentVariableEntranceHome (
     @Value("\${spring.datasource.url}")
     private val jdbcUrl: String
 ): EntranceHomeBase() {
-    
-    override val home: Directory = Directory(Paths.get(path))
+
+    override val homeDirectory: LocalDirectory = LocalDirectory(AbsolutePath.fromAmbiguousPath(Paths.get(path)))
+    override val home: DeprecatedDirectory = DeprecatedDirectory(Paths.get(path))
 
     override fun jdbcUrl(): String = jdbcUrl
 }

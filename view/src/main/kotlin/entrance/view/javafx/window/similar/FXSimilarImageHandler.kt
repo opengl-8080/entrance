@@ -1,9 +1,9 @@
 package entrance.view.javafx.window.similar
 
-import entrance.domain.entry.image.EntryImage
-import entrance.domain.similar.SimilarImage
-import entrance.domain.similar.SimilarImageHandleResult
-import entrance.domain.similar.SimilarImageHandler
+import entrance.domain.entry.entrance.EntryImage
+import entrance.domain.entry.similar.SimilarImageHandleResult
+import entrance.domain.entry.similar.SimilarImageHandler
+import entrance.domain.entry.similar.SimilarImages
 import entrance.view.javafx.util.EntranceFXMLLoader
 import javafx.application.Platform
 import javafx.stage.Modality
@@ -15,7 +15,7 @@ class FXSimilarImageHandler(
     private val fxmlLoader: EntranceFXMLLoader
 ): SimilarImageHandler {
     
-    override fun handle(entryImage: EntryImage, similarImages: List<SimilarImage>): SimilarImageHandleResult {
+    override fun handle(entryImage: EntryImage, similarImages: SimilarImages): SimilarImageHandleResult {
         var result = SimilarImageHandleResult(false)
         val barrier = CyclicBarrier(2)
     

@@ -1,8 +1,8 @@
 package entrance.view.javafx.window.similar
 
-import entrance.domain.entry.image.EntryImage
-import entrance.domain.similar.SimilarImage
-import entrance.domain.similar.SimilarImageHandleResult
+import entrance.domain.entry.entrance.EntryImage
+import entrance.domain.entry.similar.SimilarImageHandleResult
+import entrance.domain.entry.similar.SimilarImages
 import entrance.view.javafx.util.Dialog
 import entrance.view.javafx.util.FXPrototypeController
 import javafx.beans.binding.StringBinding
@@ -18,7 +18,7 @@ import javafx.stage.Stage
 @FXPrototypeController
 class HandleSimilarImageController {
     lateinit var entryImage: EntryImage
-    lateinit var similarImages: List<SimilarImage>
+    lateinit var similarImages: SimilarImages
     lateinit var stage: Stage
     
     @FXML
@@ -39,7 +39,7 @@ class HandleSimilarImageController {
     private var similarImageIndex = SimpleIntegerProperty(0)
     private var _result: SimilarImageHandleResult = SimilarImageHandleResult.noSave()
 
-    fun init(stage: Stage, entryImage: EntryImage, similarImages: List<SimilarImage>) {
+    fun init(stage: Stage, entryImage: EntryImage, similarImages: SimilarImages) {
         this.stage = stage
         this.entryImage = entryImage
         this.similarImages = similarImages

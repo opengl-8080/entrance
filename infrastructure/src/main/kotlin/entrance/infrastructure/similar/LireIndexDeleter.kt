@@ -16,7 +16,7 @@ class LireIndexDeleter(
     override fun deleteIndex(storedImage: StoredImage) {
 
         LuceneUtils.createIndexWriter(FSDirectory.open(indexDirectory.path), false, LuceneUtils.AnalyzerType.WhitespaceAnalyzer).use { writer ->
-            val term = Term(DocumentBuilder.FIELD_NAME_IDENTIFIER, storedImage.relativePath.asString())
+            val term = Term(DocumentBuilder.FIELD_NAME_IDENTIFIER, storedImage.relativePath.value)
             writer.deleteDocuments(term)
         }
     }

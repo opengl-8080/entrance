@@ -3,27 +3,25 @@ package entrance.infrastructure.categorization.image
 import entrance.domain.ItemId
 import entrance.domain.Rank
 import entrance.domain.RankCondition
+import entrance.domain.base.file.RelativePath
 import entrance.domain.categorization.image.CategorizedImage
 import entrance.domain.categorization.image.CategorizedImageRepository
-import entrance.domain.entry.LibraryDirectory
+import entrance.domain.entry.library.LibraryDirectory
 import entrance.domain.tag.SelectedTagSet
 import entrance.domain.tag.TagRepository
-import entrance.domain.util.file.RelativePath
 import entrance.infrastructure.database.image.ImageTableDao
 import entrance.infrastructure.database.item.ItemTableDao
 import entrance.infrastructure.database.tag.ItemTagTable
 import entrance.infrastructure.database.tag.ItemTagTableDao
-import entrance.infrastructure.database.tag.TagTableDao
-import entrance.infrastructure.database.tag.category.TagCategoryTableDao
 import org.springframework.stereotype.Component
 
 @Component
 class RdbCategorizedImageRepository(
-    private val imageTableDao: ImageTableDao,
-    private val itemTagTableDao: ItemTagTableDao,
-    private val libraryDirectory: LibraryDirectory,
-    private val itemTableDao: ItemTableDao,
-    private val tagRepository: TagRepository
+        private val imageTableDao: ImageTableDao,
+        private val itemTagTableDao: ItemTagTableDao,
+        private val libraryDirectory: LibraryDirectory,
+        private val itemTableDao: ItemTableDao,
+        private val tagRepository: TagRepository
 ): CategorizedImageRepository {
     override fun findNotTaggedImages(rankCondition: RankCondition): List<CategorizedImage> {
         return imageTableDao.findNotTaggedImages(rankCondition.min.value, rankCondition.max.value)

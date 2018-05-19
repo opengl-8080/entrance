@@ -1,9 +1,11 @@
 package entrance.domain.book
 
 import entrance.domain.ThumbnailImage
-import entrance.domain.util.file.Directory
-import entrance.domain.util.file.LocalFile
-import entrance.domain.util.file.RelativePath
+import entrance.domain.base.file.AbsolutePath
+import entrance.domain.base.file.LocalDirectory
+import entrance.domain.base.file.LocalFile
+import entrance.domain.base.file.RelativePath
+import entrance.domain.base.item.image.ImageFile
 import entrance.domain.viewer.book.BookImage
 import java.net.URI
 import java.nio.file.Files
@@ -11,14 +13,15 @@ import java.nio.file.Path
 import kotlin.streams.toList
 
 
-abstract class BaseBook(val directory: Directory): ThumbnailImage {
+abstract class BaseBook(val directory: LocalDirectory): ThumbnailImage {
     
-    override val thumbnailUri: URI = directory.resolveFile(RelativePath("thumbnail.jpg")).path.toUri()
+    override val thumbnailUri: URI = directory.resolveFile(RelativePath("thumbnail.jpg")).javaPath.toUri()
     
-    open val images: List<BookImage> = Files.list(directory.path)
+    open val images: List<BookImage> = Files.list(directory.javaPath)
                                     .filter { isNotThumbnail(it) }
+                                    .map { AbsolutePath(it) }
                                     .map { LocalFile(it) }
-                                    .filter { it.isImage() }
+                                    .filter { ImageFile.isImageFile(it) }
                                     .sorted()
                                     .toList()
                                     .map { BookImage(it) }

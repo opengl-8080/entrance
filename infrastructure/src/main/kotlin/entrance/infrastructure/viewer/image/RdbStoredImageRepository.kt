@@ -3,10 +3,10 @@ package entrance.infrastructure.viewer.image
 import entrance.domain.ItemId
 import entrance.domain.Rank
 import entrance.domain.RankCondition
-import entrance.domain.entry.LibraryDirectory
+import entrance.domain.base.file.RelativePath
+import entrance.domain.entry.library.LibraryDirectory
 import entrance.domain.tag.SelectedTagSet
 import entrance.domain.tag.TagRepository
-import entrance.domain.util.file.RelativePath
 import entrance.domain.viewer.image.StoredImage
 import entrance.domain.viewer.image.StoredImageRepository
 import entrance.infrastructure.database.image.ImageTableDao
@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class RdbStoredImageRepository(
-        private val itemTableDao: ItemTableDao,
-        private val imageTableDao: ImageTableDao,
-        private val itemTagTableDao: ItemTagTableDao,
-        private val libraryDirectory: LibraryDirectory,
-        private val tagRepository: TagRepository
+    private val itemTableDao: ItemTableDao,
+    private val imageTableDao: ImageTableDao,
+    private val itemTagTableDao: ItemTagTableDao,
+    private val libraryDirectory: LibraryDirectory,
+    private val tagRepository: TagRepository
 ): StoredImageRepository {
 
     override fun find(selectedTagSet: SelectedTagSet, rankCondition: RankCondition): List<StoredImage> {

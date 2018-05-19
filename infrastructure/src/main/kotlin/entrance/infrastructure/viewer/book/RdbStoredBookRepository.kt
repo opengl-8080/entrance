@@ -1,19 +1,19 @@
 package entrance.infrastructure.viewer.book
 
-import entrance.domain.book.BookName
 import entrance.domain.ItemId
 import entrance.domain.Rank
 import entrance.domain.RankCondition
-import entrance.domain.entry.LibraryDirectory
+import entrance.domain.base.file.RelativePath
+import entrance.domain.book.BookName
+import entrance.domain.entry.library.LibraryDirectory
 import entrance.domain.tag.SelectedTagSet
 import entrance.domain.tag.TagRepository
-import entrance.domain.util.file.RelativePath
 import entrance.domain.viewer.book.StoredBook
 import entrance.domain.viewer.book.StoredBookRepository
-import entrance.infrastructure.database.view.BookItemView
 import entrance.infrastructure.database.book.BookTableDao
 import entrance.infrastructure.database.item.ItemTableDao
 import entrance.infrastructure.database.tag.ItemTagTableDao
+import entrance.infrastructure.database.view.BookItemView
 import org.springframework.stereotype.Component
 
 @Component

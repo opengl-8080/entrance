@@ -1,6 +1,6 @@
 package entrance.domain.image
 
-import entrance.domain.util.file.LocalFile
+import entrance.domain.base.file.LocalFile
 import java.net.URI
 import java.util.regex.Pattern
 
@@ -9,21 +9,21 @@ abstract class BaseImageFile(
 ): ImageFile {
     private val fileNamePattern = Pattern.compile("""^(?<baseName>.*)\.(?<extension>[^.]+)$""")
 
-    override val uri: URI = localFile.path.toUri()
+    override val uri: URI = localFile.javaPath.toUri()
     
     override val thumbnailUri: URI = localFile.let {
-        val fileName = it.path.fileName.toString()
+        val fileName = it.javaPath.fileName.toString()
 
         val matcher = fileNamePattern.matcher(fileName)
         matcher.find()
         val baseName = matcher.group("baseName")
         val thumbnailFileName = "${baseName}_thumb.jpg"
 
-        it.path.parent.resolve(thumbnailFileName).toUri()
+        it.javaPath.parent.resolve(thumbnailFileName).toUri()
     }
 
     override val originalSizeImageUri: URI = localFile.let {
-        val fileName = it.path.fileName.toString()
+        val fileName = it.javaPath.fileName.toString()
 
         val matcher = fileNamePattern.matcher(fileName)
         matcher.find()
@@ -31,6 +31,6 @@ abstract class BaseImageFile(
         val extension = matcher.group("extension")
         val originalSizeImageName = "${baseName}_org.$extension"
 
-        it.path.parent.resolve(originalSizeImageName).toUri()
+        it.javaPath.parent.resolve(originalSizeImageName).toUri()
     }
 }

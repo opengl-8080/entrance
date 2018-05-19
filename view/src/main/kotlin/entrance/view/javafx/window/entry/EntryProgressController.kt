@@ -1,8 +1,7 @@
 package entrance.view.javafx.window.entry
 
-import entrance.application.entry.SaveEnteredItemService
-import entrance.application.similar.FilterSimilarImageService
-import entrance.domain.entry.EntryDirectory
+import entrance.application.entry.EntryUseCase
+import entrance.domain.entry.entrance.EntryDirectory
 import entrance.view.javafx.util.FXPrototypeController
 import javafx.concurrent.Task
 import javafx.event.EventHandler
@@ -15,8 +14,7 @@ import org.slf4j.LoggerFactory
 @FXPrototypeController
 class EntryProgressController (
     entryDirectory: EntryDirectory,
-    saveEnteredItemService: SaveEnteredItemService,
-    filterSimilarImageService: FilterSimilarImageService
+    entryUsecase: EntryUseCase
 ) {
     private val logger = LoggerFactory.getLogger(EntryProgressController::class.java)
     
@@ -25,7 +23,7 @@ class EntryProgressController (
     @FXML
     lateinit var progressBar: ProgressBar
     
-    private var task =  EntryTask(entryDirectory, saveEnteredItemService, filterSimilarImageService)
+    private var task =  EntryTask(entryDirectory, entryUsecase)
     
     fun execute(stage: Stage) {
         task.onSucceeded = EventHandler { 
@@ -53,44 +51,23 @@ class EntryProgressController (
 
 class EntryTask(
     private val entryDirectory: EntryDirectory,
-    private val saveEnteredItemService: SaveEnteredItemService,
-    private val filterSimilarImageService: FilterSimilarImageService
+    private val entryUseCase: EntryUseCase
 ): Task<Void>() {
-    private val logger = LoggerFactory.getLogger(EntryTask::class.java)
-    
     override fun call(): Void? {
-        val allImages = entryDirectory.readAllImages()
-        val allBooks = entryDirectory.readAllBooks()
+        val entryImages = entryDirectory.getEntryImages()
+        val entryBooks = entryDirectory.getEntryBooks()
         
-        val total = allImages.size + allBooks.size
+        val total = (entryImages.size + entryBooks.size).toLong()
+        updateProgress(0L, total)
+        
         var count = 0L
-                
-        updateProgress(count, total)
-
-        allImages.forEachImages { entryImage ->
-            if (isCancelled) {
-                logger.debug("cancel entry task")
-                return@forEachImages
-            }
+        entryUseCase.execute(entryImages, entryBooks) { cancel ->
+            count++
+            updateProgress(count, total)
             
-            if (filterSimilarImageService.decideToSave(entryImage)) {
-                saveEnteredItemService.save(entryImage)
-            }
-
-            count++
-            updateProgress(count, total)
-        }
-
-        allBooks.forEachBooks { entryBook ->
             if (isCancelled) {
-                logger.debug("cancel entry task")
-                return@forEachBooks
+                cancel()
             }
-
-            saveEnteredItemService.save(entryBook)
-
-            count++
-            updateProgress(count, total)
         }
         
         return null

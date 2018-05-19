@@ -1,8 +1,8 @@
 package entrance.infrastructure.similar
 
-import entrance.domain.entry.image.EnteredImage
-import entrance.domain.entry.LibraryDirectory
-import entrance.domain.similar.SimilarImageIndexer
+import entrance.domain.entry.library.LibraryDirectory
+import entrance.domain.entry.library.LibraryImage
+import entrance.domain.entry.similar.SimilarImageIndexer
 import net.semanticmetadata.lire.builders.GlobalDocumentBuilder
 import net.semanticmetadata.lire.imageanalysis.features.global.CEDD
 import net.semanticmetadata.lire.utils.LuceneUtils
@@ -18,15 +18,15 @@ class LireSimilarImageIndexer (
 ): SimilarImageIndexer {
     private val logger = LoggerFactory.getLogger(LireSimilarImageIndexer::class.java)
     
-    override fun indexSimilarImage(enteredImage: EnteredImage) {
+    override fun indexSimilarImage(libraryImage: LibraryImage) {
         val globalDocumentBuilder = GlobalDocumentBuilder(CEDD::class.java)
         
         LuceneUtils.createIndexWriter(FSDirectory.open(indexDirectory.path), false, LuceneUtils.AnalyzerType.WhitespaceAnalyzer).use { writer ->
-            val localFile = libraryDirectory.resolveFile(enteredImage.relativePath)
-            val bufferedImage = ImageIO.read(localFile.path.toFile())
-            val document = globalDocumentBuilder.createDocument(bufferedImage, enteredImage.relativePath.asString())
+            val localFile = libraryDirectory.resolveFile(libraryImage.relativePath)
+            val bufferedImage = ImageIO.read(localFile.javaFile)
+            val document = globalDocumentBuilder.createDocument(bufferedImage, libraryImage.relativePath.value)
             writer.addDocument(document)
-            logger.info("indexing image = ${enteredImage.relativePath}")
+            logger.info("indexing image = ${libraryImage.relativePath}")
         }
     }
 }

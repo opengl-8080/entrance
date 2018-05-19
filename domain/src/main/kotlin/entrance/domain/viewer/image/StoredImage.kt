@@ -1,13 +1,13 @@
 package entrance.domain.viewer.image
 
-import entrance.domain.image.BaseImageFile
 import entrance.domain.ItemId
 import entrance.domain.Rank
+import entrance.domain.base.file.LocalFile
+import entrance.domain.base.file.RelativePath
+import entrance.domain.image.BaseImageFile
 import entrance.domain.sort.BaseSortableImage
 import entrance.domain.sort.SortableItem
 import entrance.domain.tag.Tag
-import entrance.domain.util.file.LocalFile
-import entrance.domain.util.file.RelativePath
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -20,7 +20,7 @@ class StoredImage(
 ): BaseImageFile(localFile), SortableItem by BaseSortableImage(tags, rank) {
     
     fun deleteLocalFile() {
-        Files.delete(localFile.path)
+        Files.delete(localFile.javaPath)
         Files.delete(Paths.get(thumbnailUri))
         val originalImagePath = Paths.get(originalSizeImageUri)
         if (Files.exists(originalImagePath)) {
