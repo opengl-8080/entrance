@@ -1,19 +1,12 @@
+apply plugin: 'org.springframework.boot'
+
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
-dependencies {
-    compile project(':view')
-    compile project(':infrastructure')
-}
-
-jar {
+bootJar {
     baseName = 'entrance'
-    
-    manifest {
-        attributes('Main-Class': 'entrance.Main')
-    }
 }
 
 task("release", dependsOn: "build") {
