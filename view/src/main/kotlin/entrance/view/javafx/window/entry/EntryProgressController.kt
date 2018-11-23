@@ -26,6 +26,8 @@ class EntryProgressController (
     private var task =  EntryTask(entryDirectory, entryUsecase)
     
     fun execute(stage: Stage) {
+        logger.debug("execute EntryProgressController")
+        
         task.onSucceeded = EventHandler { 
             stage.close()
         }
@@ -39,7 +41,7 @@ class EntryProgressController (
 
         label.textProperty().bind(task.messageProperty())
         progressBar.progressProperty().bind(task.progressProperty())
-        
+
         Thread(task).start()
     }
     
@@ -53,7 +55,11 @@ class EntryTask(
     private val entryDirectory: EntryDirectory,
     private val entryUseCase: EntryUseCase
 ): Task<Void>() {
+    private val logger = LoggerFactory.getLogger(EntryTask::class.java)
+    
     override fun call(): Void? {
+        logger.debug("start EntryTask")
+        
         val entryImages = entryDirectory.getEntryImages()
         val entryBooks = entryDirectory.getEntryBooks()
         
@@ -63,6 +69,7 @@ class EntryTask(
         var count = 0L
         entryUseCase.execute(entryImages, entryBooks) { cancel ->
             count++
+            logger.debug("EntryTask progress count={}", count)
             updateProgress(count, total)
             
             if (isCancelled) {
