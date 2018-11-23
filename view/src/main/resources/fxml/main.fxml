@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/8.0.162" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.MainController">
+<BorderPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@base.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="entrance.view.javafx.window.MainController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
          <menus>
@@ -50,19 +51,24 @@
                   </items>
                 </SplitPane>
             </VBox>
-            <ScrollPane fitToHeight="true" fitToWidth="true">
-               <content>
-                  <FlowPane fx:id="thumbnailsPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
-               </content>
-               <contextMenu>
-                  <ContextMenu>
-                    <items>
-                      <MenuItem fx:id="openImageMenuItem" mnemonicParsing="false" onAction="#openImage" text="開く" />
-                        <MenuItem mnemonicParsing="false" onAction="#deleteImage" text="削除" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu>
-            </ScrollPane>
+            <VBox>
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <content>
+                        <FlowPane fx:id="thumbnailsPane" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="10.0" />
+                     </content>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem fx:id="openImageMenuItem" mnemonicParsing="false" onAction="#openImage" text="開く" />
+                              <MenuItem mnemonicParsing="false" onAction="#deleteImage" text="削除" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </ScrollPane>
+                  <Label fx:id="statusBarLabel" maxWidth="1.7976931348623157E308" styleClass="panel" text="Image Infomations..." VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
          </items>
       </SplitPane>
    </center>

@@ -22,6 +22,7 @@ import entrance.view.javafx.window.tag.category.TagCategoryMaintenanceWindow
 import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
+import javafx.scene.control.Label
 import javafx.scene.control.MenuItem
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
@@ -56,6 +57,8 @@ class MainController(
     lateinit var thumbnailsPane: FlowPane
     @FXML
     lateinit var openImageMenuItem: MenuItem
+    @FXML
+    lateinit var statusBarLabel: Label
 
     lateinit var thumbnailsView: ThumbnailsView<ThumbnailImage>
     private val images = mutableListOf<StoredImage>()
@@ -63,6 +66,11 @@ class MainController(
     
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         thumbnailsView = ThumbnailsView(thumbnailsPane)
+
+        statusBarLabel.text = ""
+        thumbnailsView.selectedThumbnailProperty.addListener { _, _, thumbnailImage -> 
+            statusBarLabel.text = thumbnailImage?.statusText ?: ""
+        }
     }
     
     @FXML

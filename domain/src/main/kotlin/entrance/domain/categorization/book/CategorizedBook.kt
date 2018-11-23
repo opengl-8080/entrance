@@ -23,4 +23,7 @@ class CategorizedBook(
         get() = book.thumbnailUri
     
     val images: List<BookImage> = book.images
+
+    override val statusText: String
+        get() = "TODO (ブック名？)"
 }

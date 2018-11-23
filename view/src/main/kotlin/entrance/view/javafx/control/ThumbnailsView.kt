@@ -1,6 +1,9 @@
 package entrance.view.javafx.control
 
 import entrance.domain.ThumbnailImage
+import javafx.beans.property.ObjectProperty
+import javafx.beans.property.ReadOnlyObjectProperty
+import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.event.EventHandler
 import javafx.scene.input.MouseButton
 import javafx.scene.layout.FlowPane
@@ -18,6 +21,14 @@ class ThumbnailsView<T: ThumbnailImage>(
      */
     var selectedThumbnail: ThumbnailView<T>? = null
         private set
+    
+    private val _selectedThumbnailProperty = ReadOnlyObjectWrapper<T>(null)
+
+    /**
+     * 現在選択されているサムネイルの読み取り専用のプロパティ.
+     */
+    val selectedThumbnailProperty: ReadOnlyObjectProperty<T>
+        get() = _selectedThumbnailProperty.readOnlyProperty
 
     private val _images = mutableListOf<T>()
 
@@ -48,10 +59,12 @@ class ThumbnailsView<T: ThumbnailImage>(
                         if (selectedThumbnail == thumbnail) {
                             thumbnail.deselect()
                             selectedThumbnail = null
+                            _selectedThumbnailProperty.set(null)
                         } else {
                             selectedThumbnail?.deselect()
                             thumbnail.select()
                             selectedThumbnail = thumbnail
+                            _selectedThumbnailProperty.set(thumbnail.thumbnailImage)
                         }
                     }
                 }

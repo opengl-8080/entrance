@@ -27,4 +27,7 @@ abstract class BaseBook(val directory: LocalDirectory): ThumbnailImage {
                                     .map { BookImage(it) }
     
     private fun isNotThumbnail(path: Path): Boolean = path.toUri() != thumbnailUri
+
+    override val statusText: String
+        get() = "TODO"
 }

@@ -12,7 +12,7 @@ bootJar {
 task("release", dependsOn: "build") {
     doLast {
         String entranceHome = System.getenv("ENTRANCE_HOME")
-        String distJarPathString = "${entranceHome}/${jar.archiveName}"
+        String distJarPathString = "${entranceHome}/${bootJar.archiveName}"
 
         Path distJarPath = Paths.get(distJarPathString)
 
@@ -21,7 +21,7 @@ task("release", dependsOn: "build") {
             Files.move(distJarPath, backupJarPath, StandardCopyOption.REPLACE_EXISTING)
         }
 
-        Path jarPath = jar.archivePath.toPath()
+        Path jarPath = bootJar.archivePath.toPath()
         Files.copy(jarPath, distJarPath, StandardCopyOption.REPLACE_EXISTING)
     }
 }
