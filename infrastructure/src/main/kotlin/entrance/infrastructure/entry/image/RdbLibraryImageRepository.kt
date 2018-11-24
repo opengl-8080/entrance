@@ -23,6 +23,8 @@ class RdbLibraryImageRepository (
         val imageTable = ImageTable()
         imageTable.itemId = itemTable.id
         imageTable.path = libraryImage.relativePath.value
+        imageTable.width = libraryImage.width
+        imageTable.height = libraryImage.height
         imageTableDao.insert(imageTable)
     }
 }

@@ -83,7 +83,6 @@ project(":application") {
 project(":infrastructure") {
     dependencies {
         api 'com.h2database:h2'
-        implementation 'org.flywaydb:flyway-core'
         implementation('org.seasar.doma.boot:doma-spring-boot-starter:1.1.1') {
             exclude group: 'org.seasar.doma', module: 'doma'
         }

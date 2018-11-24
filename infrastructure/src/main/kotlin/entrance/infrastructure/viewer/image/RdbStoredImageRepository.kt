@@ -39,7 +39,15 @@ class RdbStoredImageRepository(
         val tags = tagRepository.findByItemId(ItemId(imageItemView.id))
         val localFile = libraryDirectory.resolveFile(RelativePath(imageItemView.path))
         val rank = Rank.of(imageItemView.rank)
-        return StoredImage(ItemId(imageItemView.id), RelativePath(imageItemView.path), localFile, tags, rank)
+        return StoredImage(
+                ItemId(imageItemView.id), 
+                RelativePath(imageItemView.path), 
+                imageItemView.width,
+                imageItemView.height,
+                localFile, 
+                tags, 
+                rank
+        )
     }
     
     override fun delete(storedImage: StoredImage) {

@@ -14,5 +14,6 @@ class CategorizedImage(
     tagSet: Set<Tag>,
     rank: Rank
 ): CategorizedItem(tagSet, rank), ImageFile by object: BaseImageFile(localFile) {
-    
+
+    override val statusText: String = "TODO (必要？)"
 }

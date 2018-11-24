@@ -5,35 +5,44 @@ import entrance.domain.base.file.RelativePath
 import entrance.domain.base.item.image.ImageFile
 import entrance.domain.entry.RegisteredDateTime
 import entrance.domain.util.image.ImageResizer
+import org.slf4j.LoggerFactory
 import java.awt.image.BufferedImage
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 import javax.imageio.ImageIO
+import kotlin.math.log
 
 
 class LibraryImage(
     val localFile: LocalFile,
     val relativePath: RelativePath
 ) {
-    
-    val registeredDateTime: RegisteredDateTime = RegisteredDateTime.now()
-    
+    private val logger = LoggerFactory.getLogger(LibraryImage::class.java)
+
     /**画像サイズが大きすぎるかどうかの閾値*/
     private val tooLargeImageSize = 10000 * 10000
+    val registeredDateTime: RegisteredDateTime = RegisteredDateTime.now()
+    val width: Int
+    val height: Int
+    private val tooLarge: Boolean
+    
+    init {
+        logger.debug("ImageIO.read()")
+        val image = ImageIO.read(localFile.javaFile)
+        width = image.width
+        height = image.height
+        logger.debug("width={}, height={}", width, height)
+        tooLarge = tooLargeImageSize < width * height
+    }
     
     fun replaceToSmallImageIfTooLarge(): LibraryImage {
-        if (!isTooLarge()) {
+        if (!tooLarge) {
+            logger.debug("not too large")
             return this
         }
         
+        logger.debug("too large. create small image.")
         return createSmallSizeImage()
-    }
-    
-    private fun isTooLarge(): Boolean {
-        val image = ImageIO.read(localFile.javaFile)
-        val width = image.width
-        val height = image.height
-        return tooLargeImageSize < width * height
     }
     
     private fun createSmallSizeImage(): LibraryImage {

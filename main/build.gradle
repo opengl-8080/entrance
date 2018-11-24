@@ -9,6 +9,13 @@ bootJar {
     baseName = 'entrance'
 }
 
+bootRun {
+    doFirst {
+        jvmArgs("-Dlogging.level.entrance=DEBUG")
+        args("--ENTRANCE_HOME=${projectDir}/entrance_home")
+    }
+}
+
 task("release", dependsOn: "build") {
     doLast {
         String entranceHome = System.getenv("ENTRANCE_HOME")

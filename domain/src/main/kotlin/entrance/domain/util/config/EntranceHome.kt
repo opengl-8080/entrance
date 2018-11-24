@@ -5,8 +5,14 @@ import entrance.domain.base.file.RelativePath
 import entrance.domain.util.file.DeprecatedDirectory
 import entrance.domain.util.file.DeprecatedLocalFile
 import entrance.domain.util.file.DeprecatedRelativePath
+import java.nio.file.Path
 
 interface EntranceHome {
+
+    /**
+     * このホームディレクトリのパス.
+     */
+    val path: Path
 
     /**
      * ホームディレクトリから指定した相対パスの場所を指すディレクトリを解決する.

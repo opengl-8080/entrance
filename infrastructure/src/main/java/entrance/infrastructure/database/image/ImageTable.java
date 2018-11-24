@@ -11,12 +11,16 @@ public class ImageTable {
     @Id
     public Long itemId;
     public String path;
+    public int width;
+    public int height;
 
     @Override
     public String toString() {
         return "ImageTable{" +
                 "itemId=" + itemId +
                 ", path='" + path + '\'' +
+                ", width=" + width +
+                ", height=" + height +
                 '}';
     }
 }

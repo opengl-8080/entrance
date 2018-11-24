@@ -13,6 +13,9 @@ fun main(args: Array<String>) {
 
     val entranceHome = context.getBean(EntranceHome::class.java)
     
+    println("ENTRANCE_HOME=${entranceHome.path}")
+    println("jdbcUrl=${entranceHome.jdbcUrl()}")
+    
     if (args.contains("--database")) {
         Shell.main("-url", entranceHome.jdbcUrl(), "-user", "SA", "-password", "")
         return

@@ -15,6 +15,8 @@ public class ImageItemView {
     public LocalDateTime registeredDateTime;
     public String path;
     public int rank;
+    public int width;
+    public int height;
 
     @Override
     public String toString() {
@@ -23,6 +25,8 @@ public class ImageItemView {
                 ", registeredDateTime=" + registeredDateTime +
                 ", path='" + path + '\'' +
                 ", rank=" + rank +
+                ", width=" + width +
+                ", height=" + height +
                 '}';
     }
 }

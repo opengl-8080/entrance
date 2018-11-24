@@ -1,5 +1,7 @@
     SELECT ITEM.*
           ,IMAGE.PATH
+          ,IMAGE.WIDTH
+          ,IMAGE.HEIGHT
       FROM ITEM
 INNER JOIN IMAGE
         ON IMAGE.ITEM_ID = ITEM.ID

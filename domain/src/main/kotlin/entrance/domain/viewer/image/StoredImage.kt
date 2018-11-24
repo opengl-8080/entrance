@@ -14,10 +14,14 @@ import java.nio.file.Paths
 class StoredImage(
     val itemId: ItemId,
     val relativePath: RelativePath,
+    val width: Int,
+    val height: Int,
     localFile: LocalFile,
     tags: List<Tag>,
     rank: Rank
 ): BaseImageFile(localFile), SortableItem by BaseSortableImage(tags, rank) {
+
+    override val statusText: String = "$width x $height (${localFile.name})"
     
     fun deleteLocalFile() {
         Files.delete(localFile.javaPath)
