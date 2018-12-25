@@ -61,7 +61,10 @@
                         <ContextMenu>
                           <items>
                             <MenuItem fx:id="openImageMenuItem" mnemonicParsing="false" onAction="#openImage" text="開く" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#copyToClipboard" text="クリップボードにコピー" />
                               <MenuItem mnemonicParsing="false" onAction="#openWithExplorer" text="エクスプローラで開く" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
                               <MenuItem mnemonicParsing="false" onAction="#deleteImage" text="削除" />
                           </items>
                         </ContextMenu>

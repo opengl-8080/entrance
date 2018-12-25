@@ -23,6 +23,9 @@ import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
+import javafx.scene.input.Clipboard
+import javafx.scene.input.ClipboardContent
+import javafx.scene.input.DataFormat
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
 import org.springframework.stereotype.Component
@@ -130,6 +133,29 @@ class MainController(
             ItemType.BOOK -> {
                 val book = toSoredBook(selectedThumbnail)
                 Runtime.getRuntime().exec(arrayOf("explorer", "${book.directory.javaPath}"))
+            }
+        }
+    }
+    
+    @FXML
+    fun copyToClipboard() {
+        val selectedThumbnail: ThumbnailView<ThumbnailImage> = thumbnailsView.selectedThumbnail ?: return
+
+        when (itemTypeSelectController.itemType) {
+            ItemType.IMAGE -> {
+                val image = toStoredImage(selectedThumbnail)
+                val clipboard = Clipboard.getSystemClipboard()
+                val content = ClipboardContent()
+                content.putFiles(listOf(image.javaPath.toFile()))
+                clipboard.setContent(content)
+            }
+
+            ItemType.BOOK -> {
+                val book = toSoredBook(selectedThumbnail)
+                val clipboard = Clipboard.getSystemClipboard()
+                val content = ClipboardContent()
+                content.putFiles(listOf(book.directory.javaPath.toFile()))
+                clipboard.setContent(content)
             }
         }
     }
