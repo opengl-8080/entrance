@@ -23,7 +23,6 @@ import entrance.view.javafx.window.viewer.SingleImageViewerWindow
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
-import javafx.scene.control.MenuItem
 import javafx.scene.layout.FlowPane
 import javafx.stage.Stage
 import org.springframework.stereotype.Component
@@ -55,8 +54,6 @@ class MainController(
     
     @FXML
     lateinit var thumbnailsPane: FlowPane
-    @FXML
-    lateinit var openImageMenuItem: MenuItem
     @FXML
     lateinit var statusBarLabel: Label
 
@@ -105,11 +102,7 @@ class MainController(
     // コンテキストメニュー
     @FXML
     fun openImage() {
-        val selectedThumbnail: ThumbnailView<ThumbnailImage>? = thumbnailsView.selectedThumbnail
-        
-        if (selectedThumbnail == null) {
-            return
-        }
+        val selectedThumbnail: ThumbnailView<ThumbnailImage> = thumbnailsView.selectedThumbnail ?: return
 
         when (itemTypeSelectController.itemType) {
             ItemType.IMAGE -> {
@@ -125,12 +118,25 @@ class MainController(
     }
     
     @FXML
-    fun deleteImage() {
-        val selectedThumbnail: ThumbnailView<ThumbnailImage>? = thumbnailsView.selectedThumbnail
+    fun openWithExplorer() {
+        val selectedThumbnail: ThumbnailView<ThumbnailImage> = thumbnailsView.selectedThumbnail ?: return
 
-        if (selectedThumbnail == null) {
-            return
+        when (itemTypeSelectController.itemType) {
+            ItemType.IMAGE -> {
+                val image = toStoredImage(selectedThumbnail)
+                Runtime.getRuntime().exec(arrayOf("explorer", """/select,"${image.javaPath}""""))
+            }
+            
+            ItemType.BOOK -> {
+                val book = toSoredBook(selectedThumbnail)
+                Runtime.getRuntime().exec(arrayOf("explorer", "${book.directory.javaPath}"))
+            }
         }
+    }
+    
+    @FXML
+    fun deleteImage() {
+        val selectedThumbnail: ThumbnailView<ThumbnailImage> = thumbnailsView.selectedThumbnail ?: return
 
         when (itemTypeSelectController.itemType) {
             ItemType.IMAGE -> {
