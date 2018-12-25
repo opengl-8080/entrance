@@ -87,6 +87,7 @@ project(":infrastructure") {
             exclude group: 'org.seasar.doma', module: 'doma'
         }
         implementation 'org.seasar.doma:doma:2.19.2'
+        annotationProcessor 'org.seasar.doma:doma:2.19.2'
         api project(':application')
         
         implementation group: 'commons-io', name: 'commons-io', version: '2.5'
