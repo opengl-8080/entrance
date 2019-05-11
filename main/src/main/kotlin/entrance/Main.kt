@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
     
     println("ENTRANCE_HOME=${entranceHome.path}")
     println("jdbcUrl=${entranceHome.jdbcUrl()}")
+
     
     if (args.contains("--database")) {
         Shell.main("-url", entranceHome.jdbcUrl(), "-user", "SA", "-password", "")
@@ -23,6 +24,10 @@ fun main(args: Array<String>) {
 
     val wallpaperService = context.getBean(WallpaperService::class.java)
     wallpaperService.doService()
+    
+    if (args.contains("--wallpaper")) {
+        return
+    }
 
     EntranceApplication.context = context
     Application.launch(EntranceApplication::class.java, *args)
